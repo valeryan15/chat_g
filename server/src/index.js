@@ -1,13 +1,14 @@
 import 'dotenv/config'
-
 import express from 'express'
 import cors from 'cors'
+import http from 'http'
+import routes from './routes'
+import swaggerSpec from './OpenAPISpecification'
 
 const { PORT } = process.env
 const app = express()
+const server = http.Server(app)
 
-import routes from './routes';
-import swaggerSpec from './OpenAPISpecification'
 
 const swaggerUi = require('swagger-ui-express');
 
@@ -35,7 +36,7 @@ app.delete('/', (req, res) => {
 });
 
 
-app.listen(PORT, () =>
+server.listen(PORT, () =>
   console.log(`Example app listening on port http://localhost:${PORT}`),
 );
 

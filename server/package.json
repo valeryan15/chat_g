@@ -2,11 +2,12 @@
   "name": "server",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
     "dev": "nodemon --exec babel-node src/index.js",
     "build": "webpack",
-    "start": "node dist/server.js"
+    "start": "node dist/server.js",
+    "prod": "yarn run build && yarn run start"
   },
   "author": "",
   "license": "ISC",
