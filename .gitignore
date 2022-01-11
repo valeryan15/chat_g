@@ -97,3 +97,5 @@ log
 # settings locales
 locales.json
 config.json
+
+key-adminsdk.json
