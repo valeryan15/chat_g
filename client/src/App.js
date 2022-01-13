@@ -1,15 +1,19 @@
 
-import './App.css';
 import Login from './components/login/login';
 
+import Header from "./components/header/Header";
+import AuthForm from "./authorization/AuthForm";
+
 const App = (props) => {
-    console.log('hello')
-  return (
-    
-    <div className="App">
-      <Login />
-    </div>
-  );
+    return (
+            <div className="App">
+                <Header/>
+                <AuthForm/>
+                {/*<Login/>*/}
+
+            </div>
+
+);
 }
 
 export default App;
