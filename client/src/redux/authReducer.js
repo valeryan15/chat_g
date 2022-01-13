@@ -42,11 +42,11 @@ export const logoutThunk = () => (dispatch) => {
             }
         })
 }
-export const authThunk = (login, password) => (dispatch) => {
-    authAPI.auth()
+export const authThunk = (login, password, passwordConfirmation) => (dispatch) => {
+    authAPI.auth(login, password, passwordConfirmation)
         .then(response => {
             if (response.data.resultCode === 0) {
-                dispatch(loginThunk(login, password))
+                dispatch(loginThunk(login, password, passwordConfirmation))
             }
         })
 }

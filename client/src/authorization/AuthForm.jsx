@@ -3,6 +3,7 @@ import { Formik } from 'formik'
 
 
 const AuthForm = (props) => {
+    console.log(props)
     return (
         <div className='relative w-full h-full'>
             <div className='fixed h-48 -ml-48 text-center bg-gray-600 rounded w-96 top-1/3 left-2/4'>
@@ -10,18 +11,14 @@ const AuthForm = (props) => {
                     initialValues={{ login: '', password: '', passwordConfirmation: '' }}
                     validate={values => {
                         const errors = {};
-                        if (!values.email) {
-                            errors.email = 'Required';
-                        } else if (
-                            !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)
-                        ) {
-                            errors.email = 'Invalid login';
+                        if (!values.login) {
+                            errors.login = 'Required';
                         }
                         return errors;
                     }}
                     onSubmit={(values, { setSubmitting }) => {
-
                             setSubmitting(false);
+                            props.onSubmit(values)
 
                     }}
                 >
@@ -33,7 +30,6 @@ const AuthForm = (props) => {
                           handleBlur,
                           handleSubmit,
                           isSubmitting,
-                          /* and other goodies */
                       }) => (
                         <form onSubmit={handleSubmit}>
                             <div className='my-4'>
@@ -43,7 +39,7 @@ const AuthForm = (props) => {
                                     name="login"
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    value={values.email}
+                                    value={values.login}
                                 />
                             </div>
                             <div className='text-white'>

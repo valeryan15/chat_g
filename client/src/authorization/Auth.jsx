@@ -1,6 +1,7 @@
 import AuthForm from "./AuthForm";
 import {connect} from "react-redux";
 import {authThunk} from "../redux/authReducer";
+import React from "react";
 
 const Auth = (props) => {
     const onSubmit = (formData) => {
