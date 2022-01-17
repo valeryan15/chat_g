@@ -14,7 +14,6 @@ const authReducer = (state = initialState, action) => {
             return {
                 ...state,
                 ...action.payload,
-                isAuth: true
             }
 
         default:
@@ -22,21 +21,31 @@ const authReducer = (state = initialState, action) => {
     }
 }
 
-export const setAuthUserData = (userId, login) => ({type: SET_USER_DATA, payload: {userId, login}})
+export const setAuthUserData = (userId, login, isAuth) => ({type: SET_USER_DATA, payload: {userId, login, isAuth}})
 
-export const loginThunk = () => (dispatch) => {
-    authAPI.login()
+export const getAuthUserDataThunk = () => (dispatch) => {
+    authAPI.login(login, password)
         .then(response => {
-            if (response.data.resultCode === 0) {
-                let {login} = response.data.data
-                dispatch(setAuthUserData(login))
+            if (response.status === 200) {
+                let {id, login} = response.data.data
+                dispatch(getAuthUserData(id,login))
+            }
+        })
+}
+
+export const loginThunk = (login, password) => (dispatch) => {
+    authAPI.login(login, password)
+        .then(response => {
+            if (response.status === 200) {
+                let {id, login} = response.data.data
+                dispatch(getAuthUserDataThunk(id,login))
             }
         })
 }
 export const logoutThunk = () => (dispatch) => {
     authAPI.login()
         .then(response => {
-            if (response.data.resultCode === 0) {
+            if (response.status === 200) {
                 let {login} = response.data.data
                 dispatch(setAuthUserData(login))
             }
@@ -45,8 +54,9 @@ export const logoutThunk = () => (dispatch) => {
 export const authThunk = (login, password, passwordConfirmation) => (dispatch) => {
     authAPI.auth(login, password, passwordConfirmation)
         .then(response => {
-            if (response.data.resultCode === 0) {
-                dispatch(loginThunk(login, password, passwordConfirmation))
+            console.log(response)
+            if (response.status === 200) {
+                dispatch(loginThunk(login, password))  //редирект на страницу логина
             }
         })
 }

@@ -6,8 +6,9 @@ export const authAPI = {
         return axios.post('http://localhost:8081/users/sign-up',
             {login, password, passwordConfirmation})
     },
-    login(login) {
-        return axios.get(`http://localhost:8081/users/sign-up/${login}`)
+    login(login,password) {
+        console.log(login,password)
+        return axios.get(`http://localhost:8081/users/${login}`)
     },
     // logout() {
     //     axios.delete(``)
