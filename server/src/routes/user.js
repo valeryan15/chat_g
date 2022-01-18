@@ -53,10 +53,17 @@ router.get('/', async (req, res) => {
 router.post(
   '/sign-up',
   body('login')
+    .isLength({ max: 50 })
+    .withMessage('must be no more than 50 chars')
     .not()
     .isEmpty()
     .trim()
     .escape()
+    .not()
+    .matches(/\ /)
+    .withMessage('there should be no spaces')
+    .matches(/^[A-Za-z0-9\-\_]+$/)
+    .withMessage('must contain only latin characters, symbols "-", "_" and numbers')
     .custom(async (value) => {
       const ref = db.ref(DatabaseUrlUsers)
       const child = await ref.child(value).once('value')
@@ -68,7 +75,12 @@ router.post(
     .isLength({ min: 5 })
     .withMessage('must be at least 5 chars long')
     .matches(/\d/)
-    .withMessage('must contain a number'),
+    .withMessage('must contain a number')
+    .not()
+    .matches(/\ /)
+    .withMessage('there should be no spaces')
+    .matches(/^[A-Za-z0-9\-\_]+$/)
+    .withMessage('must contain only latin characters, symbols "-", "_" and numbers'),
   body('passwordConfirmation').custom((value, { req }) => {
     if (value !== req.body.password) {
       throw new Error('Password confirmation does not match password')
