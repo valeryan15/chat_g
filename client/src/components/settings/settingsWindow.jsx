@@ -1,7 +1,7 @@
 import React from "react";
 import Footer from "../footer/Footer";
 
-const MainWindow = () => {
+const SettingsWindow = () => {
     return <div className='flex h-full absolute w-full'>
         <div className='w-72 bg-gray-200 h-full'>
             <Footer/>
@@ -12,4 +12,4 @@ const MainWindow = () => {
     </div>
 }
 
-export default MainWindow
+export default SettingsWindow

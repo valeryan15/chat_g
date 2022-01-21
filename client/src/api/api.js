@@ -6,10 +6,13 @@ export const authAPI = {
         return axios.post('http://localhost:8081/users/sign-up',
             {login, password, passwordConfirmation})
     },
-    login(login,password) {
-        console.log(login,password)
+    me(login) {
         return axios.get(`http://localhost:8081/users/${login}`)
     },
+    // login(login, password) {
+    //     return axios.post(``) //по идее должно быть в АПИ форма регистрации, форма логинизации и форма получения данных по логину
+    // }
+
     // logout() {
     //     axios.delete(``)
     // }

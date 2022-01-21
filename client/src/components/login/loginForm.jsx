@@ -1,28 +1,36 @@
-import React from "react"
-import {Formik} from "formik";
+import React, {useState} from "react"
+import {Formik, Field} from "formik";
+import preloader from "../../img/785.gif";
+import * as Yup from "yup";
+
+const SignInSchema = Yup.object().shape({
+    login: Yup.string()
+        .max(50, 'Too Long!')
+        .required('Required'),
+    password: Yup.string()
+        .min(5, 'Too Short!')
+        .required('Required')
+})
 
 
 const LoginForm = (props) => {
+
+    const [loading, setLoading] = useState(false)
+
+    const fetchDataServer = () => {
+        setLoading(true)
+    }
+
     return (
         <div className='relative w-full h-full'>
-            <div className='fixed h-48 -ml-48 text-center bg-gray-600 rounded w-96 top-1/3 left-2/4'>
+            <div className='fixed min-h-48 -ml-48 text-center bg-gray-600 rounded w-96 top-1/3 left-2/4'>
                 <button className='cursor-pointer relative float-right -top-5 right-5'>
                     <div className="h-[2px] w-4 absolute mt-8 bg-gray-900 rounded-sm origin-center rotate-45 ease-in duration-300"></div>
                     <div className="h-[2px] w-4 absolute mt-8 bg-gray-900 rounded-sm origin-center -rotate-45 ease-in duration-300"></div>
                 </button>
                 <Formik
                     initialValues={{ login: '', password: ''}}
-                    // validate={values => {
-                    //     const errors = {};
-                    //     if (!values.login) {
-                    //         errors.login = 'Required';
-                    //     } else if (
-                    //         !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.login)
-                    //     ) {
-                    //         errors.login = 'Invalid login';
-                    //     }
-                    //     return errors;
-                    // }}
+                    validationSchema={SignInSchema}
                     onSubmit={(values, { setSubmitting }) => {
 
                         setSubmitting(false);
@@ -37,12 +45,11 @@ const LoginForm = (props) => {
                           handleChange,
                           handleBlur,
                           handleSubmit,
-                          isSubmitting,
-                          /* and other goodies */
                       }) => (
                         <form onSubmit={handleSubmit}>
                             <div className='my-4'>
-                                <input className='border border-yellow-300 rounded w-72'
+                                <Field className='border border-yellow-300 rounded w-72'
+
                                        placeholder='Enter your login'
                                        type="login"
                                        name="login"
@@ -51,11 +58,11 @@ const LoginForm = (props) => {
                                        value={values.login}
                                 />
                             </div>
-                            <div className='text-white'>
+                            <div className='text-red-600'>
                                 {errors.login && touched.login && errors.login}
                             </div>
                             <div className='my-4'>
-                                <input className='border border-yellow-300 rounded w-72'
+                                <Field className='border border-yellow-300 rounded w-72'
                                        placeholder='Enter your password'
                                        type="password"
                                        name="password"
@@ -64,9 +71,19 @@ const LoginForm = (props) => {
                                        value={values.password}
                                 />
                             </div>
-                            {errors.password && touched.password && errors.password}
-                            <button className='button' type="submit" disabled={isSubmitting}>
-                                Sing in
+                            <div className='text-red-600'>
+                                {errors.password && touched.password && errors.password}
+                            </div>
+                            <button className='button mb-2 w-28 h-8 '
+                                    type="submit"
+                                    disabled={loading}
+                                    // onClick={fetchDataServer}    //как сделать прелоадер без onclick?
+                            >
+                                {<span className='flex justify-between px-4'>
+                                {loading && <span>Вход...</span>}
+                                {loading && (<img src={preloader} className='w-4'/>)}
+                                </span>}
+                                {!loading && <span>Войти</span>}
                             </button>
                             <button className='ml-12 text-xs font-thin text-white'>forgot password?</button>
                         </form>
