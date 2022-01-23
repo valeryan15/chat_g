@@ -1,6 +1,5 @@
 import {authAPI} from "../api/api";
 import 'react-toastify/dist/ReactToastify.css'
-import {toast} from "react-toastify";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 
@@ -25,24 +24,23 @@ const authReducer = (state = initialState, action) => {
 
 export const setAuthUserData = (userId, login, isAuth) => ({type: SET_USER_DATA, payload: {userId, login, isAuth}})
 
-export const getAuthUserDataThunk = (login,password) => (dispatch) => {
-    authAPI.login(login, password)
+export const getAuthUserDataThunk = (login) => (dispatch) => {
+    authAPI.me(login)
         .then(response => {
             if (response.status === 200) {
                 let {id, login} = response.data
-                 dispatch(setAuthUserData(id,login, true))
-            }else {
+                dispatch(setAuthUserData(id, login, true))
+            } else {
             }
         })
 }
 
-export const loginThunk = (login, password) => (dispatch) => {
-    authAPI.login(login, password)
+export const loginThunk = (login) => (dispatch) => {
+    authAPI.me(login)
         .then(response => {
-            debugger
             if (response.status === 200) {
                 let {id, login} = response.data
-                dispatch(getAuthUserDataThunk(id,login))
+                dispatch(getAuthUserDataThunk(id, login))
             }
         })
 }
@@ -62,11 +60,7 @@ export const authThunk = (login, password, passwordConfirmation) => (dispatch) =
             if (response.status === 200) {
                 dispatch(loginThunk(login, password))  // надо сделать редирект на страницу логина
             }
-        }).catch((error) =>  {
-            if(error) {
-                toast(`error ${error}`, {className: 'error-toast', draggable: true, position: toast.POSITION.TOP_RIGHT})
-            }
-    })
+        })
 }
 
 export default authReducer

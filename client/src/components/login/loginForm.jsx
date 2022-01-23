@@ -1,23 +1,13 @@
 import React, {useState} from "react"
 import {Formik, Field} from "formik";
 import preloader from "../../img/785.gif";
-import * as Yup from "yup";
-
-const SignInSchema = Yup.object().shape({
-    login: Yup.string()
-        .max(50, 'Too Long!')
-        .required('Required'),
-    password: Yup.string()
-        .min(5, 'Too Short!')
-        .required('Required')
-})
-
+import {SignupSchema} from "../support/Validators";
 
 const LoginForm = (props) => {
 
     const [loading, setLoading] = useState(false)
 
-    const fetchDataServer = () => {
+    const isSetPreloader = () => {
         setLoading(true)
     }
 
@@ -30,7 +20,7 @@ const LoginForm = (props) => {
                 </button>
                 <Formik
                     initialValues={{ login: '', password: ''}}
-                    validationSchema={SignInSchema}
+                    validationSchema={SignupSchema}
                     onSubmit={(values, { setSubmitting }) => {
 
                         setSubmitting(false);
@@ -59,7 +49,7 @@ const LoginForm = (props) => {
                                 />
                             </div>
                             <div className='text-red-600'>
-                                {errors.login && touched.login && errors.login}
+                                {errors.login && touched.login}
                             </div>
                             <div className='my-4'>
                                 <Field className='border border-yellow-300 rounded w-72'
@@ -72,16 +62,15 @@ const LoginForm = (props) => {
                                 />
                             </div>
                             <div className='text-red-600'>
-                                {errors.password && touched.password && errors.password}
+                                {errors.password && touched.password}
                             </div>
                             <button className='button mb-2 w-28 h-8 '
                                     type="submit"
                                     disabled={loading}
-                                    // onClick={fetchDataServer}    //как сделать прелоадер без onclick?
                             >
                                 {<span className='flex justify-between px-4'>
                                 {loading && <span>Вход...</span>}
-                                {loading && (<img src={preloader} className='w-4'/>)}
+                                {loading && (<img src={preloader} alt={'preloader'} className='w-4'/>)}
                                 </span>}
                                 {!loading && <span>Войти</span>}
                             </button>
