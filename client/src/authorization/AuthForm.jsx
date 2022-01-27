@@ -1,26 +1,17 @@
-import React, {useState} from "react"
+import React from "react"
 import {Formik, Field} from 'formik'
 import preloader from '../img/785.gif'
 import {SignupSchema} from "../components/support/Validators";
 
 const AuthForm = (props) => {
-    const [loading, setLoading] = useState(false)
-
     return (
         <div className='relative w-full h-full'>
             <div className='fixed min-h-48 -ml-48 text-center bg-gray-600 rounded w-96 top-1/3 left-2/4'>
-                <div className='cursor-pointer relative float-right -top-5 right-5'>
-                    <div
-                        className="h-[2px] w-4 absolute mt-8 bg-gray-900 rounded-sm origin-center rotate-45 ease-in duration-300"></div>
-                    <div
-                        className="h-[2px] w-4 absolute mt-8 bg-gray-900 rounded-sm origin-center -rotate-45 ease-in duration-300"></div>
-                </div>
                 <Formik
                     initialValues={{login: '', password: '', passwordConfirmation: ''}}
                     validationSchema={SignupSchema}
                     onSubmit={(values, {setSubmitting}) => {
                         setSubmitting(false);
-                        console.log('нажата кнопка onSubmit')
                         props.onSubmit(values)
 
                     }}
@@ -77,12 +68,14 @@ const AuthForm = (props) => {
                             <div className='text-red-600'>
                                 {errors.passwordConfirmation && touched.passwordConfirmation}
                             </div>
-                            <button className='button mb-2'
+                            <button className='button mb-2 h-8'
                                     type="submit"
-                                    disabled={loading}>
-                                {loading && (<img src={preloader} alt={'preloader'} className='w-4'/>)}
-                                {loading && <span>Singing up...</span>}
-                                {!loading && <span>Sing up</span>}
+                                    disabled={props.isFetching}>
+                                {<span className='flex justify-between px-4'>
+                                {props.isFetching && <span>Отправка...</span>}
+                                {props.isFetching && (<img src={preloader} alt={'preloader'} className='w-6 ml-2'/>)}
+                                </span>}
+                                {!props.isFetching && <span>Регистрация</span>}
                             </button>
                             <button className='ml-12 mb-2 text-xs font-thin text-white'>Authorized?</button>
                         </form>

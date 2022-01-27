@@ -12,7 +12,7 @@ import {ToastContainer, Zoom} from "react-toastify";
 const App = () => {
     return (
             <div className="App">
-                <ToastContainer draggable={false} transition={Zoom} autoClose={3000}/>
+                <ToastContainer draggable={false} transition={Zoom} autoClose={8000}/>
                 <BrowserRouter>
                     <Header/>
                     <Routes>

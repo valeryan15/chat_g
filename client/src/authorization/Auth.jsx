@@ -1,6 +1,6 @@
 import AuthForm from "./AuthForm";
 import {connect} from "react-redux";
-import {authThunk} from "../redux/authReducer";
+import {authThunk, toggleIsFetching} from "../redux/authReducer";
 import React from "react";
 
 const Auth = (props) => {
@@ -9,8 +9,14 @@ const Auth = (props) => {
     }
 
     return (
-        <AuthForm onSubmit={onSubmit}/>
+        <AuthForm onSubmit={onSubmit} isFetching = {props.isFetching}/>
     )
 }
 
-export default connect(null, {authThunk}) (Auth)
+const mapStateToProps = (state) => {
+    return {
+        isFetching: state.auth.isFetching
+    }
+}
+
+export default connect(mapStateToProps, {authThunk, toggleIsFetching}) (Auth)

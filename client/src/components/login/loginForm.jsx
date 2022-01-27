@@ -7,10 +7,6 @@ const LoginForm = (props) => {
 
     const [loading, setLoading] = useState(false)
 
-    const isSetPreloader = () => {
-        setLoading(true)
-    }
-
     return (
         <div className='relative w-full h-full'>
             <div className='fixed min-h-48 -ml-48 text-center bg-gray-600 rounded w-96 top-1/3 left-2/4'>
@@ -25,6 +21,7 @@ const LoginForm = (props) => {
 
                         setSubmitting(false);
                         props.onSubmit(values)
+
 
                     }}
                 >
