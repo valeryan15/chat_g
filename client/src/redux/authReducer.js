@@ -39,7 +39,6 @@ export const toggleIsFetching = (isFetching) => ({
 export const loginThunk = (login, password) => (dispatch) => {
   dispatch(toggleIsFetching(true))
   authAPI.login(login, password).then((response) => {
-    console.log('response login success')
     if (response.status === 200) {
       dispatch(toggleIsFetching(false))
       let { login } = response.data
@@ -62,12 +61,12 @@ export const authThunk =
     authAPI
       .auth(login, password, passwordConfirmation)
       .then((response) => {
-        console.log('success')
         dispatch(toggleIsFetching(false))
         if (response.status === 200) {
           dispatch(loginThunk(login, password))
         }
       })
+      .catch(() => dispatch(toggleIsFetching(false)))
   }
 
 export default authReducer
