@@ -5,6 +5,7 @@ import MainWindow from './components/mainWindow/MainWindow'
 import SettingsWindow from './components/settings/settingsWindow'
 import { ToastContainer, Zoom } from 'react-toastify'
 import HeaderContainer from './components/header/HeaderContainer'
+import 'react-toastify/dist/ReactToastify.css'
 
 const App = () => {
   return (

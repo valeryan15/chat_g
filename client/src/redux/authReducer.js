@@ -1,6 +1,4 @@
 import { authAPI } from '../api/api'
-import 'react-toastify/dist/ReactToastify.css'
-
 const SET_USER_DATA = 'SET_USER_DATA'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
@@ -64,6 +62,7 @@ export const authThunk =
     authAPI
       .auth(login, password, passwordConfirmation)
       .then((response) => {
+        console.log('success')
         dispatch(toggleIsFetching(false))
         if (response.status === 200) {
           dispatch(loginThunk(login, password))
@@ -72,3 +71,4 @@ export const authThunk =
   }
 
 export default authReducer
+
