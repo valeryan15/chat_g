@@ -27,23 +27,34 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
-export const setAuthUserData = (login, isAuth) => ({
+export const setAuthUserData = (login, token, isAuth) => ({
   type: SET_USER_DATA,
-  payload: { login, isAuth },
+  payload: { login, token, isAuth },
 })
 export const toggleIsFetching = (isFetching) => ({
   type: TOGGLE_IS_FETCHING,
   isFetching,
 })
 
-export const loginThunk = (login, password) => (dispatch) => {
+export const authorizationThunk = (login, password) => (dispatch) => {
+  console.log('попали в login')
   dispatch(toggleIsFetching(true))
-  authAPI.login(login, password).then((response) => {
-    if (response.status === 200) {
+  authAPI
+    .authorization(login, password)
+    .then((response) => {
       dispatch(toggleIsFetching(false))
-      let { login } = response.data
-      dispatch(setAuthUserData(login, true))
-    }
+      const { login, token } = response
+      localStorage.setItem('token', JSON.stringify(token))
+      dispatch(getInfoThunk(login, token))
+    })
+    .catch(dispatch(toggleIsFetching(false)))
+}
+
+export const getInfoThunk = (login, token) => (dispatch) => {
+  console.log('попали в auth')
+  authAPI.getInfo(login, token).then(() => {
+    dispatch(toggleIsFetching(false))
+    dispatch(setAuthUserData(login, token, true))
   })
 }
 // export const logoutThunk = () => (dispatch) => {
@@ -55,19 +66,16 @@ export const loginThunk = (login, password) => (dispatch) => {
 //             }
 //         })
 // }
-export const authThunk =
+export const registrationThunk =
   (login, password, passwordConfirmation) => (dispatch) => {
     dispatch(toggleIsFetching(true))
     authAPI
-      .auth(login, password, passwordConfirmation)
-      .then((response) => {
+      .registration(login, password, passwordConfirmation)
+      .then(() => {
         dispatch(toggleIsFetching(false))
-        if (response.status === 200) {
-          dispatch(loginThunk(login, password))
-        }
+        // dispatch(loginThunk(response.login, response.password))    //Валер, пока не знаю надо ли передавать данные в логин
       })
       .catch(() => dispatch(toggleIsFetching(false)))
   }
 
 export default authReducer
-

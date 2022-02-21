@@ -1,10 +1,10 @@
 import LoginForm from './loginForm'
 import { connect } from 'react-redux'
-import { loginThunk, toggleIsFetching } from '../../redux/authReducer'
+import { authorizationThunk, toggleIsFetching } from '../../redux/authReducer'
 
 const Login = (props) => {
   const onSubmit = (formData) => {
-    props.loginThunk(formData.login, formData.password)
+    props.authorizationThunk(formData.login, formData.password)
   }
 
   return (
@@ -17,6 +17,6 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  loginThunk,
+  authorizationThunk,
   toggleIsFetching,
 })(Login)
