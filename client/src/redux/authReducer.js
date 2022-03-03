@@ -27,10 +27,16 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
+const setToken = (token) => {
+  localStorage.setItem('token', JSON.stringify(token))
+}
+
+
 export const setAuthUserData = (login, token, isAuth) => ({
   type: SET_USER_DATA,
   payload: { login, token, isAuth },
 })
+
 export const toggleIsFetching = (isFetching) => ({
   type: TOGGLE_IS_FETCHING,
   isFetching,
@@ -44,7 +50,7 @@ export const authorizationThunk = (login, password) => (dispatch) => {
     .then((response) => {
       dispatch(toggleIsFetching(false))
       const { login, token } = response
-      localStorage.setItem('token', JSON.stringify(token))
+      setToken(token)
       dispatch(getInfoThunk(login, token))
     })
     .catch(dispatch(toggleIsFetching(false)))

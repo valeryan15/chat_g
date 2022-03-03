@@ -1,10 +1,10 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
 
+
 const getToken = (token) => {
   if (token) {
-    let tokenProfileLocalStorage = localStorage.getItem('token')
-    let tokenProfile = JSON.parse(tokenProfileLocalStorage)
+    let tokenProfile = localStorage.getItem('token')
     let headers = { 'Authorization': `Bearer ${tokenProfile}` }
     return headers
   } else {
@@ -22,8 +22,8 @@ const http = async (url, method, body = {}, headers = {}) => {
   }
   try {
     const response = await axios({
-      method,
       url,
+      method,
       ...options,
       headers,
     })
@@ -42,6 +42,8 @@ const http = async (url, method, body = {}, headers = {}) => {
     return Promise.reject(e)
   }
 }
+
+
 export const authAPI = {
   registration(login, password, passwordConfirmation) {
     const options = { login, password, passwordConfirmation }

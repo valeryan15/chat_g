@@ -10,7 +10,8 @@ const Header = (props) => {
 
         <span className="text-white">
           {props.isAuth ? (
-            <span>{props.login}</span>
+            <span>{props.login}
+            <button className='ml-4'>logout</button></span>
           ) : (
             <Link to={'/login'}>Sign in</Link>
           )}
