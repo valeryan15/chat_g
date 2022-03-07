@@ -28,7 +28,7 @@ const authReducer = (state = initialState, action) => {
 }
 
 const setToken = (token) => {
-  localStorage.setItem('token', JSON.stringify(token))
+  localStorage.setItem('token', token)
 }
 
 
@@ -57,7 +57,7 @@ export const authorizationThunk = (login, password) => (dispatch) => {
 }
 
 export const getInfoThunk = (login, token) => (dispatch) => {
-  console.log('попали в auth')
+  console.log('попали в getInfo')
   authAPI.getInfo(login, token).then(() => {
     dispatch(toggleIsFetching(false))
     dispatch(setAuthUserData(login, token, true))
