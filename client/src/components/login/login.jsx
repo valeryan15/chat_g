@@ -8,7 +8,7 @@ const Login = (props) => {
     props.authorizationThunk(formData.login, formData.password)
   }
   if(props.isAuth) {
-    <Navigate to='/main'/>
+    return <Navigate to='/main'/>
   }
   return (
     <LoginForm onSubmit={onSubmit} isFetching={props.isFetching} />

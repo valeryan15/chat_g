@@ -1,24 +1,9 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import {getToken} from "../components/login/token";
 
-// const getToken = (token) => {
-//   if (token) {
-//     let tokenProfile = localStorage.getItem('token')
-//     let headers = { 'Authorization': `Bearer ${tokenProfile}` }
-//     return headers
-//   } else {
-//     let headers = ''
-//     return headers
-//   }
-// }
-
-const http = async (url, method, body = {}, headers = {}) => {
-  let tokenProfile = localStorage.getItem('token')
-  if(tokenProfile) {
-    headers = {'Authorization': `Bearer ${tokenProfile}`}
-  } else {
-    headers = null
-  }
+const http = async (url, method, body = {}) => {
+  let headers = getToken()
   let options = {}
   if (method === 'GET') {
     options.params = body
@@ -68,6 +53,7 @@ export const authAPI = {
   },
   getInfo(login) {
     const options = { login }
+
     return http(
       'http://localhost:8081/users/get-info',
       'POST',

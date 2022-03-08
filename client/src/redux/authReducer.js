@@ -1,4 +1,5 @@
 import { authAPI } from '../api/api'
+import {setToken} from "../components/login/token";
 const SET_USER_DATA = 'SET_USER_DATA'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
@@ -27,14 +28,9 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
-const setToken = (token) => {
-  localStorage.setItem('token', token)
-}
-
-
-export const setAuthUserData = (login, token, isAuth) => ({
+export const setAuthUserData = (login, isAuth) => ({
   type: SET_USER_DATA,
-  payload: { login, token, isAuth },
+  payload: { login, isAuth },
 })
 
 export const toggleIsFetching = (isFetching) => ({
@@ -51,16 +47,16 @@ export const authorizationThunk = (login, password) => (dispatch) => {
       dispatch(toggleIsFetching(false))
       const { login, token } = response
       setToken(token)
-      dispatch(getInfoThunk(login, token))
+      dispatch(getInfoThunk(login))
     })
     .catch(dispatch(toggleIsFetching(false)))
 }
 
-export const getInfoThunk = (login, token) => (dispatch) => {
+export const getInfoThunk = (login) => (dispatch) => {
   console.log('попали в getInfo')
-  authAPI.getInfo(login, token).then(() => {
+  authAPI.getInfo(login).then(() => {
     dispatch(toggleIsFetching(false))
-    dispatch(setAuthUserData(login, token, true))
+    dispatch(setAuthUserData(login, true))
   })
 }
 // export const logoutThunk = () => (dispatch) => {
