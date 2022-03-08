@@ -1,4 +1,5 @@
 import { authAPI } from '../api/api'
+import {setToken} from "../components/login/token";
 const SET_USER_DATA = 'SET_USER_DATA'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 
@@ -31,19 +32,31 @@ export const setAuthUserData = (login, isAuth) => ({
   type: SET_USER_DATA,
   payload: { login, isAuth },
 })
+
 export const toggleIsFetching = (isFetching) => ({
   type: TOGGLE_IS_FETCHING,
   isFetching,
 })
 
-export const loginThunk = (login, password) => (dispatch) => {
+export const authorizationThunk = (login, password) => (dispatch) => {
+  console.log('попали в login')
   dispatch(toggleIsFetching(true))
-  authAPI.login(login, password).then((response) => {
-    if (response.status === 200) {
+  authAPI
+    .authorization(login, password)
+    .then((response) => {
       dispatch(toggleIsFetching(false))
-      let { login } = response.data
-      dispatch(setAuthUserData(login, true))
-    }
+      const { login, token } = response
+      setToken(token)
+      dispatch(getInfoThunk(login))
+    })
+    .catch(dispatch(toggleIsFetching(false)))
+}
+
+export const getInfoThunk = (login) => (dispatch) => {
+  console.log('попали в getInfo')
+  authAPI.getInfo(login).then(() => {
+    dispatch(toggleIsFetching(false))
+    dispatch(setAuthUserData(login, true))
   })
 }
 // export const logoutThunk = () => (dispatch) => {
@@ -55,19 +68,16 @@ export const loginThunk = (login, password) => (dispatch) => {
 //             }
 //         })
 // }
-export const authThunk =
+export const registrationThunk =
   (login, password, passwordConfirmation) => (dispatch) => {
     dispatch(toggleIsFetching(true))
     authAPI
-      .auth(login, password, passwordConfirmation)
-      .then((response) => {
+      .registration(login, password, passwordConfirmation)
+      .then(() => {
         dispatch(toggleIsFetching(false))
-        if (response.status === 200) {
-          dispatch(loginThunk(login, password))
-        }
+        // dispatch(loginThunk(response.login, response.password))    //Валер, пока не знаю надо ли передавать данные в логин
       })
       .catch(() => dispatch(toggleIsFetching(false)))
   }
 
 export default authReducer
-

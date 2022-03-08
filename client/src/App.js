@@ -6,6 +6,7 @@ import SettingsWindow from './components/settings/settingsWindow'
 import { ToastContainer, Zoom } from 'react-toastify'
 import HeaderContainer from './components/header/HeaderContainer'
 import 'react-toastify/dist/ReactToastify.css'
+import Footer from "./components/footer/Footer";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
           <Route path="/settings" element={<SettingsWindow />} />
           <Route path="/main" element={<MainWindow />} />
         </Routes>
+        <Footer/>
       </BrowserRouter>
     </div>
   )

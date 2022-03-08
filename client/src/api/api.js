@@ -1,7 +1,9 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
+import {getToken} from "../components/login/token";
 
 const http = async (url, method, body = {}) => {
+  let headers = getToken()
   let options = {}
   if (method === 'GET') {
     options.params = body
@@ -10,9 +12,10 @@ const http = async (url, method, body = {}) => {
   }
   try {
     const response = await axios({
-      method,
       url,
+      method,
       ...options,
+      headers,
     })
     if (response.status >= 200 && response.status < 400) {
       return response.data
@@ -29,8 +32,10 @@ const http = async (url, method, body = {}) => {
     return Promise.reject(e)
   }
 }
+
+
 export const authAPI = {
-  auth(login, password, passwordConfirmation) {
+  registration(login, password, passwordConfirmation) {
     const options = { login, password, passwordConfirmation }
     return http(
       'http://localhost:8081/common/sign-up',
@@ -38,12 +43,21 @@ export const authAPI = {
       options
     )
   },
-  login(login, password) {
+  authorization(login, password) {
     const options = { login, password }
     return http(
       'http://localhost:8081/common/sign-in',
       'POST',
       options
+    )
+  },
+  getInfo(login) {
+    const options = { login }
+
+    return http(
+      'http://localhost:8081/users/get-info',
+      'POST',
+      options,
     )
   },
 }

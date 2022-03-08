@@ -1,12 +1,15 @@
 import LoginForm from './loginForm'
 import { connect } from 'react-redux'
-import { loginThunk, toggleIsFetching } from '../../redux/authReducer'
+import { authorizationThunk, toggleIsFetching } from '../../redux/authReducer'
+import {Navigate} from "react-router-dom";
 
 const Login = (props) => {
   const onSubmit = (formData) => {
-    props.loginThunk(formData.login, formData.password)
+    props.authorizationThunk(formData.login, formData.password)
   }
-
+  if(props.isAuth) {
+    return <Navigate to='/main'/>
+  }
   return (
     <LoginForm onSubmit={onSubmit} isFetching={props.isFetching} />
   )
@@ -17,6 +20,6 @@ const mapStateToProps = (state) => ({
 })
 
 export default connect(mapStateToProps, {
-  loginThunk,
+  authorizationThunk,
   toggleIsFetching,
 })(Login)
