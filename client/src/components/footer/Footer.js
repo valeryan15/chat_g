@@ -3,11 +3,11 @@ import {Link} from "react-router-dom";
 const Footer = () => {
     return (
       <div className="absolute bottom-0">
-        <div className="ml-28">
+        <div className="ml-24">
           <span>
-            <Link to={'/settings'}>A</Link>
+            <Link to={'/users'}>A</Link>
           </span>
-          <span className="mx-4">
+          <span className="mx-8">
             <Link to={'/chats'}>B</Link>
           </span>
           <span>
