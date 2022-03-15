@@ -1,42 +1,48 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 const ProfileData = (props) => {
-  let newNameDataBody = props.newNameDataText
-  let newPhoneDataBody = props.newPhoneDataText
+  let [newName = '', setNewName] = useState(props.newName)
+  let [newPhone = '', setNewPhone] = useState(props.newPhone)
 
   const sendProfileData = () => {
-    props.sendProfileData()
-    props.sendPhoneData()
+    props.sendName(newName)
+    props.sendPhone(newPhone)
   }
 
-  const onChangeNameData = (e) => {
-    let nameBody = e.target.value
-    props.onChangeNameData(nameBody)
+  const onChangeName = (e) => {
+    setNewName(e.target.value)
   }
-  const onChangePhoneData = (e) => {
-    let phoneBody = e.target.value
-    props.onChangePhoneData(phoneBody)
+  const onChangePhone = (e) => {
+    setNewPhone(e.target.value)
   }
+
   return (
-    <div className="relative w-full h-full mt-12">
-      <div className="text-center">
-        <textarea
-          onChange={onChangeNameData}
-          value={newNameDataBody}
-          className="m-2 rounded-lg h-8 w-1/3"
-          placeholder="Введите имя и фамилию"
-        />
-      </div>
-      <div className="text-center">
-        <textarea
-          value={newPhoneDataBody}
-          onChange={onChangePhoneData}
-          className="m-2 rounded-lg h-8 w-1/3"
-          placeholder="Введите номер телефона"
-        />
-      </div>
-      <div className="text-center">
-        <button onClick={sendProfileData}>сохранить</button>
+    <div className="relative w-full h-full mt-4 ">
+      <div className='bg-gray-200 dark:bg-gray-600 transition duration-1000 table m-0 m-auto w-1/3 p-4 rounded-lg '>
+        <div className="text-center">
+          <input
+            onChange={onChangeName}
+            value={newName}
+            className="my-2 rounded-lg h-8 w-full border border-black"
+            placeholder="Введите имя и фамилию"
+          />
+        </div>
+        <div className="text-center">
+          <input
+            value={newPhone}
+            onChange={onChangePhone}
+            className="my-2 rounded-lg h-8 w-full border border-black"
+            placeholder="Введите номер телефона"
+          />
+        </div>
+        <div className="text-center">
+          <button
+            className=" py-2 px-8 text-center transition duration-1000 text-black dark:text-white"
+            onClick={sendProfileData}
+          >
+            сохранить
+          </button>
+        </div>
       </div>
     </div>
   )

@@ -11,8 +11,8 @@ class NavSettingsContainer extends React.Component {
 
 const mapStateToProps = (state) => ({
   login: state.auth.login,
-  nameData: state.settings.nameData,
-  phoneData: state.settings.phoneData,
+  nameData: state.settings.settingsNamePhone.nameData,
+  phoneData: state.settings.settingsNamePhone.phoneData,
 })
 
 export default connect(mapStateToProps)(NavSettingsContainer)

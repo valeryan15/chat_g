@@ -1,7 +1,7 @@
 import ProfileData from "./ProfileData";
 import {connect} from "react-redux";
 import React from "react";
-import {phoneDataAC, profileDataAC, updatePhoneDataAC, updateProfileDataAC} from "../../../redux/settingsReducer";
+import {phoneDataAC, profileDataAC,} from "../../../redux/settingsReducer";
 
 class ProfileDataContainer extends React.Component {
   render() {
@@ -10,22 +10,16 @@ class ProfileDataContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  newNameDataText: state.settings.newNameDataText,
-  newPhoneDataText: state.settings.newPhoneDataText
+  newName: state.settings.newName,
+  newPhone: state.settings.newPhone
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  onChangeNameData: (body) => {
-    dispatch(updateProfileDataAC(body))
+  sendName: (newName) => {
+    dispatch(profileDataAC(newName))
   },
-  sendProfileData: (profileData) => {
-    dispatch(profileDataAC(profileData))
-  },
-  sendPhoneData: (phoneData) => {
-    dispatch(phoneDataAC(phoneData))
-  },
-  onChangePhoneData: (body) => {
-    dispatch(updatePhoneDataAC(body))
+  sendPhone: (newPhone) => {
+    dispatch(phoneDataAC(newPhone))
   },
 })
 
