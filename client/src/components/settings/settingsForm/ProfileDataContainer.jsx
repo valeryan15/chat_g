@@ -10,8 +10,8 @@ class ProfileDataContainer extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  newName: state.settings.newName,
-  newPhone: state.settings.newPhone
+  nameData: state.settings.nameData,
+  phoneData: state.settings.phoneData
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -7,8 +7,6 @@ const MainWindowContainer = (props) => {
     <MainWindow {...props} />
   )
 }
-const mapStateToProps = (state) => ({
-  mainWindowBackgroundColor: state.settings.mainWindowBackgroundColor,
-  textColor: state.settings.textColor,
+const mapStateToProps = () => ({
 })
 export default connect(mapStateToProps)(MainWindowContainer)

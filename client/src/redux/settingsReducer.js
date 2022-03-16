@@ -38,7 +38,6 @@ const settingsReducer = (state = initialState, action) => {
         settingsNamePhone: {
           ...state.settingsNamePhone,
           phoneData: action.newPhone,
-          // newPhone: '',
         },
       }
     default:
