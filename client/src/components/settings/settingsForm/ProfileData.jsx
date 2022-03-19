@@ -1,14 +1,13 @@
 import React, { useState } from 'react'
 
 const ProfileData = (props) => {
-  let [newName = '', setNewName] = useState(props.nameData)
-  let [newPhone = '', setNewPhone] = useState(props.phoneData)
+  let [newName = '', setNewName] = useState(props.name)
+  let [newPhone = '', setNewPhone] = useState(props.phone)
 
   const sendProfileData = () => {
-    props.sendName(newName)
-    props.sendPhone(newPhone)
-    setNewName(newName = '')
-    setNewPhone(newPhone = '')
+    props.sendNamePhone(newName, newPhone)
+    setNewName(props.name)
+    setNewPhone(props.phone)
   }
 
   const onChangeName = (e) => {

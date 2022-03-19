@@ -1,10 +1,11 @@
 import {useEffect, useState} from "react";
+import {TypesTheme} from "./constants";
 
 
 export const useDarkMode = () => {
-  const [theme, setTheme] = useState('light')
+  const [theme, setTheme] = useState(TypesTheme.Light)
 
-  const colorTheme = theme === 'dark' ? 'light' : 'dark'
+  const colorTheme = theme === TypesTheme.Dark ? TypesTheme.Light : TypesTheme.Dark
 
   useEffect( () => {
     const root = window.document.documentElement

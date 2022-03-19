@@ -11,7 +11,7 @@ const SettingsWindow = () => {
       </div>
       <div className="bg-white transition duration-1000 dark:bg-gray-600 w-full h-full">
         <Routes>
-          <Route path="/profileData" element={<ProfileDataContainer />} />
+          <Route path="/profile" element={<ProfileDataContainer />} />
         </Routes>
       </div>
     </div>

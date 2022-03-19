@@ -5,12 +5,11 @@ import SettingsWindow from './components/settings/settingsWindow'
 import { ToastContainer, Zoom } from 'react-toastify'
 import HeaderContainer from './components/header/HeaderContainer'
 import 'react-toastify/dist/ReactToastify.css'
-import Footer from "./components/footer/Footer";
-import MainWindowContainer from "./components/mainWindow/MainWindowContainer";
+import MainWindow from "./components/mainWindow/MainWindow";
 
 const App = () => {
   return (
-    <div className="App">
+    <div className="min-h-full flex flex-col">
       <ToastContainer
         draggable={false}
         transition={Zoom}
@@ -18,13 +17,15 @@ const App = () => {
       />
       <BrowserRouter>
         <HeaderContainer />
-        <Routes>
-          <Route path="/auth" element={<Auth />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/settings/*" element={<SettingsWindow />} />
-          <Route path="/main/*" element={<MainWindowContainer />} />
-        </Routes>
-        <Footer/>
+        <div className='flex-auto'>
+          <Routes>
+            <Route path="/auth" element={<Auth />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/settings/*" element={<SettingsWindow />} />
+            <Route path="/main/*" element={<MainWindow />} />
+          </Routes>
+        </div>
+        {/*<Footer />*/}
       </BrowserRouter>
     </div>
   )

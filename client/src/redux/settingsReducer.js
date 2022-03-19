@@ -1,43 +1,32 @@
-const SET_NAME_DATA = 'SET_NAME_DATA'
-const SET_PHONE_DATA = 'SET_PHONE_DATA'
+const SET_NAME_PHONE = 'SET_NAME_PHONE'
 
 const initialState = {
   settingsNamePhone: {
-    nameData: '',
-    phoneData: '',
+    name: '',
+    phone: '',
   },
-  login: '',
-  id: '',
+  login: "valeryan15",
+  id: 1,
   settings: {
-    theme: {
-      id: '',
-      name: 'darkTheme',
-    },
-  },
-  chats: [
-    {
-      id: '',
-      name: '',
-    },
-  ],
+    theme: "light",
+    chats: [
+      {
+        id: 1,
+        name: "nene"
+      }
+    ]
+  }
 }
 
 const settingsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SET_NAME_DATA:
+    case SET_NAME_PHONE:
       return {
         ...state,
         settingsNamePhone: {
           ...state.settingsNamePhone,
-          nameData: action.newName,
-        },
-      }
-    case SET_PHONE_DATA:
-      return {
-        ...state,
-        settingsNamePhone: {
-          ...state.settingsNamePhone,
-          phoneData: action.newPhone,
+          name: action.newName,
+          phone: action.newPhone
         },
       }
     default:
@@ -45,13 +34,10 @@ const settingsReducer = (state = initialState, action) => {
   }
 }
 
-export const profileDataAC = (newName) => ({
-  type: SET_NAME_DATA,
-  newName,
+export const namePhoneChangeAC = (newName, newPhone) => ({
+  type: SET_NAME_PHONE,
+  newName, newPhone
 })
-export const phoneDataAC = (newPhone) => ({
-  type: SET_PHONE_DATA,
-  newPhone,
-})
+
 
 export default settingsReducer
