@@ -4,6 +4,10 @@ const fileActiveUsers = 'active-users.txt'
 
 let ActiveUsers = []
 async function addActiveUser(user) {
+  const isUserFound = ActiveUsers.map(u => u.id === user.id)
+  if (Boolean(isUserFound)) {
+    ActiveUsers = ActiveUsers.filter((u) => u.id !== user.id)
+  }
   ActiveUsers = [...ActiveUsers, user]
   await writeFileActiveUser(ActiveUsers)
   return true
