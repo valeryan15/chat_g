@@ -1,37 +1,12 @@
 import express, { Router } from 'express'
 import db, { DatabaseUrlSettings } from '../database'
-import { tokenKey } from '../constants'
-import jwt from 'jsonwebtoken'
-import { getActiveUserById } from '../realtime-data/active-users'
 import { body, validationResult } from 'express-validator'
+import authMiddleware from '../middleware/auth.middleware'
 
 const router = Router()
 
 router.use(express.json())
-router.use((req, res, next) => {
-  if (req.headers.authorization) {
-    jwt.verify(
-      req.headers.authorization.split(' ')[1],
-      tokenKey,
-      (err, payload) => {
-        if (err) {
-          return res.status(401).json({ message: 'Not authorized' })
-        } else if (payload) {
-          const activeUser = getActiveUserById(payload.id)
-          if (activeUser) {
-            req.user = activeUser
-            next()
-          }
-
-          if (!req.user)
-            return res.status(401).json({ message: 'Not authorized' })
-        }
-      }
-    )
-  } else {
-    next()
-  }
-})
+router.use(authMiddleware)
 /**
  * @openapi
  * /settings/update-theme:
@@ -86,7 +61,6 @@ router.post(
       ...snapshot.val(),
       theme: req.body.theme,
     }
-    console.log(settings)
     await ref.update(settings)
     return res.status(200).json(settings)
   }
