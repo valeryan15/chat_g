@@ -180,7 +180,7 @@ router.post(
       login: user.login,
       token: token,
     }
-    addActiveUser(userAuth)
+    await addActiveUser(userAuth)
     return res.status(200).json(userAuth)
   }
 )

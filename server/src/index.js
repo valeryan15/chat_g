@@ -6,6 +6,7 @@ import routes from './routes'
 import swaggerSpec from './OpenAPISpecification'
 import bodyParser from "body-parser"
 import swaggerUi from 'swagger-ui-express'
+import { readFileActiveUsers } from './realtime-data/active-users'
 
 const { PORT } = process.env
 const app = express()
@@ -26,7 +27,9 @@ app.get('/', (req, res) => {
 });
 
 
-server.listen(PORT, () =>
-  console.log(`Example app listening on port http://localhost:${PORT}`),
+server.listen(PORT, async () => {
+    await readFileActiveUsers()
+    console.log(`Example app listening on port http://localhost:${PORT}`)
+  },
 );
 
