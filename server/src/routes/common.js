@@ -1,4 +1,4 @@
-import db from '../database'
+import db, { DatabaseUrlSettings, DatabaseUrlUsers } from '../database'
 import { Router } from 'express'
 import { body, validationResult } from 'express-validator'
 import { v4 as uuidv4 } from 'uuid'
@@ -6,9 +6,9 @@ import { ServerError } from '../models/ServerError'
 import jwt from 'jsonwebtoken'
 import { tokenKey } from '../constants'
 import { addActiveUser } from '../realtime-data/active-users'
+import { ThemeTypes } from '../constants/theme.constant'
 
 const router = Router()
-const DatabaseUrlUsers = 'server/users'
 
 /**
  * @openapi
@@ -88,14 +88,22 @@ router.post(
       return res.status(400).json({ errors: errors.array() })
     }
     const ref = db.ref(DatabaseUrlUsers)
+    const refSetting = db.ref(DatabaseUrlSettings)
+    const settings = {
+      id: uuidv4(),
+      theme: ThemeTypes.Light,
+      name: '',
+      phone: ''
+    }
     const user = {
       login: req.body.login,
       password: req.body.password,
       id: uuidv4(),
+      id_settings: settings.id
     }
 
     await ref.child(user.login).set(user)
-
+    await refSetting.child(settings.id).set(settings)
     return res.status(200).json(user)
   }
 )

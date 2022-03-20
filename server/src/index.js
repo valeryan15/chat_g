@@ -20,6 +20,7 @@ app.use(bodyParser.json({type: 'application/json'}))
 app.use(cors())
 app.use('/users', routes.user)
 app.use('/common', routes.common)
+app.use('/settings', routes.setting)
 
 
 app.get('/', (req, res) => {
