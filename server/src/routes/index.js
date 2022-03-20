@@ -1,7 +1,9 @@
-import user from './user';
+import user from './user'
 import common from './common'
+import setting from './setting'
 
 export default {
   user,
-  common
+  common,
+  setting,
 }
