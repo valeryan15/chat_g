@@ -1,10 +1,8 @@
 import express, { Router } from 'express'
-import db from '../database'
-import { tokenKey } from '../constants'
-import jwt from 'jsonwebtoken'
-import { getActiveUserById } from '../realtime-data/active-users'
+import db, { DatabaseUrlSettings, DatabaseUrlUsers } from '../database'
+import { removeActiveUser } from '../realtime-data/active-users'
+import authMiddleware from '../middleware/auth.middleware'
 
-const DatabaseUrlUsers = 'server/users'
 const router = Router()
 //TODO удалить дублирование
 // const schema = checkSchema({
@@ -29,57 +27,46 @@ const router = Router()
 //   }
 // })
 router.use(express.json())
-router.use((req, res, next) => {
-  if (req.headers.authorization) {
-    jwt.verify(
-      req.headers.authorization.split(' ')[1],
-      tokenKey,
-      (err, payload) => {
-        if (err) next()
-        else if (payload) {
-          const activeUser = getActiveUserById(payload.id)
-          if (activeUser) {
-            req.user = activeUser
-            next()
-          }
-
-          if (!req.user) next()
-        }
-      }
-    )
-  } else {
-    next()
-  }
-})
+router.use(authMiddleware)
 
 /**
  * @openapi
  * /users:
- *   get:
+ *   post:
  *     description: Получение списка пользователей
  *     responses:
  *       200:
- *         description: Returns a mysterious string.
+ *         description: Список пользователей.
+ *         content:
+ *          application/json:
+ *            schema:
+ *              type: array
+ *              items:
+ *                type: object
+ *                properties:
+ *                  id:
+ *                    type: string
+ *                    description: ID пользователя.
+ *                  login:
+ *                    type: string
+ *                    description: Логин пользователя.
  */
-router.get('/', async (req, res) => {
+router.post('/', async (req, res) => {
   const ref = db.ref(DatabaseUrlUsers)
   let snapshot = await ref.once('value')
   const users = snapshot.val() ? Object.values(snapshot.val()) : []
-  return res.status(200).json(users)
+  return res.status(200).json(users.map(user => {
+    return {
+      id: user.id,
+      login: user.login
+    }
+  }))
 })
-
 /**
  * @openapi
- * /users/get-info:
+ * /users/get-user:
  *   post:
- *     parameters:
- *         - in: path
- *           name: login
- *           schema:
- *             type: string
- *           required: true
- *           description: Numeric ID of the user to get
- *     description: Получение пользователя по логину
+ *     description: Получение данных пользователя
  *     responses:
  *       200:
  *         description: Возвращает обект пользователя.
@@ -94,15 +81,62 @@ router.get('/', async (req, res) => {
  *                   login:
  *                     type: string
  *                     description: логин.
+ *                   settings:
+ *                     type: object
+ *                     properties:
+ *                       id:
+ *                         type: string
+ *                         description: ID настроек.
+ *                       name:
+ *                         type: string
+ *                         description: ФИО пользователя.
+ *                       phone:
+ *                         type: string
+ *                         description: Телефон пользователя.
+ *                       theme:
+ *                         type: string
+ *                         description: тема.
+ *
  */
-router.post('/get-info', async (req, res) => {
-  if (!req.user)
-    return res.status(401).json({ message: 'Not authorized' })
-  const ref = db.ref(`${DatabaseUrlUsers}/${req.body.login}`)
+router.post('/get-user', async (req, res) => {
+  const ref = db.ref(`${DatabaseUrlUsers}`)
+  const currentUser = req.user
   let snapshot = await ref.once('value')
-  const user = snapshot.val()
-  delete user.password
-  return res.status(200).json(user)
+  const users = snapshot.val() ? Object.values(snapshot.val()) : []
+  let user = users.find(u => u.id === currentUser.id)
+  if (user) {
+    const refSettings = db.ref(`${DatabaseUrlSettings}/${user.id_settings}`)
+    // const refUserChats = db.ref(`${DatabaseUrlUserChats}/${user.id}`)
+    let snapshotSetting = await refSettings.once('value')
+    let settings = snapshotSetting.val()
+    user = {
+      id: user.id,
+      login: user.login,
+      settings,
+      chats: []
+    }
+  }
+  return res.status(200).json({ user })
+})
+/**
+ * @openapi
+ * /users/logout:
+ *   post:
+ *     description: выход пользователя
+ *     responses:
+ *       200:
+ *         description: возвращает сообщение.
+ *         content:
+ *             application/json:
+ *               schema:
+ *                 type: object
+ *                 properties:
+ *                   message:
+ *                     type: string
+ */
+router.post('/logout', async (req, res) => {
+  await removeActiveUser(req.user)
+  return res.status(200).json({ message: 'ok' })
 })
 
 export default router
