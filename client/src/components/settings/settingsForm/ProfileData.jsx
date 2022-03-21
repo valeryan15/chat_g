@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 
 const ProfileData = (props) => {
-  let [newName = '', setNewName] = useState(props.name)
-  let [newPhone = '', setNewPhone] = useState(props.phone)
+  let [newName, setNewName] = useState(props.name || '')
+  let [newPhone, setNewPhone] = useState(props.phone || '')
+
+  const clearForm = () => {
+    setNewName('')
+    setNewPhone('')
+  }
 
   const sendProfileData = () => {
     props.sendNamePhone(newName, newPhone)
-    setNewName(props.name)
-    setNewPhone(props.phone)
+    clearForm()
   }
 
   const onChangeName = (e) => {
@@ -19,7 +23,7 @@ const ProfileData = (props) => {
 
   return (
     <div className="relative w-full h-full mt-4 ">
-      <div className='bg-gray-200 dark:bg-gray-600 transition duration-1000 table m-0 m-auto w-1/3 p-4 rounded-lg '>
+      <div className="bg-gray-200 dark:bg-gray-600 transition duration-1000 table m-0 m-auto w-1/3 p-4 rounded-lg ">
         <div className="text-center">
           <input
             onChange={onChangeName}

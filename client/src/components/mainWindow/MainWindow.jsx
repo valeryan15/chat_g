@@ -1,8 +1,7 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
 import Dialog from '../dialogs/Dialog'
-import MessageContainer from "../dialogs/MessageContainer";
-
+import MessageContainer from '../dialogs/MessageContainer'
 
 const MainWindow = () => {
   return (

@@ -1,7 +1,7 @@
 import ProfileData from './ProfileData'
 import { connect } from 'react-redux'
 import React from 'react'
-import { namePhoneChangeAC } from '../../../redux/settingsReducer'
+import { namePhoneChangeAction } from '../../../redux/settingsReducer'
 
 class ProfileDataContainer extends React.Component {
   render() {
@@ -16,7 +16,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   sendNamePhone: (newName, newPhone) => {
-    dispatch(namePhoneChangeAC(newName, newPhone))
+    dispatch(namePhoneChangeAction(newName, newPhone))
   },
 })
 

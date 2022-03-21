@@ -34,9 +34,10 @@ const settingsReducer = (state = initialState, action) => {
   }
 }
 
-export const namePhoneChangeAC = (newName, newPhone) => ({
+export const namePhoneChangeAction = (newName, newPhone) => ({
   type: SET_NAME_PHONE,
-  newName, newPhone
+  newName,
+  newPhone,
 })
 
 

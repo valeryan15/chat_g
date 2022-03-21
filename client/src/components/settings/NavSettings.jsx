@@ -29,7 +29,9 @@ const NavSettings = (props) => {
         </div>
       </Link>
       <div className="flex-auto">
-
+        <Link to='/settings/theme'>
+            <div className=' text-center mt-4'>Theme</div>
+        </Link>
       </div>
       <Footer />
     </div>

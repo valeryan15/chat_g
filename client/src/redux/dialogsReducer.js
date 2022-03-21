@@ -25,7 +25,7 @@ const dialogsReducer = (state = initialState, action) => {
   }
 }
 
-export const newMessageAC = (message) => ({
+export const newMessageAction = (message) => ({
   type: SET_MESSAGE,
   message,
 })
