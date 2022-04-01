@@ -6,12 +6,12 @@ import Footer from '../footer/Footer'
 const NavSettings = (props) => {
   return (
     <div className="min-h-full flex flex-col">
-      <Link to={'/settings/profile'}>
-        <div className="min-h-0 m-4 bg-gray-200 rounded-lg transition duration-1000 dark:bg-gray-600">
-          <div className="flex justify-between">
+      <div className="editButton">
+        <Link to={'/settings/profile'}>
+          <div className="flex">
             <img
               src={profileAvatar}
-              className="w-20 h-20 rounded-full ml-4 "
+              className="w-20 h-20 rounded-full mx-4 "
               alt="profileImage"
             />
             <ul>
@@ -26,11 +26,24 @@ const NavSettings = (props) => {
               </li>
             </ul>
           </div>
-        </div>
-      </Link>
+        </Link>
+      </div>
+
       <div className="flex-auto">
-        <Link to='/settings/theme'>
-            <div className=' text-center mt-4'>Theme</div>
+        <Link to="/settings/theme">
+          <div className="h-8 text-center mt-4 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-200 dark:text-white transition duration-1000 border-y-2 mx-4 border-slate-200">
+            Theme
+          </div>
+        </Link>
+        <Link to="">
+          <div className="h-8 text-center mt-4 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-200 dark:text-white transition duration-1000 border-y-2 mx-4 border-slate-200">
+            Еще что-то
+          </div>
+        </Link>
+        <Link to="">
+          <div className="h-8 text-center mt-4 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-200 dark:text-white transition duration-1000 border-y-2 mx-4 border-slate-200">
+            И еще что-то
+          </div>
         </Link>
       </div>
       <Footer />

@@ -1,9 +1,20 @@
 import React from 'react'
-
 import TypeTheme from './TypeTheme'
+import {updateThemeThunk} from "../../redux/settingsReducer";
+import {connect} from "react-redux";
+
 
 const TypeThemeContainer = (props) => {
-  return <TypeTheme {...props} />
+  const sendTheme = ( theme) => {
+    props.updateThemeThunk(props.id, theme)
+  }
+  return <TypeTheme sendTheme = {sendTheme} {...props} />
 }
 
-export default TypeThemeContainer
+const mapStateToProps = (state) => ({
+  id: state.settings.settings.id
+})
+
+
+
+export default connect(mapStateToProps, {updateThemeThunk})(TypeThemeContainer)

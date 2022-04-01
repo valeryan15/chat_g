@@ -1,13 +1,17 @@
 import React from 'react'
 import NavSettingsContainer from './NavSettingsContainer'
-import { Route, Routes } from 'react-router-dom'
+import {Navigate, Route, Routes} from 'react-router-dom'
 import ProfileDataContainer from './settingsForm/ProfileDataContainer'
 import TypeThemeContainer from "../theme/TypeThemeContainer";
+import {connect} from "react-redux";
 
-const SettingsWindow = () => {
+const SettingsWindow = (props) => {
+  if(!props.isToken) {
+    return <Navigate to='/login' />
+  }
   return (
     <div className="flex h-full absolute w-full">
-      <div className="w-1/4 bg-gray-200 border-r-2 border-slate-200 transition duration-1000 dark:bg-gray-600 h-full">
+      <div className=" min-w-[400px] bg-white border-r-2 border-slate-200 transition duration-1000 dark:bg-gray-600 h-full">
         <div>
           <NavSettingsContainer />
         </div>
@@ -21,5 +25,7 @@ const SettingsWindow = () => {
     </div>
   )
 }
-
-export default SettingsWindow
+const mapStateToProps = (state) => ({
+  isToken: state.settings.isToken
+})
+export default connect(mapStateToProps) (SettingsWindow)

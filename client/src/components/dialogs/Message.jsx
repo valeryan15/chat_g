@@ -3,15 +3,16 @@ import WroteMessage from './WroteMessage'
 
 const Message = (props) => {
   let state = props.dialogsPage
+
   let [newMessage, setMessage] = useState(() => {
     if (state.chats.length) {
-      return state.chats[0].message || ''
+      return state.chats.message || ''
     }
     return ''
   })
   const sendMessage = () => {
     props.sendMessage(newMessage)
-    setMessage(state.chats[0].message)
+    setMessage('')
   }
 
   const onMessageChange = (e) => {
@@ -23,14 +24,14 @@ const Message = (props) => {
   ))
   return (
     <div className="min-h-full flex flex-col">
-      <div className="dark:text-white transition duration-1000 w-full min-h-0 border-r-2 border-b-2 border-slate-200 ">
+      <div className="dark:text-white transition duration-1000 w-full min-h-0 border-r-2 border-b-2 border-slate-200 text-center ">
         header
       </div>
       <div className="dark:text-white flex-auto transition duration-1000 ">
         <div className="ml-24 bg-gray-200 w-1/3 my-4 p-2 rounded-lg dark:bg-black">
           message from friend
         </div>
-        <div className="float-right p-2 w-1/3 ">{messageElement}</div>
+        <div className="float-right w-1/3 ">{messageElement}</div>
       </div>
       <div className="dark:text-white mb-12 flex transition duration-1000">
         <textarea

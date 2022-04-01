@@ -1,26 +1,19 @@
 import ProfileData from './ProfileData'
 import { connect } from 'react-redux'
 import React from 'react'
-import { namePhoneChangeAction } from '../../../redux/settingsReducer'
+import { updateInfoThunk } from '../../../redux/settingsReducer'
 
-class ProfileDataContainer extends React.Component {
-  render() {
-    return <ProfileData {...this.props} />
+const ProfileDataContainer = (props) => {
+  const onSubmit = ( formData) => {
+    props.updateInfoThunk(props.id, formData.name, formData.phone)
   }
+  return <ProfileData onSubmit={onSubmit} {...props} />
 }
 
 const mapStateToProps = (state) => ({
-  name: state.settings.name,
-  phone: state.settings.phone,
+  id: state.settings.settings.id
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  sendNamePhone: (newName, newPhone) => {
-    dispatch(namePhoneChangeAction(newName, newPhone))
-  },
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ProfileDataContainer)
+export default connect(mapStateToProps, { updateInfoThunk })(
+  ProfileDataContainer
+)

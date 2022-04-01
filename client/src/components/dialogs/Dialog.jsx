@@ -7,7 +7,7 @@ const Dialog = () => {
   return (
     <div>
       <Link to={'/main/chatWindow'}>
-        <div className="border-b-2 dark:text-white transition duration-1000 border-slate-200 w-max h-16 ml-4 flex pt-2">
+        <div className="border-b-2 dark:text-white transition duration-1000 border-slate-200 mx-4 h-16 flex pt-2">
           <img
             src={userAvatar}
             alt="user pic"

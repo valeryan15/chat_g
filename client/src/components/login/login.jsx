@@ -14,10 +14,12 @@ const Login = (props) => {
     <LoginForm onSubmit={onSubmit} isFetching={props.isFetching} />
   )
 }
-const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth,
-  isFetching: state.auth.isFetching,
-})
+const mapStateToProps = (state) => {
+  return {
+    isAuth: state.auth.isAuth,
+    isFetching: state.auth.isFetching,
+  }
+}
 
 export default connect(mapStateToProps, {
   authorizationThunk,

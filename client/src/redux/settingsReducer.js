@@ -1,21 +1,19 @@
+import { authAPI, settingsAPI } from '../api/api'
+import { setAuthUserData, toggleIsFetching } from './authReducer'
+
 const SET_NAME_PHONE = 'SET_NAME_PHONE'
+const SET_THEME = 'SET_THEME'
+const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
+const UPDATE_USER_DATA = 'UPDATE_USER_DATA'
 
 const initialState = {
-  settingsNamePhone: {
+  settings: {
+    id: '',
     name: '',
     phone: '',
+    theme: 'light',
   },
-  login: "valeryan15",
-  id: 1,
-  settings: {
-    theme: "light",
-    chats: [
-      {
-        id: 1,
-        name: "nene"
-      }
-    ]
-  }
+  isToken: false,
 }
 
 const settingsReducer = (state = initialState, action) => {
@@ -23,16 +21,55 @@ const settingsReducer = (state = initialState, action) => {
     case SET_NAME_PHONE:
       return {
         ...state,
-        settingsNamePhone: {
-          ...state.settingsNamePhone,
+        settings: {
+          ...state.settings,
           name: action.newName,
-          phone: action.newPhone
+          phone: action.newPhone,
         },
       }
+
+    case SET_THEME:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          theme: action.theme,
+        },
+      }
+
+    case INITIALIZED_SUCCESS:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          id: action.id,
+          name: action.name,
+          phone: action.phone,
+          theme: action.theme
+        },
+        isToken: true,
+      }
+
+    case UPDATE_USER_DATA:
+      return {
+        ...state,
+        settings: {
+          ...state.settings,
+          id: action.id,
+          name: action.name,
+          phone: action.phone,
+        }
+      }
+
     default:
       return state
   }
 }
+
+export const initializedAction = (id, name, phone, theme) => ({
+  type: INITIALIZED_SUCCESS,
+  id, name, phone, theme
+})
 
 export const namePhoneChangeAction = (newName, newPhone) => ({
   type: SET_NAME_PHONE,
@@ -40,5 +77,40 @@ export const namePhoneChangeAction = (newName, newPhone) => ({
   newPhone,
 })
 
+export const themeChangeAction = (theme) => ({
+  type: SET_THEME,
+  theme,
+})
+
+export const updateUserDataAction = (id, name, phone,) => ({
+  type: UPDATE_USER_DATA,
+  id, name, phone,
+})
+
+export const updateInfoThunk = (id, name, phone) => (dispatch) => {
+  settingsAPI.updateInfo(id, name, phone).then((response) => {
+      let { name, phone } = response
+      dispatch(updateUserDataAction( name, phone))
+    dispatch(namePhoneChangeAction( name, phone))
+  })
+}
+
+export const updateThemeThunk = (id, theme) => (dispatch) => {
+  settingsAPI.updateTheme(id, theme).then(() => {
+    dispatch(themeChangeAction(theme))
+  })
+}
+
+export const getUserThunk = () => (dispatch) => {
+  console.log('попали в getInfo')
+  authAPI.getUser().then((response) => {
+    console.log(response)
+    let { login } = response.user
+    let {id, name, phone, theme} = response.user.settings
+    dispatch(initializedAction(id, name, phone, theme))
+    dispatch(setAuthUserData(login, true))
+    dispatch(toggleIsFetching(false))
+  })
+}
 
 export default settingsReducer

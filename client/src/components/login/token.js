@@ -1,3 +1,5 @@
+import React from "react";
+
 export const setToken = (token) => {
   localStorage.setItem('token', token)
 }
@@ -10,3 +12,8 @@ export const getToken = () => {
     return ''
   }
 }
+
+export const removeToken = () => {
+  localStorage.removeItem('token')
+}
+
