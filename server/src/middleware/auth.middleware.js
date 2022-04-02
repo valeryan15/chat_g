@@ -23,7 +23,7 @@ async function authMiddleware(req, res, next) {
       }
     )
   } else {
-    next()
+    return res.status(401).json({ message: 'Not authorized' })
   }
 }
 
