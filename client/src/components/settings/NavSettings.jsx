@@ -14,11 +14,11 @@ const NavSettings = (props) => {
               className="w-20 h-20 rounded-full mx-4 "
               alt="profileImage"
             />
-            <ul>
-              <li className="text-black transition duration-1000 dark:text-white text-center pr-8">
+            <ul className='ml-8'>
+              <li className="text-black transition duration-1000 dark:text-white pr-8">
                 {props.name}
               </li>
-              <li className="text-black transition duration-1000 dark:text-white text-center pr-8">
+              <li className="text-black transition duration-1000 dark:text-white pr-8">
                 {props.phone}
               </li>
               <li className="text-black transition duration-1000 dark:text-white pr-8">

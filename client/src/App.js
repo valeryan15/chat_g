@@ -1,29 +1,30 @@
 import Login from './components/login/login'
 import Auth from './authorization/Auth'
-import {
-  BrowserRouter,
-  Route,
-  Routes,
-} from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import SettingsWindow from './components/settings/settingsWindow'
 import { ToastContainer, Zoom } from 'react-toastify'
 import HeaderContainer from './components/header/HeaderContainer'
 import 'react-toastify/dist/ReactToastify.css'
 import MainWindow from './components/mainWindow/MainWindow'
-import { Component } from 'react'
+import { useContext, useEffect } from 'react'
 import { connect } from 'react-redux'
-import UsersContainer from "./components/users/usersContainer";
-import {getUserThunk} from "./redux/settingsReducer";
+import UsersContainer from './components/users/usersContainer'
+import { initializeApp } from './redux/appReducer'
+import { ThemeContext } from './contexts/themeContext'
 
+const App = (props) => {
+  useEffect(() => {
+    props.initializeApp()
+  }, [])
 
-class App extends Component {
-  componentDidMount() {
-    this.props.getUserThunk()
-  }
-  render() {
+  const themeStore = useContext(ThemeContext)
+  const classes = `min-h-full flex flex-col ${themeStore.theme}`
+
+  if (!props.initialized) {
+    return <span>loading...</span>
+  } else {
     return (
-      <div className="min-h-full flex flex-col">
-
+      <div className={classes}>
         <ToastContainer
           draggable={false}
           transition={Zoom}
@@ -50,7 +51,8 @@ class App extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  isToken: state.settings.isToken,
+  theme: state.settings.settings.theme,
+  initialized: state.app.initialized,
 })
 
-export default connect(mapStateToProps, { getUserThunk })(App)
+export default connect(mapStateToProps, { initializeApp })(App)

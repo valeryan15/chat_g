@@ -6,20 +6,19 @@ import { getUsersThunk } from '../../redux/usersReducer'
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    getUsersThunk()
+    this.props.getUsersThunk()
   }
 
   render() {
-    if (!this.props.isToken) {
+    if (!this.props.isAuth) {
       return <Navigate to="/login" />
     }
-
     return <Users {...this.props} />
   }
 }
 const mapStateToProps = (state) => ({
-  isToken: state.settings.isToken,
+  isAuth: state.auth.isAuth,
   users: state.users.users,
 })
 
-export default connect(mapStateToProps)(UsersContainer)
+export default connect(mapStateToProps, {getUsersThunk})(UsersContainer)

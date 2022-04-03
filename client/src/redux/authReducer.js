@@ -1,8 +1,9 @@
 import { authAPI } from '../api/api'
 import { removeToken, setToken } from '../components/login/token'
-import {getUserThunk} from "./settingsReducer";
+import { getUserThunk } from './settingsReducer'
 const SET_USER_DATA = 'SET_USER_DATA'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
+const TOGGLE_IS_AUTH = 'TOGGLE_IS_AUTH'
 
 const initialState = {
   userId: null,
@@ -23,6 +24,11 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
       }
+    case TOGGLE_IS_AUTH:
+      return {
+        ...state,
+        isAuth: action.isAuth,
+      }
 
     default:
       return state
@@ -37,6 +43,10 @@ export const setAuthUserData = (login, isAuth) => ({
 export const toggleIsFetching = (isFetching) => ({
   type: TOGGLE_IS_FETCHING,
   isFetching,
+})
+export const toggleIsAuth = (isAuth) => ({
+  type: TOGGLE_IS_AUTH,
+  isAuth,
 })
 
 export const authorizationThunk = (login, password) => (dispatch) => {
@@ -59,7 +69,8 @@ export const logoutThunk = () => (dispatch) => {
   })
 }
 
-export const registrationThunk = (login, password, passwordConfirmation) => (dispatch) => {
+export const registrationThunk =
+  (login, password, passwordConfirmation) => (dispatch) => {
     dispatch(toggleIsFetching(true))
     authAPI
       .registration(login, password, passwordConfirmation)

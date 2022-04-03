@@ -1,4 +1,3 @@
-import React from "react";
 
 export const setToken = (token) => {
   localStorage.setItem('token', token)

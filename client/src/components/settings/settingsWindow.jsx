@@ -6,7 +6,7 @@ import TypeThemeContainer from "../theme/TypeThemeContainer";
 import {connect} from "react-redux";
 
 const SettingsWindow = (props) => {
-  if(!props.isToken) {
+  if(!props.isAuth) {
     return <Navigate to='/login' />
   }
   return (
@@ -26,6 +26,6 @@ const SettingsWindow = (props) => {
   )
 }
 const mapStateToProps = (state) => ({
-  isToken: state.settings.isToken
+  isAuth: state.auth.isAuth
 })
 export default connect(mapStateToProps) (SettingsWindow)

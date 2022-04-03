@@ -1,5 +1,5 @@
 import { authAPI, settingsAPI } from '../api/api'
-import { setAuthUserData, toggleIsFetching } from './authReducer'
+import { setAuthUserData } from './authReducer'
 
 const SET_NAME_PHONE = 'SET_NAME_PHONE'
 const SET_THEME = 'SET_THEME'
@@ -11,10 +11,11 @@ const initialState = {
     id: '',
     name: '',
     phone: '',
-    theme: 'light',
+    theme: '',
   },
-  isToken: false,
 }
+
+
 
 const settingsReducer = (state = initialState, action) => {
   switch (action.type) {
@@ -40,14 +41,7 @@ const settingsReducer = (state = initialState, action) => {
     case INITIALIZED_SUCCESS:
       return {
         ...state,
-        settings: {
-          ...state.settings,
-          id: action.id,
-          name: action.name,
-          phone: action.phone,
-          theme: action.theme
-        },
-        isToken: true,
+        ...action.state,
       }
 
     case UPDATE_USER_DATA:
@@ -55,7 +49,6 @@ const settingsReducer = (state = initialState, action) => {
         ...state,
         settings: {
           ...state.settings,
-          id: action.id,
           name: action.name,
           phone: action.phone,
         }
@@ -66,9 +59,9 @@ const settingsReducer = (state = initialState, action) => {
   }
 }
 
-export const initializedAction = (id, name, phone, theme) => ({
+export const initializedAction = (state) => ({
   type: INITIALIZED_SUCCESS,
-  id, name, phone, theme
+  state,
 })
 
 export const namePhoneChangeAction = (newName, newPhone) => ({
@@ -82,9 +75,9 @@ export const themeChangeAction = (theme) => ({
   theme,
 })
 
-export const updateUserDataAction = (id, name, phone,) => ({
+export const updateUserDataAction = ( name, phone,) => ({
   type: UPDATE_USER_DATA,
-  id, name, phone,
+   name, phone,
 })
 
 export const updateInfoThunk = (id, name, phone) => (dispatch) => {
@@ -96,6 +89,7 @@ export const updateInfoThunk = (id, name, phone) => (dispatch) => {
 }
 
 export const updateThemeThunk = (id, theme) => (dispatch) => {
+  console.log('updateThemeThunk', theme)
   settingsAPI.updateTheme(id, theme).then(() => {
     dispatch(themeChangeAction(theme))
   })
@@ -103,13 +97,10 @@ export const updateThemeThunk = (id, theme) => (dispatch) => {
 
 export const getUserThunk = () => (dispatch) => {
   console.log('попали в getInfo')
-  authAPI.getUser().then((response) => {
-    console.log(response)
+  return authAPI.getUser().then((response) => {
     let { login } = response.user
-    let {id, name, phone, theme} = response.user.settings
-    dispatch(initializedAction(id, name, phone, theme))
+    dispatch(initializedAction(response.user))
     dispatch(setAuthUserData(login, true))
-    dispatch(toggleIsFetching(false))
   })
 }
 

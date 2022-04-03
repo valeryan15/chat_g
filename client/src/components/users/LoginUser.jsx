@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Users = (props) => {
+const LoginUser = (props) => {
   return (
     <div>
         <div className="changeButton text-left px-8 py-2 flex justify-between">
@@ -11,4 +11,4 @@ const Users = (props) => {
   )
 }
 
-export default Users
+export default LoginUser
