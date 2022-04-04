@@ -8,6 +8,7 @@ function MainWindow(props) {
   if (!props.isAuth) {
     return <Navigate to='/login'/>
   }
+  console.log('main')
   return (
     <div className="flex h-full absolute w-full">
       <div
@@ -25,6 +26,6 @@ function MainWindow(props) {
 
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
-  theme: state.settings.settings.theme
+  theme: state.settings.theme
 })
 export default connect(mapStateToProps) (MainWindow)

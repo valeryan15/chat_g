@@ -34,8 +34,8 @@ const ThemeProvider = ({ children, ...props }) => {
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.settings.settings.theme,
-  id: state.settings.settings.id
+  theme: state.settings.theme,
+  id: state.settings.id
 })
 
 export default connect(mapStateToProps, {updateThemeThunk})(ThemeProvider)

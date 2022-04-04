@@ -5,37 +5,29 @@ const SET_NAME_PHONE = 'SET_NAME_PHONE'
 const SET_THEME = 'SET_THEME'
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
 const UPDATE_USER_DATA = 'UPDATE_USER_DATA'
+const IS_CHANGE_THEME = 'IS_CHANGE_THEME'
 
 const initialState = {
-  settings: {
-    id: '',
-    name: '',
-    phone: '',
-    theme: '',
-  },
+  id: '',
+  name: '',
+  phone: '',
+  theme: '',
+  isChangeTheme: false,
 }
-
-
 
 const settingsReducer = (state = initialState, action) => {
   switch (action.type) {
     case SET_NAME_PHONE:
       return {
         ...state,
-        settings: {
-          ...state.settings,
           name: action.newName,
           phone: action.newPhone,
-        },
       }
 
     case SET_THEME:
       return {
         ...state,
-        settings: {
-          ...state.settings,
           theme: action.theme,
-        },
       }
 
     case INITIALIZED_SUCCESS:
@@ -43,15 +35,17 @@ const settingsReducer = (state = initialState, action) => {
         ...state,
         ...action.state,
       }
+    case IS_CHANGE_THEME:
+      return {
+        ...state,
+        isChangeTheme: action.isChangeTheme,
+      }
 
     case UPDATE_USER_DATA:
       return {
         ...state,
-        settings: {
-          ...state.settings,
           name: action.name,
           phone: action.phone,
-        }
       }
 
     default:
@@ -62,6 +56,10 @@ const settingsReducer = (state = initialState, action) => {
 export const initializedAction = (state) => ({
   type: INITIALIZED_SUCCESS,
   state,
+})
+export const isChangeThemeAction = (isChange) => ({
+  type: IS_CHANGE_THEME,
+  isChange,
 })
 
 export const namePhoneChangeAction = (newName, newPhone) => ({
@@ -75,28 +73,29 @@ export const themeChangeAction = (theme) => ({
   theme,
 })
 
-export const updateUserDataAction = ( name, phone,) => ({
+export const updateUserDataAction = (name, phone) => ({
   type: UPDATE_USER_DATA,
-   name, phone,
+  name,
+  phone,
 })
 
 export const updateInfoThunk = (id, name, phone) => (dispatch) => {
   settingsAPI.updateInfo(id, name, phone).then((response) => {
-      let { name, phone } = response
-      dispatch(updateUserDataAction( name, phone))
-    dispatch(namePhoneChangeAction( name, phone))
+    let { name, phone } = response
+    dispatch(updateUserDataAction(name, phone))
+    dispatch(namePhoneChangeAction(name, phone))
   })
 }
 
 export const updateThemeThunk = (id, theme) => (dispatch) => {
-  console.log('updateThemeThunk', theme)
+  dispatch(isChangeThemeAction(true))
   settingsAPI.updateTheme(id, theme).then(() => {
     dispatch(themeChangeAction(theme))
+    dispatch(isChangeThemeAction(false))
   })
 }
 
 export const getUserThunk = () => (dispatch) => {
-  console.log('попали в getInfo')
   return authAPI.getUser().then((response) => {
     let { login } = response.user
     dispatch(initializedAction(response.user))

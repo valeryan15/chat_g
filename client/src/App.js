@@ -19,20 +19,20 @@ const App = (props) => {
 
   const themeStore = useContext(ThemeContext)
   const classes = `min-h-full flex flex-col ${themeStore.theme}`
-
-  if (!props.initialized) {
-    return <span>loading...</span>
-  } else {
-    return (
-      <div className={classes}>
-        <ToastContainer
-          draggable={false}
-          transition={Zoom}
-          autoClose={8000}
-        />
+  console.log(props.isAuth)
+  return (
+    <div className={classes}>
+      <ToastContainer
+        draggable={false}
+        transition={Zoom}
+        autoClose={8000}
+      />
+      {!props.initialized ? (
+        <span>loading...</span>
+      ) : (
         <BrowserRouter>
           <HeaderContainer />
-          <div className="flex-auto">
+          <div className="flex-auto relative dark:bg-gray-600">
             <Routes>
               <Route path="/auth" element={<Auth />} />
               <Route path="/login" element={<Login />} />
@@ -45,14 +45,15 @@ const App = (props) => {
             </Routes>
           </div>
         </BrowserRouter>
-      </div>
-    )
-  }
+      )}
+    </div>
+  )
 }
 
 const mapStateToProps = (state) => ({
-  theme: state.settings.settings.theme,
+  theme: state.settings.theme,
   initialized: state.app.initialized,
+  isAuth: state.auth.isAuth
 })
 
 export default connect(mapStateToProps, { initializeApp })(App)

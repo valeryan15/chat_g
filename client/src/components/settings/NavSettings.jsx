@@ -11,11 +11,11 @@ const NavSettings = (props) => {
           <div className="flex">
             <img
               src={profileAvatar}
-              className="w-20 h-20 rounded-full mx-4 "
+              className="min-w-[80px] h-20 pt-1 rounded-full mx-4 "
               alt="profileImage"
             />
             <ul className='ml-8'>
-              <li className="text-black transition duration-1000 dark:text-white pr-8">
+              <li className="text-black transition duration-1000 truncate max-w-[250px] dark:text-white pr-8">
                 {props.name}
               </li>
               <li className="text-black transition duration-1000 dark:text-white pr-8">
@@ -31,18 +31,8 @@ const NavSettings = (props) => {
 
       <div className="flex-auto">
         <Link to="/settings/theme">
-          <div className="h-8 text-center mt-4 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-200 dark:text-white transition duration-1000 border-y-2 mx-4 border-slate-200">
+          <div className="h-8 text-center dark:hover:bg-gray-800 rounded-lg hover:bg-gray-200 dark:text-white transition duration-1000 border-y-2 mx-4 border-slate-200">
             Theme
-          </div>
-        </Link>
-        <Link to="">
-          <div className="h-8 text-center mt-4 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-200 dark:text-white transition duration-1000 border-y-2 mx-4 border-slate-200">
-            Еще что-то
-          </div>
-        </Link>
-        <Link to="">
-          <div className="h-8 text-center mt-4 dark:hover:bg-gray-800 rounded-lg hover:bg-gray-200 dark:text-white transition duration-1000 border-y-2 mx-4 border-slate-200">
-            И еще что-то
           </div>
         </Link>
       </div>

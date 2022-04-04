@@ -7,7 +7,7 @@ import { authInitialValues } from '../components/support/formik'
 const AuthForm = (props) => {
   return (
     <div className="relative w-full h-full">
-      <div className="fixed  -ml-48 text-center bg-gray-200 rounded w-96 top-1/3 left-2/4">
+      <div className="fixed  -ml-48 text-center bg-gray-200 dark:bg-gray-800 rounded w-96 top-1/3 left-2/4">
         <Formik
           initialValues={authInitialValues}
           validationSchema={SignupSchema}
@@ -27,7 +27,7 @@ const AuthForm = (props) => {
             <form onSubmit={handleSubmit}>
               <div className="my-4">
                 <Field
-                  className="border border-gray-300 rounded w-72"
+                  className="border border-gray-300 dark:text-white dark:bg-gray-600 rounded w-72"
                   placeholder="Enter your login"
                   type="login"
                   name="login"
@@ -41,7 +41,7 @@ const AuthForm = (props) => {
               </div>
               <div className="my-4">
                 <Field
-                  className="border border-gray-300 rounded w-72"
+                  className="border border-gray-300 rounded dark:text-white dark:bg-gray-600 w-72"
                   placeholder="Enter your password"
                   type="password"
                   name="password"
@@ -57,7 +57,7 @@ const AuthForm = (props) => {
               </div>
               <div className="my-4">
                 <Field
-                  className="border border-gray-300 rounded w-72"
+                  className="border border-gray-300 dark:text-white dark:bg-gray-600 rounded w-72"
                   placeholder="Repeat your password"
                   type="password"
                   name="passwordConfirmation"
@@ -77,7 +77,7 @@ const AuthForm = (props) => {
                   touched.passwordConfirmation}
               </div>
               <button
-                className="button mb-2 h-8"
+                className="button mb-2 h-8 dark:bg-black dark:hover:bg-blue-800 dark:border-gray-400 dark:border"
                 type="submit"
                 disabled={props.isFetching}
               >
@@ -95,7 +95,7 @@ const AuthForm = (props) => {
                 }
                 {!props.isFetching && <span>Регистрация</span>}
               </button>
-              <button className="ml-12 mb-2 text-xs font-thin">
+              <button className="ml-12 mb-2 text-xs font-thin dark:text-white">
                 Authorized?
               </button>
             </form>

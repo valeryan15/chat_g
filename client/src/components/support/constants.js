@@ -4,7 +4,8 @@ export const TypesTheme = {
 }
 
 export const phoneNumberMask = [
-  /\d/,
+  '+',
+  '7',
   '(',
   /[1-9]/,
   /\d/,

@@ -8,6 +8,7 @@ const Login = (props) => {
     props.authorizationThunk(formData.login, formData.password)
   }
   if(props.isAuth) {
+    console.log('login')
     return <Navigate to='/main'/>
   }
   return (

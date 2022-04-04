@@ -11,7 +11,7 @@ const ProfileDataContainer = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  id: state.settings.settings.id
+  id: state.settings.id
 })
 
 export default connect(mapStateToProps, { updateInfoThunk })(

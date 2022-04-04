@@ -1,8 +1,11 @@
 import React from 'react'
 import TypeTheme from './TypeTheme'
+import {connect} from "react-redux";
 
-const TypeThemeContainer = () => {
-  return <TypeTheme />
+const TypeThemeContainer = (props) => {
+  return <TypeTheme {...props}/>
 }
-
-export default TypeThemeContainer
+const mapStateToProps = (state) => ({
+  isChangeTheme: state.settings.isChangeTheme
+})
+export default connect(mapStateToProps)(TypeThemeContainer)

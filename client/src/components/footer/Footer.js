@@ -3,7 +3,7 @@ import { SvgDialogs, SvgSettings, SvgUsers } from '../../img/svg'
 
 const Footer = () => {
   return (
-    <div className="absolute bottom-0 mb-12 min-w-[400px]">
+    <div className="absolute bottom-0 min-w-[400px] ">
       <div className="mx-20 flex justify-between pb-2">
         <Link to={'/main'}>
           <SvgDialogs className="h-6 w-6 rounded-full dark:text-white dark:bg-gray-600" />

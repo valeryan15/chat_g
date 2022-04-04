@@ -9,7 +9,7 @@ const ProfileData = (props) => {
 
   return (
     <div className="relative w-full h-full mt-4 ">
-      <div className="bg-gray-200 dark:bg-gray-600 transition duration-1000 table m-0 m-auto w-1/3 p-4 rounded-lg ">
+      <div className="bg-gray-200 dark:bg-gray-800 transition duration-1000 table m-0 m-auto w-1/3 p-4 rounded-lg ">
         <Formik
           initialValues={namePhoneInitialValues}
           validationSchema={NamePhoneSchema}
@@ -29,7 +29,7 @@ const ProfileData = (props) => {
             <form onSubmit={handleSubmit}>
               <div className="my-4">
                 <Field
-                  className="my-2 rounded-lg h-8 w-full border border-black"
+                  className="my-2 rounded-lg h-8 w-full border border-black pl-2 dark:bg-gray-600 dark:text-white"
                   placeholder="Enter your name"
                   type="name"
                   name="name"
@@ -47,10 +47,10 @@ const ProfileData = (props) => {
                   name="phone"
                   render={({ field }) => (
                     <MaskedInput
-                      className="my-2 rounded-lg h-8 w-full border border-black"
+                      className="my-2 rounded-lg h-8 w-full border border-black pl-2 dark:bg-gray-600 dark:text-white"
                       {...field}
                       mask={phoneNumberMask}
-                      placeholder="8(123) 123-4567"
+                      placeholder="+7(123) 123-4567"
                       type="phone"
                       onChange={handleChange}
                       onBlur={handleBlur}
