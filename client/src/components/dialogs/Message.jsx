@@ -33,7 +33,7 @@ const Message = (props) => {
         </div>
         <div className="float-right w-1/3 ">{messageElement}</div>
       </div>
-      <div className="dark:text-white mb-12 flex transition duration-1000">
+      <div className="dark:text-white mb-2 flex transition duration-1000">
         <textarea
           className=" ml-24  border-2 border-slate-200 transition duration-100 w-full dark:bg-gray-800 dark:text-white"
           placeholder="Введите текст"

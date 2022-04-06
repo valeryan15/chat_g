@@ -5,13 +5,13 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { Provider } from 'react-redux'
 import store from './redux/redux-store'
-import  ThemeProvider from './contexts/themeContext'
+import ThemeProvider from './contexts/themeContext'
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider>
-        <App />
+          <App />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,

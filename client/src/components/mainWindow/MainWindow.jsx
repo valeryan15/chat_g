@@ -1,14 +1,11 @@
 import React from 'react'
-import {Navigate, Route, Routes} from 'react-router-dom'
+import { Route, Routes} from 'react-router-dom'
 import Dialog from '../dialogs/Dialog'
 import MessageContainer from '../dialogs/MessageContainer'
 import {connect} from "react-redux";
 
-function MainWindow(props) {
-  if (!props.isAuth) {
-    return <Navigate to='/login'/>
-  }
-  console.log('main')
+function MainWindow() {
+
   return (
     <div className="flex h-full absolute w-full">
       <div

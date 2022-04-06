@@ -73,8 +73,7 @@ export const authAPI = {
 }
 
 export const settingsAPI = {
-  updateInfo(id, name, phone) {
-    const options = {id, name, phone,}
+  updateInfo(options) {
     return http(
       'http://localhost:8081/settings/update-info',
       'POST',

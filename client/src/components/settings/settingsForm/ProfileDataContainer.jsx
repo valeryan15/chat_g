@@ -5,7 +5,7 @@ import { updateInfoThunk } from '../../../redux/settingsReducer'
 
 const ProfileDataContainer = (props) => {
   const onSubmit = ( formData) => {
-    props.updateInfoThunk(props.id, formData.name, formData.phone)
+    props.updateInfoThunk({...formData, id: props.id })
   }
   return <ProfileData onSubmit={onSubmit} {...props} />
 }

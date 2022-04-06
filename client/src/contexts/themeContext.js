@@ -5,7 +5,6 @@ import {updateThemeThunk} from "../redux/settingsReducer";
 
 export const ThemeContext = createContext({
   theme: TypesTheme.Light,
-  changeTheme: () => {},
   toggleTheme: () => {},
 })
 
@@ -16,9 +15,6 @@ const ThemeProvider = ({ children, ...props }) => {
       props.updateThemeThunk(props.id, newTheme)
   }
 
-  const changeTheme = (value) => {
-    setTheme(value)
-  }
 
   useEffect(() => {
     setTheme(props.theme)
@@ -26,7 +22,7 @@ const ThemeProvider = ({ children, ...props }) => {
 
   return (
     <ThemeContext.Provider
-      value={{ theme, changeTheme, toggleTheme }}
+      value={{ theme, toggleTheme }}
     >
       {children}
     </ThemeContext.Provider>

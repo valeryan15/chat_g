@@ -98,7 +98,7 @@ export const updateThemeThunk = (id, theme) => (dispatch) => {
 export const getUserThunk = () => (dispatch) => {
   return authAPI.getUser().then((response) => {
     let { login } = response.user
-    dispatch(initializedAction(response.user))
+    dispatch(initializedAction(response.user.settings))
     dispatch(setAuthUserData(login, true))
   })
 }

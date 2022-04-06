@@ -1,16 +1,21 @@
 import LoginForm from './loginForm'
 import { connect } from 'react-redux'
-import { authorizationThunk, toggleIsFetching } from '../../redux/authReducer'
+import {
+  authorizationThunk,
+  toggleIsFetching,
+} from '../../redux/authReducer'
 import {Navigate} from "react-router-dom";
 
+
 const Login = (props) => {
+
   const onSubmit = (formData) => {
     props.authorizationThunk(formData.login, formData.password)
   }
   if(props.isAuth) {
-    console.log('login')
-    return <Navigate to='/main'/>
+    return <Navigate to='/main' />
   }
+
   return (
     <LoginForm onSubmit={onSubmit} isFetching={props.isFetching} />
   )

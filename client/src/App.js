@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import UsersContainer from './components/users/usersContainer'
 import { initializeApp } from './redux/appReducer'
 import { ThemeContext } from './contexts/themeContext'
+import RequireAuth from "./contexts/authContext";
 
 const App = (props) => {
   useEffect(() => {
@@ -19,7 +20,8 @@ const App = (props) => {
 
   const themeStore = useContext(ThemeContext)
   const classes = `min-h-full flex flex-col ${themeStore.theme}`
-  console.log(props.isAuth)
+  console.log(props)
+
   return (
     <div className={classes}>
       <ToastContainer
@@ -38,10 +40,28 @@ const App = (props) => {
               <Route path="/login" element={<Login />} />
               <Route
                 path="/settings/*"
-                element={<SettingsWindow />}
+                element={
+                  <RequireAuth>
+                    <SettingsWindow />
+                  </RequireAuth>
+                }
               />
-              <Route path="/main/*" element={<MainWindow />} />
-              <Route path="/users" element={<UsersContainer />} />
+              <Route
+                path="/main/*"
+                element={
+                  <RequireAuth>
+                    <MainWindow />
+                  </RequireAuth>
+                }
+              />
+              <Route
+                path="/users"
+                element={
+                  <RequireAuth>
+                    <UsersContainer />
+                  </RequireAuth>
+                }
+              />
             </Routes>
           </div>
         </BrowserRouter>
@@ -53,7 +73,7 @@ const App = (props) => {
 const mapStateToProps = (state) => ({
   theme: state.settings.theme,
   initialized: state.app.initialized,
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
 })
 
 export default connect(mapStateToProps, { initializeApp })(App)

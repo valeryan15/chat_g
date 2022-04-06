@@ -6,7 +6,7 @@ const Header = (props) => {
       <div className="text-black dark:text-white transition duration-500">
         <span className="mx-4">
           {!props.isAuth ?
-            < Link to={'/auth'}>Sing up</Link> : <span> </span>
+            < Link to={'/auth'}>Sing up</Link> : null
           }
         </span>
 
