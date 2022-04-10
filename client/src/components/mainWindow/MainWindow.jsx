@@ -1,8 +1,8 @@
 import React from 'react'
 import { Route, Routes} from 'react-router-dom'
-import Dialog from '../dialogs/Dialog'
 import MessageContainer from '../dialogs/MessageContainer'
 import {connect} from "react-redux";
+import DialogContainer from "../dialogs/dialogsPage/DialogContainer";
 
 function MainWindow() {
 
@@ -10,7 +10,7 @@ function MainWindow() {
     <div className="flex h-full absolute w-full">
       <div
         className="min-w-[400px] bg-white border-r-2 border-slate-200 transition duration-1000 dark:bg-gray-600 h-full">
-        <Dialog/>
+        <DialogContainer/>
       </div>
       <div className="bg-white dark:bg-gray-600 transition duration-1000  w-full h-full">
         <Routes>

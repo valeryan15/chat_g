@@ -12,8 +12,7 @@ const settingsReducer = (state = initialState, action) => {
       return {
         ...state,
         users:
-          [...action.users]
-        ,
+          [...action.users],
       }
     default:
       return state

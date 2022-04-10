@@ -1,13 +1,10 @@
 const SET_MESSAGE = 'SET_MESSAGE'
+const SET_USER_DIALOG = 'SET_USER_DIALOG'
 
 const initialState = {
-  chats: [
-    {
-      id: '',
-      name: '',
-      message: '',
-    },
-  ],
+  dialogs: [],
+  chats: [],
+  toggleAddUser: false,
 }
 let count = 0
 const dialogsReducer = (state = initialState, action) => {
@@ -16,9 +13,18 @@ const dialogsReducer = (state = initialState, action) => {
       return {
         ...state,
         chats: [
-            ...state.chats,
-          {id: count++, name: '', message: action.message}
+          ...state.chats,
+          { id: count++, name: '', message: action.message },
         ],
+      }
+    case SET_USER_DIALOG:
+      return {
+        ...state,
+        dialogs: [
+          ...state.dialogs,
+          { id: action.id, login: action.login },
+        ],
+        toggleAddUser: true
       }
     default:
       return state
@@ -28,6 +34,11 @@ const dialogsReducer = (state = initialState, action) => {
 export const newMessageAction = (message) => ({
   type: SET_MESSAGE,
   message,
+})
+export const setUserAction = (id, login) => ({
+  type: SET_USER_DIALOG,
+  id,
+  login,
 })
 
 export default dialogsReducer

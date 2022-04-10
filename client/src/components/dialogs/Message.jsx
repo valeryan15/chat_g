@@ -10,6 +10,7 @@ const Message = (props) => {
     }
     return ''
   })
+
   const sendMessage = () => {
     props.sendMessage(newMessage)
     setMessage('')

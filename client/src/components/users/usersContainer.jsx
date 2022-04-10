@@ -1,24 +1,33 @@
-import { connect } from 'react-redux'
-import React from 'react'
+import {connect} from 'react-redux'
+import React, {useEffect} from 'react'
 import Users from './users'
-import { Navigate } from 'react-router-dom'
-import { getUsersThunk } from '../../redux/usersReducer'
+import {Navigate} from 'react-router-dom'
+import {getUsersThunk} from '../../redux/usersReducer'
+import {setUserAction} from "../../redux/dialogsReducer";
 
-class UsersContainer extends React.Component {
-  componentDidMount() {
-    this.props.getUsersThunk()
+const UsersContainer = (props) => {
+  useEffect( () => {
+    props.getUsersThunk()
+  }, [])
+
+  const setUser = (id, login) => {
+    return setTimeout(() => {
+      props.setUserAction(id, login)
+    },500)
+
   }
 
-  render() {
-    if (!this.props.isAuth) {
-      return <Navigate to="/login" />
-    }
-    return <Users {...this.props} />
+  if (!props.isAuth) {
+    return <Navigate to="/login"/>
   }
+  return <Users setUser={setUser} {...props} />
 }
+
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
   users: state.users.users,
+  toggleAddUser: state.dialogsPage.toggleAddUser,
+  addInProgress: state.dialogsPage.addInProgress
 })
 
-export default connect(mapStateToProps, {getUsersThunk})(UsersContainer)
+export default connect(mapStateToProps, {getUsersThunk, setUserAction})(UsersContainer)
