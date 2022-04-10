@@ -1,4 +1,3 @@
-import db, { DatabaseUrlSettings, DatabaseUrlUsers } from '../database'
 import { Router } from 'express'
 import { body, validationResult } from 'express-validator'
 import { v4 as uuidv4 } from 'uuid'
@@ -7,6 +6,7 @@ import jwt from 'jsonwebtoken'
 import { tokenKey } from '../constants'
 import { addActiveUser } from '../realtime-data/active-users'
 import { ThemeTypes } from '../constants/theme.constant'
+import { addUser, existUser, getUserByLogin } from '../database-function/users.function'
 
 const router = Router()
 
@@ -56,9 +56,8 @@ router.post(
       'must contain only latin characters, symbols "-", "_" and numbers'
     )
     .custom(async (value) => {
-      const ref = db.ref(DatabaseUrlUsers)
-      const child = await ref.child(value).once('value')
-      if (child.exists()) {
+      const isExist = await existUser(value)
+      if (isExist) {
         return Promise.reject('Such user already exists')
       }
     }),
@@ -87,8 +86,6 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() })
     }
-    const ref = db.ref(DatabaseUrlUsers)
-    const refSetting = db.ref(DatabaseUrlSettings)
     const settings = {
       id: uuidv4(),
       theme: ThemeTypes.Light,
@@ -101,9 +98,7 @@ router.post(
       id: uuidv4(),
       id_settings: settings.id
     }
-
-    await ref.child(user.login).set(user)
-    await refSetting.child(settings.id).set(settings)
+    await addUser(user, settings)
     return res.status(200).json(user)
   }
 )
@@ -147,9 +142,8 @@ router.post(
       'must contain only latin characters, symbols "-", "_" and numbers'
     )
     .custom(async (value) => {
-      const ref = db.ref(DatabaseUrlUsers)
-      const child = await ref.child(value).once('value')
-      if (!child.exists()) {
+      const isExist = await existUser(value)
+      if (!isExist) {
         return Promise.reject('Login or password is incorrect')
       }
     }),
@@ -170,9 +164,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() })
     }
-    const ref = db.ref(`${DatabaseUrlUsers}/${req.body.login}`)
-    let snapshot = await ref.once('value')
-    const user = snapshot.val()
+    const user = await getUserByLogin(req.body.login)
     if (user.password !== req.body.password) {
       const error = new ServerError({
         value: req.body.password,

@@ -1,7 +1,8 @@
 import express, { Router } from 'express'
-import db, { DatabaseUrlSettings, DatabaseUrlUsers } from '../database'
 import { removeActiveUser } from '../realtime-data/active-users'
 import authMiddleware from '../middleware/auth.middleware'
+import { getUserById, getUsers } from '../database-function/users.function'
+import { getSettingsById } from '../database-function/settings.function'
 
 const router = Router()
 //TODO удалить дублирование
@@ -52,9 +53,7 @@ router.use(authMiddleware)
  *                    description: Логин пользователя.
  */
 router.post('/', async (req, res) => {
-  const ref = db.ref(DatabaseUrlUsers)
-  let snapshot = await ref.once('value')
-  const users = snapshot.val() ? Object.values(snapshot.val()) : []
+  const users = await getUsers()
   return res.status(200).json(users.map(user => {
     return {
       id: user.id,
@@ -99,16 +98,9 @@ router.post('/', async (req, res) => {
  *
  */
 router.post('/get-user', async (req, res) => {
-  const ref = db.ref(`${DatabaseUrlUsers}`)
-  const currentUser = req.user
-  let snapshot = await ref.once('value')
-  const users = snapshot.val() ? Object.values(snapshot.val()) : []
-  let user = users.find(u => u.id === currentUser.id)
+  let user = await getUserById(req.user.id)
   if (user) {
-    const refSettings = db.ref(`${DatabaseUrlSettings}/${user.id_settings}`)
-    // const refUserChats = db.ref(`${DatabaseUrlUserChats}/${user.id}`)
-    let snapshotSetting = await refSettings.once('value')
-    let settings = snapshotSetting.val()
+    let settings = await getSettingsById(user.id_settings)
     user = {
       id: user.id,
       login: user.login,

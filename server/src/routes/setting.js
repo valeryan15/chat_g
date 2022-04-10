@@ -1,7 +1,7 @@
 import express, { Router } from 'express'
-import db, { DatabaseUrlSettings } from '../database'
 import { body, validationResult } from 'express-validator'
 import authMiddleware from '../middleware/auth.middleware'
+import { updateSettings } from '../database-function/settings.function'
 
 const router = Router()
 
@@ -55,13 +55,9 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() })
     }
-    const ref = db.ref(`${DatabaseUrlSettings}/${req.body.id}`)
-    let snapshot = await ref.once('value')
-    let settings = {
-      ...snapshot.val(),
+    const settings = await updateSettings(req.body.id, {
       theme: req.body.theme,
-    }
-    await ref.update(settings)
+    })
     return res.status(200).json(settings)
   }
 )
@@ -121,14 +117,10 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() })
     }
-    const ref = db.ref(`${DatabaseUrlSettings}/${req.body.id}`)
-    let snapshot = await ref.once('value')
-    let settings = {
-      ...snapshot.val(),
+    const settings = await updateSettings(req.body.id, {
       name: req.body.name,
       phone: req.body.phone,
-    }
-    await ref.update(settings)
+    })
     return res.status(200).json(settings)
   }
 )
