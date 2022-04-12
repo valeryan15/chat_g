@@ -18,7 +18,8 @@ export async function getUserByLogin(login) {
 export async function getUsers() {
   const ref = db.ref(`${DatabaseUrlUsers}`)
   let snapshot = await ref.once('value')
-  return snapshot.val() ? Object.values(snapshot.val()) : []
+  const users = snapshot.val() ? Object.values(snapshot.val()) : []
+  return users.map(mappingFullUser)
 }
 export async function getUserByIdFull(id) {
   const users = await getUsers()
@@ -49,4 +50,20 @@ export async function existUser(login) {
   const ref = db.ref(`${DatabaseUrlUsers}/${login}`)
   const snapshot = await ref.once('value')
   return snapshot.exists()
+}
+
+/**
+ * @param login {string}
+ * @returns {Promise<{id: string, name: string}[]|[]>}
+ */
+export async function getUserChats(login) {
+  const user = await getUserByLogin(login)
+  return user.chats ? Object.values(user.chats) : []
+}
+
+function mappingFullUser(user) {
+  return {
+    ...user,
+    chats: user.chats ? Object.values(user.chats) : []
+  }
 }

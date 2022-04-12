@@ -1,7 +1,7 @@
 import express, { Router } from 'express'
 import { removeActiveUser } from '../realtime-data/active-users'
 import authMiddleware from '../middleware/auth.middleware'
-import { getUserById, getUsers } from '../database-function/users.function'
+import { getUserByLogin, getUserChats, getUsers } from '../database-function/users.function'
 import { getSettingsById } from '../database-function/settings.function'
 
 const router = Router()
@@ -51,13 +51,17 @@ router.use(authMiddleware)
  *                  login:
  *                    type: string
  *                    description: Логин пользователя.
+ *                  chatExist:
+ *                    type: boolean
+ *                    description: говорит о существование чата с этим пользователем.
  */
 router.post('/', async (req, res) => {
   const users = await getUsers()
   return res.status(200).json(users.map(user => {
     return {
       id: user.id,
-      login: user.login
+      login: user.login,
+      chatExist: user.chats.some(c => c.name === req.user.login)
     }
   }))
 })
@@ -95,10 +99,21 @@ router.post('/', async (req, res) => {
  *                       theme:
  *                         type: string
  *                         description: тема.
+ *                   chats:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: string
+ *                           description: ID чата
+ *                         name:
+ *                           type: string
+ *                           description: Имя чата
  *
  */
 router.post('/get-user', async (req, res) => {
-  let user = await getUserById(req.user.id)
+  let user = await getUserByLogin(req.user.login)
   if (user) {
     let settings = await getSettingsById(user.id_settings)
     user = {
@@ -109,6 +124,32 @@ router.post('/get-user', async (req, res) => {
     }
   }
   return res.status(200).json({ user })
+})
+/**
+ * @openapi
+ * /users/get-chats:
+ *   post:
+ *     description: Получение списка чатов пользователя
+ *     responses:
+ *       200:
+ *         description: Возвращает массив чатов.
+ *         content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: ID чата
+ *                     name:
+ *                       type: string
+ *                       description: Имя чата
+ */
+router.post('/get-chats', async (req, res) => {
+  const chats = await getUserChats(req.user.login)
+  return res.status(200).json(chats)
 })
 /**
  * @openapi
