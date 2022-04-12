@@ -14,7 +14,7 @@ function MainWindow() {
       </div>
       <div className="bg-white dark:bg-gray-600 transition duration-1000  w-full h-full">
         <Routes>
-          <Route path="/chatWindow" element={<MessageContainer/>}/>
+          <Route path="/chatWindow/:user_id" element={<MessageContainer/>}/>
         </Routes>
       </div>
     </div>

@@ -11,6 +11,7 @@ import { connect } from 'react-redux'
 import UsersContainer from './components/users/usersContainer'
 import { initializeApp } from './redux/appReducer'
 import { ThemeContext } from './contexts/themeContext'
+import AuthProvider  from './contexts/authContext'
 import RequireAuth from "./contexts/authContext";
 
 const App = (props) => {
@@ -20,6 +21,7 @@ const App = (props) => {
 
   const themeStore = useContext(ThemeContext)
   const classes = `min-h-full flex flex-col ${themeStore.theme}`
+  console.log(props)
 
   return (
     <div className={classes}>
@@ -56,9 +58,9 @@ const App = (props) => {
               <Route
                 path="/users"
                 element={
-                  <RequireAuth>
+                  <AuthProvider>
                     <UsersContainer />
-                  </RequireAuth>
+                  </AuthProvider>
                 }
               />
             </Routes>

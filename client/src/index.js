@@ -11,7 +11,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <ThemeProvider>
-          <App />
+        <App />
       </ThemeProvider>
     </Provider>
   </React.StrictMode>,

@@ -1,7 +1,6 @@
 import {connect} from 'react-redux'
 import React, {useEffect} from 'react'
 import Users from './users'
-import {Navigate} from 'react-router-dom'
 import {getUsersThunk} from '../../redux/usersReducer'
 import {setUserAction} from "../../redux/dialogsReducer";
 
@@ -17,9 +16,6 @@ const UsersContainer = (props) => {
 
   }
 
-  if (!props.isAuth) {
-    return <Navigate to="/login"/>
-  }
   return <Users setUser={setUser} {...props} />
 }
 

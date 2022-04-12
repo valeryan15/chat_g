@@ -11,7 +11,7 @@ const Dialog = (props) => {
   ))
   return (
     <div>
-      <Link to={'/main/chatWindow'}>
+      <Link to={'/main/chatWindow/[user_id]'}>
           <div>{userElement}</div>
       </Link>
 

@@ -7,8 +7,12 @@ const TypeTheme = (props) => {
   const { theme, toggleTheme } = useContext(ThemeContext)
 
   const onChangeTheme = () => {
+    if(props.isChangeTheme) {
+      return
+    }
     toggleTheme()
   }
+
   return (
     <div className="w-full bg-white mt-48 dark:bg-gray-600 dark:text-white transition duration-1000 flex h-12 pt-2 ">
       <div className="mx-auto flex">

@@ -34,16 +34,14 @@ const http = async (url, method, body = {}) => {
 }
 
 export const authAPI = {
-  registration(login, password, passwordConfirmation) {
-    const options = { login, password, passwordConfirmation }
+  registration(options) {
     return http(
       'http://localhost:8081/common/sign-up',
       'POST',
       options
     )
   },
-  authorization(login, password) {
-    const options = { login, password }
+  authorization(options) {
     return http(
       'http://localhost:8081/common/sign-in',
       'POST',
