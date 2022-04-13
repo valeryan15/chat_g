@@ -11,8 +11,7 @@ import { connect } from 'react-redux'
 import UsersContainer from './components/users/usersContainer'
 import { initializeApp } from './redux/appReducer'
 import { ThemeContext } from './contexts/themeContext'
-import AuthProvider  from './contexts/authContext'
-import RequireAuth from "./contexts/authContext";
+import RequireAuth from './contexts/authContext'
 
 const App = (props) => {
   useEffect(() => {
@@ -58,9 +57,9 @@ const App = (props) => {
               <Route
                 path="/users"
                 element={
-                  <AuthProvider>
+                  <RequireAuth>
                     <UsersContainer />
-                  </AuthProvider>
+                  </RequireAuth>
                 }
               />
             </Routes>

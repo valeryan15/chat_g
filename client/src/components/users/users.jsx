@@ -5,7 +5,7 @@ import User from './User'
 const Users = (props) => {
   const user = props.users.map((u) => (
     <User
-      addInProgress ={props.addInProgress}
+      addInProgress={props.addInProgress}
       setUser={props.setUser}
       toggleAddUser={props.toggleAddUser}
       id={u.id}

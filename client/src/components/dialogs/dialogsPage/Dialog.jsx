@@ -7,14 +7,13 @@ const Dialog = (props) => {
   const state = props.dialogsPage
 
   let userElement = state.dialogs.map((d) => (
-    <DialogUsers login={d.login} key={d.id} />
+    <Link to={`/main/chatWindow/${d.login}`} key={d.id} >
+    <DialogUsers login={d.login} />
+    </Link>
   ))
   return (
     <div>
-      <Link to={'/main/chatWindow/[user_id]'}>
           <div>{userElement}</div>
-      </Link>
-
       <Footer />
     </div>
   )
