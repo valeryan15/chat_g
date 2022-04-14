@@ -1,7 +1,8 @@
 import express, { Router } from 'express'
-import db, { DatabaseUrlSettings, DatabaseUrlUsers } from '../database'
 import { removeActiveUser } from '../realtime-data/active-users'
 import authMiddleware from '../middleware/auth.middleware'
+import { getUserByLogin, getUserChats, getUsers } from '../database-function/users.function'
+import { getSettingsById } from '../database-function/settings.function'
 
 const router = Router()
 //TODO удалить дублирование
@@ -50,15 +51,17 @@ router.use(authMiddleware)
  *                  login:
  *                    type: string
  *                    description: Логин пользователя.
+ *                  chatExist:
+ *                    type: boolean
+ *                    description: говорит о существование чата с этим пользователем.
  */
 router.post('/', async (req, res) => {
-  const ref = db.ref(DatabaseUrlUsers)
-  let snapshot = await ref.once('value')
-  const users = snapshot.val() ? Object.values(snapshot.val()) : []
+  const users = await getUsers()
   return res.status(200).json(users.map(user => {
     return {
       id: user.id,
-      login: user.login
+      login: user.login,
+      chatExist: user.chats.some(c => c.name === req.user.login)
     }
   }))
 })
@@ -96,19 +99,23 @@ router.post('/', async (req, res) => {
  *                       theme:
  *                         type: string
  *                         description: тема.
+ *                   chats:
+ *                     type: array
+ *                     items:
+ *                       type: object
+ *                       properties:
+ *                         id:
+ *                           type: string
+ *                           description: ID чата
+ *                         name:
+ *                           type: string
+ *                           description: Имя чата
  *
  */
 router.post('/get-user', async (req, res) => {
-  const ref = db.ref(`${DatabaseUrlUsers}`)
-  const currentUser = req.user
-  let snapshot = await ref.once('value')
-  const users = snapshot.val() ? Object.values(snapshot.val()) : []
-  let user = users.find(u => u.id === currentUser.id)
+  let user = await getUserByLogin(req.user.login)
   if (user) {
-    const refSettings = db.ref(`${DatabaseUrlSettings}/${user.id_settings}`)
-    // const refUserChats = db.ref(`${DatabaseUrlUserChats}/${user.id}`)
-    let snapshotSetting = await refSettings.once('value')
-    let settings = snapshotSetting.val()
+    let settings = await getSettingsById(user.id_settings)
     user = {
       id: user.id,
       login: user.login,
@@ -117,6 +124,32 @@ router.post('/get-user', async (req, res) => {
     }
   }
   return res.status(200).json({ user })
+})
+/**
+ * @openapi
+ * /users/get-chats:
+ *   post:
+ *     description: Получение списка чатов пользователя
+ *     responses:
+ *       200:
+ *         description: Возвращает массив чатов.
+ *         content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     id:
+ *                       type: string
+ *                       description: ID чата
+ *                     name:
+ *                       type: string
+ *                       description: Имя чата
+ */
+router.post('/get-chats', async (req, res) => {
+  const chats = await getUserChats(req.user.login)
+  return res.status(200).json(chats)
 })
 /**
  * @openapi

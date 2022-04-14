@@ -21,6 +21,7 @@ app.use(cors())
 app.use('/users', routes.user)
 app.use('/common', routes.common)
 app.use('/settings', routes.setting)
+app.use('/chats', routes.chats)
 
 
 app.get('/', (req, res) => {
