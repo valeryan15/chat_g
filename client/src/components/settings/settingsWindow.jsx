@@ -1,17 +1,28 @@
 import React from 'react'
-import Footer from '../footer/Footer'
+import NavSettingsContainer from './NavSettingsContainer'
+import { Route, Routes} from 'react-router-dom'
+import ProfileDataContainer from './settingsForm/ProfileDataContainer'
+import TypeThemeContainer from "../theme/TypeThemeContainer";
+import {connect} from "react-redux";
 
 const SettingsWindow = () => {
   return (
     <div className="flex h-full absolute w-full">
-      <div className="w-72 bg-gray-200 h-full">
-        <Footer />
+      <div className=" min-w-[400px] max-w-[400px] bg-white border-r-2 border-slate-200 transition duration-1000 dark:bg-gray-600 h-full">
+        <div>
+          <NavSettingsContainer />
+        </div>
       </div>
-      <div className="bg-red-200 w-full h-full"></div>
+      <div className="bg-white transition duration-1000 dark:bg-gray-600 w-full h-full">
+        <Routes>
+          <Route path="/profile" element={<ProfileDataContainer />} />
+          <Route path="/theme" element={<TypeThemeContainer />} />
+        </Routes>
+      </div>
     </div>
   )
 }
-
-export default SettingsWindow
-
-
+const mapStateToProps = (state) => ({
+  isAuth: state.auth.isAuth
+})
+export default connect(mapStateToProps) (SettingsWindow)

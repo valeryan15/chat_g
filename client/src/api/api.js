@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { toast } from 'react-toastify'
-import {getToken} from "../components/login/token";
+import { getToken } from '../components/login/token'
 
 const http = async (url, method, body = {}) => {
   let headers = getToken()
@@ -33,31 +33,57 @@ const http = async (url, method, body = {}) => {
   }
 }
 
-
 export const authAPI = {
-  registration(login, password, passwordConfirmation) {
-    const options = { login, password, passwordConfirmation }
+  registration(options) {
     return http(
       'http://localhost:8081/common/sign-up',
       'POST',
       options
     )
   },
-  authorization(login, password) {
-    const options = { login, password }
+  authorization(options) {
     return http(
       'http://localhost:8081/common/sign-in',
       'POST',
       options
     )
   },
-  getInfo(login) {
-    const options = { login }
-
+  logout() {
     return http(
-      'http://localhost:8081/users/get-info',
+      'http://localhost:8081/users/logout',
       'POST',
-      options,
     )
   },
+
+  getUser() {
+    return http(
+      'http://localhost:8081/users/get-user',
+      'POST',
+    )
+  },
+  users() {
+    return http(
+      'http://localhost:8081/users',
+      'POST',
+    )
+  },
+
+}
+
+export const settingsAPI = {
+  updateInfo(options) {
+    return http(
+      'http://localhost:8081/settings/update-info',
+      'POST',
+      options
+    )
+  },
+  updateTheme(id, theme) {
+    const options = {id, theme}
+    return http(
+      'http://localhost:8081/settings/update-theme',
+      'POST',
+      options
+    )
+  }
 }

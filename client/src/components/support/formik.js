@@ -8,4 +8,8 @@ export const loginInitialValues = {
   login: '',
   password: '',
 }
+export const namePhoneInitialValues = {
+  name: '',
+  phone: ''
+}
 

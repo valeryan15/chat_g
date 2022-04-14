@@ -1,15 +1,28 @@
 import React from 'react'
-import Footer from '../footer/Footer'
+import { Route, Routes} from 'react-router-dom'
+import MessageContainer from '../dialogs/MessageContainer'
+import {connect} from "react-redux";
+import DialogContainer from "../dialogs/dialogsPage/DialogContainer";
 
-const MainWindow = () => {
+function MainWindow() {
+
   return (
     <div className="flex h-full absolute w-full">
-      <div className="w-72 bg-gray-200 h-full">
-        <Footer />
+      <div
+        className="min-w-[400px] bg-white border-r-2 border-slate-200 transition duration-1000 dark:bg-gray-600 h-full">
+        <DialogContainer/>
       </div>
-      <div className="bg-red-200 w-full h-full"></div>
+      <div className="bg-white dark:bg-gray-600 transition duration-1000  w-full h-full">
+        <Routes>
+          <Route path="/chatWindow/:user_id" element={<MessageContainer/>}/>
+        </Routes>
+      </div>
     </div>
   )
 }
 
-export default MainWindow
+const mapStateToProps = (state) => ({
+  isAuth: state.auth.isAuth,
+  theme: state.settings.theme
+})
+export default connect(mapStateToProps) (MainWindow)
