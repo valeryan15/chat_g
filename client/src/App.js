@@ -20,7 +20,6 @@ const App = (props) => {
 
   const themeStore = useContext(ThemeContext)
   const classes = `min-h-full flex flex-col ${themeStore.theme}`
-  console.log(props)
 
   return (
     <div className={classes}>

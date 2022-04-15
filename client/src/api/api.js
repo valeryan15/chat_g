@@ -87,3 +87,14 @@ export const settingsAPI = {
     )
   }
 }
+
+export const chatsAPI = {
+  createChat(id) {
+    const options = {id}
+    return http(
+      'http://localhost:8081/chats/create-chat',
+      'POST',
+      options
+    )
+  }
+}

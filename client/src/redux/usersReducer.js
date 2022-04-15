@@ -4,6 +4,7 @@ const GET_USERS = 'GET_USERS'
 
 const initialState = {
   users: [],
+  chatExist: null
 }
 
 const settingsReducer = (state = initialState, action) => {
@@ -13,6 +14,7 @@ const settingsReducer = (state = initialState, action) => {
         ...state,
         users:
           [...action.users],
+        chatExist: action.payload
       }
     default:
       return state

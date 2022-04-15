@@ -5,9 +5,8 @@ import User from './User'
 const Users = (props) => {
   const user = props.users.map((u) => (
     <User
-      addInProgress={props.addInProgress}
-      setUser={props.setUser}
-      toggleAddUser={props.toggleAddUser}
+      toggleAddChat={props.toggleAddChat}
+      createChat={props.createChat}
       id={u.id}
       login={u.login}
       key={u.id}
