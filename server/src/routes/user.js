@@ -56,7 +56,9 @@ router.use(authMiddleware)
  *                    description: говорит о существование чата с этим пользователем.
  */
 router.post('/', async (req, res) => {
-  const users = await getUsers()
+  const currentUser = req.user
+  let users = await getUsers()
+  users = users.filter(u => u.id !== currentUser.id)
   return res.status(200).json(users.map(user => {
     return {
       id: user.id,
@@ -120,7 +122,7 @@ router.post('/get-user', async (req, res) => {
       id: user.id,
       login: user.login,
       settings,
-      chats: []
+      chats: user.chats
     }
   }
   return res.status(200).json({ user })

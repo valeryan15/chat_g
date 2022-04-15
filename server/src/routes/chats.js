@@ -57,6 +57,9 @@ router.use(authMiddleware)
  *                      message:
  *                        type: string
  *                        description: тело сообщения
+ *                      timestamp:
+ *                        type: number
+ *                        description: время сообщения
  *                      user:
  *                        type: object
  *                        properties:
@@ -139,6 +142,9 @@ router.post(
  *                      message:
  *                        type: string
  *                        description: тело сообщения
+ *                      timestamp:
+ *                        type: number
+ *                        description: время сообщения
  *                      user:
  *                        type: object
  *                        properties:
@@ -202,6 +208,9 @@ router.post(
  *                message:
  *                  type: string
  *                  description: тело сообщения
+ *                timestamp:
+ *                  type: number
+ *                  description: время сообщения
  *                user:
  *                  type: object
  *                  properties:
@@ -276,6 +285,9 @@ router.post(
  *                message:
  *                  type: string
  *                  description: тело сообщения
+ *                timestamp:
+ *                  type: number
+ *                  description: время сообщения
  *                user:
  *                  type: object
  *                  properties:

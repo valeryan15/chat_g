@@ -12,7 +12,8 @@ export async function getUserById(id) {
 export async function getUserByLogin(login) {
   const ref = db.ref(`${DatabaseUrlUsers}/${login}`)
   let snapshot = await ref.once('value')
-  return snapshot.val()
+  let user = snapshot.val()
+  return mappingFullUser(user)
 }
 
 export async function getUsers() {
@@ -32,7 +33,7 @@ export async function addUser(user, settings) {
   return addSettings(settings)
 }
 
-export async function addChatToUser(login, chatId, title) {
+export async function addChatToUser(login, chatId, name) {
   const ref = db.ref(`${DatabaseUrlUsers}/${login}/chats`)
   let snapshot = await ref.once('value')
   let chats =  snapshot.val() ? snapshot.val() : {}
@@ -40,7 +41,7 @@ export async function addChatToUser(login, chatId, title) {
     ...chats,
     [chatId]: {
       id: chatId,
-      title
+      name
     }
   }
   return await ref.update(chats)
