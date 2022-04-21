@@ -6,6 +6,7 @@ const Users = (props) => {
   const user = props.users.map((u) => (
     <User
       toggleAddChat={props.toggleAddChat}
+      chatExist={u.chatExist}
       createChat={props.createChat}
       id={u.id}
       login={u.login}

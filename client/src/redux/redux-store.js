@@ -5,13 +5,15 @@ import settingsReducer from "./settingsReducer";
 import dialogsReducer from "./dialogsReducer";
 import usersReducer from "./usersReducer";
 import appReducer from "./appReducer";
+import messageReducer from "./messageReducer";
 
 let reducerBox = combineReducers({
   auth: authReducer,
   settings: settingsReducer,
-  dialogsPage: dialogsReducer,
+  dialogs: dialogsReducer,
   users: usersReducer,
-  app: appReducer
+  app: appReducer,
+  message: messageReducer
 })
 
 let store = createStore(reducerBox, applyMiddleware(thunkMiddleWear))

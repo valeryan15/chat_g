@@ -2,25 +2,23 @@ import React, { useState } from 'react'
 import WroteMessage from './WroteMessage'
 
 const Message = (props) => {
-  let state = props.dialogsPage
-
   let [newMessage, setMessage] = useState(() => {
-    if (state.chats.length) {
-      return state.chats.message || ''
+    if (props.chats.length) {
+      return props.chats.message || ''
     }
     return ''
   })
 
-  const sendMessage = () => {
-    props.sendMessage(newMessage)
-    setMessage('')
-  }
+  // const sendMessage = () => {
+  //   props.addMessage(newMessage)
+  //   setMessage('')
+  // }
 
   const onMessageChange = (e) => {
     setMessage(e.target.value)
   }
 
-  let messageElement = state.chats.map((m) => (
+  let messageElement = props.chats.map((m) => (
     <WroteMessage mess={m.message} key={m.id} />
   ))
   return (
@@ -43,7 +41,7 @@ const Message = (props) => {
         />
         <button
           className="mr-24 dark:text-white"
-          onClick={sendMessage}
+          // onClick={sendMessage}
         >
           Submit
         </button>

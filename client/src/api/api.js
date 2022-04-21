@@ -96,5 +96,22 @@ export const chatsAPI = {
       'POST',
       options
     )
+  },
+  getChats() {
+    return http(
+      'http://localhost:8081/users/get-chats',
+      'POST',
+    )
+  }
+}
+
+export const messageAPI = {
+  getChat(id) {
+    const options = {id}
+    return http(
+      'http://localhost:8081/chats/get-chat',
+      'POST',
+      options
+    )
   }
 }

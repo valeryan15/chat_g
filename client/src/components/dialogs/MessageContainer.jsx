@@ -1,22 +1,23 @@
 import Message from './Message'
 import { connect } from 'react-redux'
-import { newMessageAction } from '../../redux/dialogsReducer'
-import React from "react";
+import { getChatThunk } from '../../redux/messageReducer'
+import { useParams } from 'react-router-dom'
+import { useEffect } from 'react'
 
-class MessageContainer extends React.Component {
-  render() {
-    return <Message {...this.props} />
-  }
+const MessageContainer = (props) => {
+  let { chat_id } = useParams()
+
+  useEffect(() => {
+    props.getChatThunk(chat_id)
+  }, [chat_id])
+
+  return <Message {...props} />
 }
 
 const mapStateToProps = (state) => ({
-  dialogsPage: state.dialogsPage,
-})
-const mapDispatchToProps = (dispatch) => ({
-  sendMessage: (newMessage) => dispatch(newMessageAction(newMessage)),
+  chats: state.dialogs.chats,
 })
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(MessageContainer)
+export default connect(mapStateToProps, { getChatThunk })(
+  MessageContainer
+)

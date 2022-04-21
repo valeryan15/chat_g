@@ -20,7 +20,7 @@ const UsersContainer = (props) => {
 const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
   users: state.users.users,
-  toggleAddChat: state.dialogsPage.toggleAddChat,
+  toggleAddChat: state.dialogs.toggleAddChat,
 })
 
 export default connect(mapStateToProps, {
