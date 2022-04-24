@@ -1,5 +1,6 @@
 import db, { DatabaseUrlUsers } from '../database'
 import { addSettings } from './settings.function'
+import { getNewChatMessages } from './chats.function'
 
 export async function getUserById(id) {
   let user = await getUserByIdFull(id)
@@ -21,6 +22,7 @@ export async function getUsers() {
   const users = snapshot.val() ? Object.values(snapshot.val()) : []
   return users.map(mappingFullUser)
 }
+
 export async function getUserByIdFull(id) {
   const users = await getUsers()
   return users.find(u => u.id === id)
@@ -46,6 +48,17 @@ export async function addChatToUser(login, chatId, title) {
   return await ref.update(chats)
 }
 
+export async function updateCountNewMessagesUserChat(login, chatId, countNewMessages = 0) {
+  const ref = db.ref(`${DatabaseUrlUsers}/${login}/chats/${chatId}`)
+  let snapshot = await ref.once('value')
+  let chat =  snapshot.val() ? snapshot.val() : {}
+  chat = {
+    ...chat,
+    countNewMessages
+  }
+  return await ref.update(chat)
+}
+
 export async function existUser(login) {
   const ref = db.ref(`${DatabaseUrlUsers}/${login}`)
   const snapshot = await ref.once('value')
@@ -58,7 +71,24 @@ export async function existUser(login) {
  */
 export async function getUserChats(login) {
   const user = await getUserByLogin(login)
-  return user.chats ? Object.values(user.chats) : []
+  const chats = user.chats ? Object.values(user.chats) : []
+  return chats.map(chat => {
+    return {
+      ...chat,
+      countNewMessages: chat.countNewMessages ? chat.countNewMessages : 0
+    }
+  })
+}
+
+export async function getNewUserChatMessages(login) {
+  const chats = await getUserChats(login)
+  let promises = []
+  for (const chat of chats) {
+    if(chat.countNewMessages) {
+      promises.push(getNewChatMessages(chat, login))
+    }
+  }
+  return Promise.all(promises)
 }
 
 function mappingFullUser(user) {
