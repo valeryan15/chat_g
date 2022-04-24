@@ -1,7 +1,7 @@
 import express, { Router } from 'express'
 import { removeActiveUser } from '../realtime-data/active-users'
 import authMiddleware from '../middleware/auth.middleware'
-import { getUserByLogin, getUserChats, getUsers } from '../database-function/users.function'
+import { getNewUserChatMessages, getUserByLogin, getUserChats, getUsers } from '../database-function/users.function'
 import { getSettingsById } from '../database-function/settings.function'
 
 const router = Router()
@@ -110,6 +110,9 @@ router.post('/', async (req, res) => {
  *                         name:
  *                           type: string
  *                           description: Имя чата
+ *                         countNewMessages:
+ *                           type: number
+ *                           description: Количество новых сообщений в чате
  *
  */
 router.post('/get-user', async (req, res) => {
@@ -146,6 +149,9 @@ router.post('/get-user', async (req, res) => {
  *                     name:
  *                       type: string
  *                       description: Имя чата
+ *                     countNewMessages:
+ *                       type: number
+ *                       description: Количество новых сообщений в чате
  */
 router.post('/get-chats', async (req, res) => {
   const chats = await getUserChats(req.user.login)
@@ -172,4 +178,35 @@ router.post('/logout', async (req, res) => {
   return res.status(200).json({ message: 'ok' })
 })
 
+/**
+ * @openapi
+ * /users/check-new-messages:
+ *   post:
+ *     description: выход пользователя
+ *     responses:
+ *       200:
+ *         description: возвращает сообщение.
+ *         content:
+ *             application/json:
+ *               schema:
+ *                 type: array
+ *                 items:
+ *                   type: object
+ *                   properties:
+ *                     chatId::
+ *                       type: string
+ *                       description: ID чата с новым сооб
+ *                     newMessages:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         description: Новое сообщение структуга такая же как и в чате
+ *                     countNewMessages:
+ *                       type: number
+ *                       description: Количество новых сообщений в чате
+ */
+router.post('/check-new-messages', async (req, res) => {
+  const newMessages = await getNewUserChatMessages(req.user.login)
+  return res.status(200).json(newMessages)
+})
 export default router
