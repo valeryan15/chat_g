@@ -1,5 +1,5 @@
 import Login from './components/login/login'
-import Auth from './authorization/Auth'
+import Auth from './components/authorization/Auth'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import SettingsWindow from './components/settings/settingsWindow'
 import { ToastContainer, Zoom } from 'react-toastify'
@@ -12,11 +12,35 @@ import UsersContainer from './components/users/usersContainer'
 import { initializeApp } from './redux/appReducer'
 import { ThemeContext } from './contexts/themeContext'
 import RequireAuth from './contexts/authContext'
+import { getChatsThunk } from './redux/dialogsReducer'
+import FooterContainer from "./components/footer/FooterContainer";
+
+let tick = 0
 
 const App = (props) => {
   useEffect(() => {
     props.initializeApp()
+    props.getChatsThunk()
   }, [])
+
+  useEffect(() => {
+    let unsubscribe = null
+    if (props.isAuth) {
+      unsubscribe = setTimeout(function updateTick() {
+        props.getChatsThunk()
+        if (tick <= 10) {
+          tick++
+          unsubscribe = setTimeout(updateTick, 5000)
+        }
+      }, 5000)
+    }
+    return () => {
+      if (unsubscribe) {
+        clearTimeout(unsubscribe)
+        tick = 0
+      }
+    }
+  })
 
   const themeStore = useContext(ThemeContext)
   const classes = `min-h-full flex flex-col ${themeStore.theme}`
@@ -63,6 +87,7 @@ const App = (props) => {
               />
             </Routes>
           </div>
+          <FooterContainer />
         </BrowserRouter>
       )}
     </div>
@@ -75,4 +100,7 @@ const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
 })
 
-export default connect(mapStateToProps, { initializeApp })(App)
+export default connect(mapStateToProps, {
+  initializeApp,
+  getChatsThunk,
+})(App)

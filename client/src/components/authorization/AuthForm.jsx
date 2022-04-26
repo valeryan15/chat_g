@@ -1,8 +1,8 @@
 import React from 'react'
 import { Formik, Field } from 'formik'
-import preloader from '../img/785.gif'
-import { SignupSchema } from '../components/support/validators'
-import { authInitialValues } from '../components/support/formik'
+import preloader from '../../img/785.gif'
+import { SignupSchema } from '../support/validators'
+import { authInitialValues } from '../support/formik'
 
 const AuthForm = (props) => {
   return (

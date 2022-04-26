@@ -35,9 +35,9 @@ const authReducer = (state = initialState, action) => {
   }
 }
 
-export const setAuthUserData = (login, isAuth) => ({
+export const setAuthUserData = (userId, login, isAuth) => ({
   type: SET_USER_DATA,
-  payload: { login, isAuth },
+  payload: {userId, login, isAuth },
 })
 
 export const toggleIsFetching = (isFetching) => ({

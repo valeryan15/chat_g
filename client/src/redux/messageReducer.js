@@ -19,14 +19,18 @@ const messageReducer = (state = initialState, action) => {
 }
 
 export const getMessageAction = (messages) => ({
-  type:GET_MESSAGE,
-  messages
+  type: GET_MESSAGE,
+  messages,
 })
 
 export const getChatThunk = (chatId) => (dispatch) => {
   return messageAPI.getChat(chatId).then((response) => {
-    console.log(response)
     dispatch(getMessageAction(response.messages))
+  })
+}
+export const addMessageThunk = (chatId, message) => (dispatch) => {
+  return messageAPI.addMessage(chatId, message).then(() => {
+    dispatch(getChatThunk(chatId))
   })
 }
 

@@ -27,7 +27,7 @@ export const initializedSuccess = () => ({
 export const initializeApp = () => (dispatch) => {
   let isToken = Boolean(getToken())
   if (isToken) {
-    dispatch(setAuthUserData(null, true))
+    dispatch(setAuthUserData(null,null, true))
     dispatch(getUserThunk()).finally(() => {
       dispatch(initializedSuccess())
     })

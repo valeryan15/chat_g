@@ -12,7 +12,9 @@ const DialogContainer = (props) => {
 }
 
 const mapStateToProps = (state) => ({
-  chats: state.dialogs.chats
+  chats: state.dialogs.chats,
 })
 
-export default connect(mapStateToProps, {getChatsThunk})(DialogContainer)
+export default connect(mapStateToProps, { getChatsThunk })(
+  DialogContainer
+)

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {
   registrationThunk,
   toggleIsFetching,
-} from '../redux/authReducer'
+} from '../../redux/authReducer'
 
 const Auth = (props) => {
   const onSubmit = (formData) => {

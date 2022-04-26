@@ -1,7 +1,7 @@
 import React from 'react'
 import profileAvatar from '../../img/dOKeEPZehOc.jpeg'
 import { Link } from 'react-router-dom'
-import Footer from '../footer/Footer'
+import FooterContainer from "../footer/FooterContainer";
 
 const NavSettings = (props) => {
   return (
@@ -36,7 +36,7 @@ const NavSettings = (props) => {
           </div>
         </Link>
       </div>
-      <Footer />
+      <FooterContainer />
     </div>
   )
 }

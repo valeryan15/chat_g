@@ -113,5 +113,13 @@ export const messageAPI = {
       'POST',
       options
     )
+  },
+  addMessage(id, message) {
+    const options = {id, message}
+    return http(
+      'http://localhost:8081/chats/add-message',
+      'POST',
+      options
+    )
   }
 }

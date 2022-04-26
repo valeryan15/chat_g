@@ -9,17 +9,23 @@ const Message = (props) => {
     return ''
   })
 
-  // const sendMessage = () => {
-  //   props.addMessage(newMessage)
-  //   setMessage('')
-  // }
+  const sendMessage = () => {
+    props.addMessage(newMessage)
+    setMessage('')
+  }
 
   const onMessageChange = (e) => {
     setMessage(e.target.value)
   }
 
-  let messageElement = props.chats.map((m) => (
-    <WroteMessage mess={m.message} key={m.id} />
+  let messageElement = props.messages.map((m) => (
+    <WroteMessage
+      id={props.userId}
+      mess={m.message}
+      time={m.timestamp}
+      userId={m.user.id}
+      key={m.id}
+    />
   ))
   return (
     <div className="min-h-full flex flex-col">
@@ -27,10 +33,7 @@ const Message = (props) => {
         header
       </div>
       <div className="dark:text-white flex-auto transition duration-1000 ">
-        <div className="ml-24 bg-gray-200 w-1/3 my-4 p-2 rounded-lg dark:bg-black">
-          message from friend
-        </div>
-        <div className="float-right w-1/3 ">{messageElement}</div>
+        <div className="w-full ml-24">{messageElement}</div>
       </div>
       <div className="dark:text-white mb-2 flex transition duration-1000">
         <textarea
@@ -41,7 +44,7 @@ const Message = (props) => {
         />
         <button
           className="mr-24 dark:text-white"
-          // onClick={sendMessage}
+          onClick={sendMessage}
         >
           Submit
         </button>
