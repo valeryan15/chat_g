@@ -1,9 +1,11 @@
 import { messageAPI } from '../api/api'
 
 const GET_MESSAGE = 'GET_MESSAGE'
+const EDIT_MESSAGE = 'EDIT_MESSAGE'
 
 const initialState = {
   messages: [],
+  isEditMessage: false
 }
 
 const messageReducer = (state = initialState, action) => {
@@ -13,6 +15,11 @@ const messageReducer = (state = initialState, action) => {
         ...state,
         messages: [...action.messages],
       }
+      case EDIT_MESSAGE:
+      return {
+        ...state,
+        isEditMessage: true,
+      }
     default:
       return state
   }
@@ -21,6 +28,9 @@ const messageReducer = (state = initialState, action) => {
 export const getMessageAction = (messages) => ({
   type: GET_MESSAGE,
   messages,
+})
+export const editMessageAction = () => ({
+  type: EDIT_MESSAGE,
 })
 
 export const getChatThunk = (chatId) => (dispatch) => {

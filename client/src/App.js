@@ -13,9 +13,8 @@ import { initializeApp } from './redux/appReducer'
 import { ThemeContext } from './contexts/themeContext'
 import RequireAuth from './contexts/authContext'
 import { getChatsThunk } from './redux/dialogsReducer'
-import FooterContainer from "./components/footer/FooterContainer";
-
-let tick = 0
+import FooterContainer from './components/footer/FooterContainer'
+import preloader from './img/free-animated-icon-cloud-network-6172518.gif'
 
 const App = (props) => {
   useEffect(() => {
@@ -24,20 +23,17 @@ const App = (props) => {
   }, [])
 
   useEffect(() => {
-    let unsubscribe = null
+    let timeoutId = null
     if (props.isAuth) {
-      unsubscribe = setTimeout(function updateTick() {
+      timeoutId = setTimeout(function updateTick() {
         props.getChatsThunk()
-        if (tick <= 10) {
-          tick++
-          unsubscribe = setTimeout(updateTick, 5000)
-        }
+        timeoutId = setTimeout(updateTick, 5000)
       }, 5000)
     }
     return () => {
-      if (unsubscribe) {
-        clearTimeout(unsubscribe)
-        tick = 0
+      //это вызывается когда происходит изменение компененты, удаление
+      if (timeoutId) {
+        clearTimeout(timeoutId)
       }
     }
   })
@@ -53,7 +49,10 @@ const App = (props) => {
         autoClose={8000}
       />
       {!props.initialized ? (
-        <span>loading...</span>
+        <div className="w-24 ml-[48%] mt-[20%]">
+          <div className='ml-2'>загрузка...</div>
+          <img src={preloader} alt="preloader" />
+        </div>
       ) : (
         <BrowserRouter>
           <HeaderContainer />

@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import WroteMessage from './WroteMessage'
 
 const Message = (props) => {
+  console.log(props.isEditMessage)
   let [newMessage, setMessage] = useState(() => {
     if (props.chats.length) {
       return props.chats.message || ''
@@ -10,21 +11,27 @@ const Message = (props) => {
   })
 
   const sendMessage = () => {
-    props.addMessage(newMessage)
-    setMessage('')
+      props.addMessage(newMessage)
+      setMessage('')
   }
 
   const onMessageChange = (e) => {
     setMessage(e.target.value)
   }
 
+  const editMessage = () => {
+    props.changeEditMessage()
+  }
+
   let messageElement = props.messages.map((m) => (
     <WroteMessage
+      editMessage={editMessage}
       id={props.userId}
       mess={m.message}
       time={m.timestamp}
       userId={m.user.id}
       key={m.id}
+      messId={m.id}
     />
   ))
   return (
@@ -32,14 +39,14 @@ const Message = (props) => {
       <div className="dark:text-white transition duration-1000 w-full min-h-0 border-r-2 border-b-2 border-slate-200 text-center ">
         header
       </div>
-      <div className="dark:text-white flex-auto transition duration-1000 ">
-        <div className="w-full ml-24">{messageElement}</div>
+      <div className="dark:text-white transition duration-1000 overflow-auto ">
+        <div className="w-full max-h-[700px]">{messageElement}</div>
       </div>
-      <div className="dark:text-white mb-2 flex transition duration-1000">
+      <div className="dark:text-white mb-2 flex transition duration-1000 absolute w-[70%] bottom-0">
         <textarea
-          className=" ml-24  border-2 border-slate-200 transition duration-100 w-full dark:bg-gray-800 dark:text-white"
+          className=" ml-24 mt-4 border-2 border-slate-200 transition duration-100 w-[75%] dark:bg-gray-800 dark:text-white"
           placeholder="Введите текст"
-          value={newMessage}
+          value={!props.isEditMessage ? newMessage : 'messId'}
           onChange={onMessageChange}
         />
         <button
