@@ -1,5 +1,8 @@
 import db, { DatabaseUrlChats } from '../database'
-import { addChatToUser, updateCountNewMessagesUserChat } from './users.function'
+import {
+  addChatToUser,
+  updateCountNewMessagesUserChat,
+} from './users.function'
 
 export async function createChat(chat, login1, login2) {
   const ref = db.ref(DatabaseUrlChats)
@@ -53,7 +56,11 @@ export async function addMessageToChat(chatId, user, message) {
   const countNewMessage = mapping.filter(
     (m) => !m.read[userReceivingMessage]
   ).length
-  await updateCountNewMessagesUserChat(userReceivingMessage, chatId, countNewMessage)
+  await updateCountNewMessagesUserChat(
+    userReceivingMessage,
+    chatId,
+    countNewMessage
+  )
   return m
 }
 
@@ -70,19 +77,44 @@ export async function updateMessage(chatId, messageId, message) {
 }
 
 export async function getNewChatMessages(chat, login) {
-  const ref = db.ref(
-    `${DatabaseUrlChats}/${chat.id}/messages`
-  )
+  const ref = db.ref(`${DatabaseUrlChats}/${chat.id}/messages`)
   const snapshot = await ref.once('value')
   const mapping = mappingMessages(snapshot.val() || [])
-  const newMessages = mapping.filter(
-    (m) => !m.read[login]
-  )
+  const newMessages = mapping.filter((m) => !m.read[login])
   return {
     chatId: chat.id,
     newMessages,
-    countNewMessages: newMessages.length
+    countNewMessages: newMessages.length,
   }
+}
+
+export async function readChatMessages(chatId, login, messages = []) {
+  let promises = []
+  for (const message of messages) {
+      promises.push(readChatMessage(chatId, login, message.id))
+  }
+  await Promise.all(promises)
+  const refMessages = db.ref(`${DatabaseUrlChats}/${chatId}/messages`)
+  const snapshot = await refMessages.once('value')
+  const mapping = mappingMessages(snapshot.val() || [])
+  const countNewMessage = mapping.filter(
+    (m) => !m.read[login]
+  ).length
+  await updateCountNewMessagesUserChat(
+    login,
+    chatId,
+    countNewMessage
+  )
+}
+
+async function readChatMessage(chatId, login, messageId) {
+  const ref = db.ref(
+    `${DatabaseUrlChats}/${chatId}/messages/${messageId}`
+  )
+  const snapshot = await ref.once('value')
+  const message = snapshot.val()
+  message.read[login] = true
+  return ref.update(message)
 }
 
 export function mappingChat(chat) {
