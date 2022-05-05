@@ -9,6 +9,7 @@ import {
   existChatById,
   getChat,
   mappingChat,
+  readChatMessages,
   updateMessage,
 } from '../database-function/chats.function'
 import { ServerError } from '../models/ServerError'
@@ -308,6 +309,68 @@ router.post(
       req.body.chatId,
       req.body.messageId,
       req.body.message
+    )
+    return res.status(200).json({ success: true })
+  }
+)
+
+/**
+ * @openapi
+ * /chats/read-messages:
+ *   post:
+ *    consumes:
+ *      application/json
+ *    parameters:
+ *      - in: path
+ *        name: chatId
+ *        schema:
+ *          type: string
+ *        required: true
+ *        description: ID чата
+ *      - in: body
+ *        name: messages
+ *        required: true
+ *        description: ID сообщения
+ *        schema:
+ *          type: array
+ *          items:
+ *            type: object
+ *            properties:
+ *              id:
+ *                type: string
+ *    description: Прочитать сообщения
+ *    responses:
+ *      200:
+ *        description: что-то возвращает
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                success:
+ *                  type: boolean
+ */
+router.post(
+  '/read-messages',
+  body('chatId')
+    .not()
+    .isEmpty()
+    .custom(async (value) => {
+      const isExist = await existChatById(value)
+      if (!isExist) {
+        return Promise.reject('Chat does not exist')
+      }
+    }),
+  body('messages').not().isEmpty(),
+  async (req, res) => {
+    const errors = validationResult(req)
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() })
+    }
+    await readChatMessages(
+      req.body.chatId,
+      req.user.login,
+      req.body.messages
     )
     return res.status(200).json({ success: true })
   }
