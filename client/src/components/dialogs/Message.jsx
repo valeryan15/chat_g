@@ -1,26 +1,24 @@
-import React, { useState } from 'react'
+import React from 'react'
 import WroteMessage from './WroteMessage'
 
 const Message = (props) => {
-  console.log(props.isEditMessage)
-  let [newMessage, setMessage] = useState(() => {
-    if (props.chats.length) {
-      return props.chats.message || ''
-    }
-    return ''
-  })
+  let newMessage = props.message
+  let messId = props.editMessId
 
   const sendMessage = () => {
-      props.addMessage(newMessage)
-      setMessage('')
+    props.addMessage(newMessage)
   }
-
   const onMessageChange = (e) => {
-    setMessage(e.target.value)
+    props.setNewMessage(e.target.value)
   }
-
-  const editMessage = () => {
-    props.changeEditMessage()
+  const editMessage = (editMessage, editMessId) => {
+    props.changeEditMessage(editMessage, editMessId)
+  }
+  const sendEditMessage = () => {
+    props.addEditMessage(newMessage, messId)
+  }
+  const cancelEditMode = () => {
+    props.cancelEditMode()
   }
 
   let messageElement = props.messages.map((m) => (
@@ -37,7 +35,7 @@ const Message = (props) => {
   return (
     <div className="min-h-full flex flex-col">
       <div className="dark:text-white transition duration-1000 w-full min-h-0 border-r-2 border-b-2 border-slate-200 text-center ">
-        header
+        {props.dialogName}
       </div>
       <div className="dark:text-white transition duration-1000 overflow-auto ">
         <div className="w-full max-h-[700px]">{messageElement}</div>
@@ -46,15 +44,27 @@ const Message = (props) => {
         <textarea
           className=" ml-24 mt-4 border-2 border-slate-200 transition duration-100 w-[75%] dark:bg-gray-800 dark:text-white"
           placeholder="Введите текст"
-          value={!props.isEditMessage ? newMessage : 'messId'}
+          value={newMessage}
           onChange={onMessageChange}
         />
-        <button
-          className="mr-24 dark:text-white"
-          onClick={sendMessage}
-        >
-          Submit
-        </button>
+        <div className=" mt-4 ml-2">
+          <button
+            className="mr-24 dark:text-white rounded-lg bg-gray-200 dark:bg-gray-600"
+            onClick={
+              !props.isEditMessage ? sendMessage : sendEditMessage
+            }
+          >
+            Submit
+          </button>
+          {props.isEditMessage ? (
+            <button
+              className="text-black dark:text-white text-xs rounded-lg px-2  bg-red-200 dark:bg-red-600 transition duration-100"
+              onClick={cancelEditMode}
+            >
+              отмена
+            </button>
+          ) : null}
+        </div>
       </div>
     </div>
   )

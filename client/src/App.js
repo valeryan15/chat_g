@@ -19,12 +19,13 @@ import preloader from './img/free-animated-icon-cloud-network-6172518.gif'
 const App = (props) => {
   useEffect(() => {
     props.initializeApp()
-    props.getChatsThunk()
+
   }, [])
 
   useEffect(() => {
     let timeoutId = null
     if (props.isAuth) {
+      props.getChatsThunk()
       timeoutId = setTimeout(function updateTick() {
         props.getChatsThunk()
         timeoutId = setTimeout(updateTick, 5000)

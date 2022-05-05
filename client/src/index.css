@@ -6,7 +6,6 @@
   .sideBar-icon {
     @apply relative flex items-center justify-center h-12 mt-2 mb-2 text-blue-800 transition-all duration-300 ease-linear bg-yellow-300 w-28 rounded-3xl hover:text-white;
   }
-
   .nav {
     @apply relative top-0 left-0 flex flex-col h-screen m-0 text-white bg-gray-900 shadow-lg w-28;
   }
@@ -24,5 +23,9 @@
   }
   .changeButton {
     @apply h-12 mt-2 rounded-lg  dark:text-white transition duration-1000 border-y-2 mx-4 border-slate-200;
+  }
+  .buttonChangeFriendDialog {
+    @apply border-y-2 w-[90%] my-2 hover:bg-gray-200 dark:hover:bg-gray-800
+    rounded-lg dark:text-white transition duration-1000 border-slate-200 mx-4 h-16 flex justify-between items-center
   }
 }

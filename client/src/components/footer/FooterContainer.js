@@ -1,16 +1,14 @@
-
-import {connect} from "react-redux";
-import Footer from "./Footer";
+import { connect } from 'react-redux'
+import Footer from './Footer'
 
 const FooterContainer = (props) => {
-  return (
-    props.chats.map(m => <Footer newMess={m.countNewMessages} key={m.id}/>)
-
-  )
+  return <Footer sumMessages={props.sumMessages} {...props}/>
 }
 
 const mapStateToProps = (state) => ({
-  chats: state.dialogs.chats
+  chats: state.dialogs.chats,
+  sumMessages: state.dialogs.sumMessages,
+  isAuth: state.auth.isAuth
 })
 
 export default connect(mapStateToProps)(FooterContainer)

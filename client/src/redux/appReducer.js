@@ -1,6 +1,5 @@
 import { getUserThunk } from './settingsReducer'
 import { getToken } from '../components/login/token'
-import { setAuthUserData } from './authReducer'
 
 const INITIALIZED_SUCCESS = 'INITIALIZED_SUCCESS'
 
@@ -27,7 +26,6 @@ export const initializedSuccess = () => ({
 export const initializeApp = () => (dispatch) => {
   let isToken = Boolean(getToken())
   if (isToken) {
-    dispatch(setAuthUserData(null,null, true))
     dispatch(getUserThunk()).finally(() => {
       dispatch(initializedSuccess())
     })

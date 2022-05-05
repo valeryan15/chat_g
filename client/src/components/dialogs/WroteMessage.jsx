@@ -4,15 +4,14 @@ const WroteMessage = (props) => {
   const time = new Date(props.time)
 
   const editWroteMessage = () => {
-    props.editMessage(props.messId)
+    props.editMessage(props.mess, props.messId)
   }
-
   return (
     <>
       <div
         className={
           props.id === props.userId
-            ? ' my-4 w-1/4 px-2 break-all rounded-lg bg-blue-200 dark:bg-blue-800 dark:text-white ml-[57%]'
+            ? ' my-4 w-1/4 px-2 break-all rounded-lg bg-blue-200 dark:bg-blue-800 dark:text-white ml-[49%]'
             : ' bg-gray-200 w-1/4 my-4 px-2 rounded-lg dark:bg-black ml-24'
         }
       >
@@ -20,7 +19,7 @@ const WroteMessage = (props) => {
           {props.mess}
           {props.id === props.userId ? (
             <button
-              className="bg-gray-200 dark:bg-gray-400 mr-2 ml-[15px] w-12 h-[23px] text-xs mt-2 rounded-lg px-2 "
+              className="bg-gray-200 dark:bg-gray-400 mr-2 ml-[15px] min-w-[38px] h-[23px] text-xs mt-2 rounded-lg px-2 "
               onClick={editWroteMessage}
             >
               edit

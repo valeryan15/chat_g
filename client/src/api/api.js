@@ -49,25 +49,14 @@ export const authAPI = {
     )
   },
   logout() {
-    return http(
-      'http://localhost:8081/users/logout',
-      'POST',
-    )
+    return http('http://localhost:8081/users/logout', 'POST')
   },
-
   getUser() {
-    return http(
-      'http://localhost:8081/users/get-user',
-      'POST',
-    )
+    return http('http://localhost:8081/users/get-user', 'POST')
   },
   users() {
-    return http(
-      'http://localhost:8081/users',
-      'POST',
-    )
+    return http('http://localhost:8081/users', 'POST')
   },
-
 }
 
 export const settingsAPI = {
@@ -79,47 +68,47 @@ export const settingsAPI = {
     )
   },
   updateTheme(id, theme) {
-    const options = {id, theme}
     return http(
       'http://localhost:8081/settings/update-theme',
       'POST',
-      options
+      { id, theme }
     )
-  }
+  },
 }
 
 export const chatsAPI = {
   createChat(id) {
-    const options = {id}
     return http(
       'http://localhost:8081/chats/create-chat',
       'POST',
-      options
+      { id }
     )
   },
   getChats() {
-    return http(
-      'http://localhost:8081/users/get-chats',
-      'POST',
-    )
-  }
+    return http('http://localhost:8081/users/get-chats', 'POST')
+  },
 }
 
 export const messageAPI = {
   getChat(id) {
-    const options = {id}
     return http(
       'http://localhost:8081/chats/get-chat',
       'POST',
-      options
+      { id }
     )
   },
   addMessage(id, message) {
-    const options = {id, message}
     return http(
       'http://localhost:8081/chats/add-message',
       'POST',
-      options
+      { id, message }
     )
-  }
+  },
+  updateMessage(chatId, messageId, message) {
+    return http(
+      'http://localhost:8081/chats/update-message',
+      'POST',
+      {chatId, messageId, message}
+    )
+  },
 }
