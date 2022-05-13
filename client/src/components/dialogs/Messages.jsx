@@ -3,6 +3,7 @@ import WroteMessage from './WroteMessage'
 import arrowDown from '../../img/angle-arrow-down_icon-icons.com_73683.svg'
 
 const Messages = (props) => {
+  console.log(props.messages)
   useEffect(() => {
     scrollToBottom()
     if (props.loadedMessagePage) {

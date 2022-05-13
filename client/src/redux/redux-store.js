@@ -5,7 +5,7 @@ import settingsReducer from "./settingsReducer";
 import dialogsReducer from "./dialogsReducer";
 import usersReducer from "./usersReducer";
 import appReducer from "./appReducer";
-import messageReducer from "./messageReducer";
+import messageReducer from "./messagesReducer";
 
 let reducerBox = combineReducers({
   auth: authReducer,

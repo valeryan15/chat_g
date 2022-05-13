@@ -2,6 +2,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { getToken } from '../components/login/token'
 
+const baseUrl = 'http://localhost:8081/'
 
 const http = async (url, method, body = {}) => {
   let headers = getToken()
@@ -36,87 +37,64 @@ const http = async (url, method, body = {}) => {
 
 export const authAPI = {
   registration(options) {
-    return http(
-      'http://localhost:8081/common/sign-up',
-      'POST',
-      options
-    )
+    return http(`${baseUrl}common/sign-up`, 'POST', options)
   },
   authorization(options) {
-    return http(
-      'http://localhost:8081/common/sign-in',
-      'POST',
-      options
-    )
+    return http(`${baseUrl}common/sign-in`, 'POST', options)
   },
   logout() {
-    return http('http://localhost:8081/users/logout', 'POST')
+    return http(`${baseUrl}users/logout`, 'POST')
   },
   getUser() {
-    return http('http://localhost:8081/users/get-user', 'POST')
+    return http(`${baseUrl}users/get-user`, 'POST')
   },
   users() {
-    return http('http://localhost:8081/users', 'POST')
+    return http(`${baseUrl}users`, 'POST')
   },
 }
 
 export const settingsAPI = {
   updateInfo(options) {
-    return http(
-      'http://localhost:8081/settings/update-info',
-      'POST',
-      options
-    )
+    return http(`${baseUrl}settings/update-info`, 'POST', options)
   },
   updateTheme(id, theme) {
-    return http(
-      'http://localhost:8081/settings/update-theme',
-      'POST',
-      { id, theme }
-    )
+    return http(`${baseUrl}settings/update-theme`, 'POST', {
+      id,
+      theme,
+    })
   },
 }
 
 export const chatsAPI = {
   createChat(id) {
-    return http(
-      'http://localhost:8081/chats/create-chat',
-      'POST',
-      { id }
-    )
+    return http(`${baseUrl}chats/create-chat`, 'POST', { id })
   },
   getChats() {
-    return http('http://localhost:8081/users/get-chats', 'POST')
+    return http(`${baseUrl}users/get-chats`, 'POST')
   },
 }
 
 export const messageAPI = {
   getChat(id) {
-    return http(
-      'http://localhost:8081/chats/get-chat',
-      'POST',
-      { id }
-    )
+    return http(`${baseUrl}chats/get-chat`, 'POST', { id })
   },
   addMessage(id, message) {
-    return http(
-      'http://localhost:8081/chats/add-message',
-      'POST',
-      { id, message }
-    )
+    return http(`${baseUrl}chats/add-message`, 'POST', {
+      id,
+      message,
+    })
   },
   updateMessage(chatId, messageId, message) {
-    return http(
-      'http://localhost:8081/chats/update-message',
-      'POST',
-      {chatId, messageId, message}
-    )
+    return http(`${baseUrl}chats/update-message`, 'POST', {
+      chatId,
+      messageId,
+      message,
+    })
   },
   readMessages(chatId, messages) {
-    return http(
-      'http://localhost:8081/chats/read-messages',
-      'POST',
-      {chatId, messages}
-    )
+    return http(`${baseUrl}chats/read-messages`, 'POST', {
+      chatId,
+      messages,
+    })
   },
 }

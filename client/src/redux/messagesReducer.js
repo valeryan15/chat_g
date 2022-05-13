@@ -18,7 +18,11 @@ const initialState = {
   loadedMessagePage: false,
 }
 
-const messageReducer = (state = initialState, action) => {
+const sortMessages = (messages) => {
+  messages.sort((a,b) => a - b)
+}
+
+const messagesReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_MESSAGE:
       return {
@@ -73,9 +77,8 @@ export const getMessageAction = (messages) => ({
   type: GET_MESSAGE,
   messages,
 })
-export const addMessageAction = (message) => ({
+export const addMessageAction = () => ({
   type: ADD_MESSAGE,
-  message
 })
 export const updateMessageAction = (message) => ({
   type: UPDATE_MESSAGE,
@@ -105,8 +108,10 @@ export const getChatThunk = (chatId) => (dispatch) => {
   })
 }
 export const addMessageThunk = (chatId, message) => (dispatch) => {
-  return messageAPI.addMessage(chatId, message).then(() => {
-    dispatch(addMessageAction(message))
+  return messageAPI.addMessage(chatId, message).then((response) => {
+    let {id, message, timesTamp} = response
+    console.log(id)
+    dispatch(addMessageAction(response))
   })
 }
 export const editMessageThunk =
@@ -122,4 +127,4 @@ export const readMessageThunk = (chatId, messages) => () => {
   return messageAPI.readMessages(chatId, messages)
 }
 
-export default messageReducer
+export default messagesReducer
