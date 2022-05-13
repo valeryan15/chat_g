@@ -2,6 +2,7 @@ import axios from 'axios'
 import { toast } from 'react-toastify'
 import { getToken } from '../components/login/token'
 
+
 const http = async (url, method, body = {}) => {
   let headers = getToken()
   let options = {}
@@ -109,6 +110,13 @@ export const messageAPI = {
       'http://localhost:8081/chats/update-message',
       'POST',
       {chatId, messageId, message}
+    )
+  },
+  readMessages(chatId, messages) {
+    return http(
+      'http://localhost:8081/chats/read-messages',
+      'POST',
+      {chatId, messages}
     )
   },
 }

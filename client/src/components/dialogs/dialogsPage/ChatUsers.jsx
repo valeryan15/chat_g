@@ -1,6 +1,6 @@
 import React from 'react'
 
-const DialogUsers = (props) => {
+const ChatUsers = (props) => {
   const changeDialog = () => {
     props.setDialogName(props.name)
   }
@@ -16,4 +16,4 @@ const DialogUsers = (props) => {
   )
 }
 
-export default DialogUsers
+export default ChatUsers

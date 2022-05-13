@@ -73,7 +73,6 @@ export const createChatThunk = (userId) => (dispatch) => {
       dispatch(toggleAddChatAction(false))
       dispatch(getUsersThunk())
     })
-    .catch(dispatch(toggleAddChatAction(false)))
 }
 
 export const getChatsThunk = () => (dispatch) => {

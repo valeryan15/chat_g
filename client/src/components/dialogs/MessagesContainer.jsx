@@ -1,17 +1,16 @@
-import Message from './Message'
+import Messages from './Messages'
 import { connect } from 'react-redux'
 import {
-  addEditMessageThunk,
   addMessageThunk,
   cancelEditModeAction,
-  editMessageAction,
-  getChatThunk,
+  editMessageAction, editMessageThunk,
+  getChatThunk, readMessageThunk,
   updateMessageAction,
 } from '../../redux/messageReducer'
 import { Navigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
-const MessageContainer = (props) => {
+const MessagesContainer = (props) => {
   let { chat_id } = useParams()
 
   useEffect(() => {
@@ -26,22 +25,24 @@ const MessageContainer = (props) => {
     props.addMessageThunk(chat_id, newMessage)
   }
   const addEditMessage = (newMessage, messId) => {
-    props.addEditMessageThunk(chat_id, messId, newMessage)
+    props.editMessageThunk(chat_id, messId, newMessage)
   }
-
   const changeEditMessage = (editMessage, editMessId) => {
     props.editMessageAction(editMessage, editMessId)
   }
   const cancelEditMode = () => {
     props.cancelEditModeAction()
   }
-
   const setNewMessage = (newMessage) => {
     props.updateMessageAction(newMessage)
   }
+  const readMessage = (messages) => {
+    props.readMessageThunk(chat_id, messages)
+  }
 
   return (
-    <Message
+    <Messages
+      readMessage={readMessage}
       cancelEditMode={cancelEditMode}
       addEditMessage={addEditMessage}
       addMessage={addMessage}
@@ -56,10 +57,13 @@ const mapStateToProps = (state) => ({
   chats: state.dialogs.chats,
   messages: state.message.messages,
   userId: state.auth.userId,
+  login:state.auth.login,
   isEditMessage: state.message.isEditMessage,
   message: state.message.message,
   editMessId: state.message.editMessId,
   dialogName: state.dialogs.dialogName,
+  messageEnd: state.message.messageEnd,
+  loadedMessagePage: state.message.loadedMessagePage,
 })
 
 export default connect(mapStateToProps, {
@@ -67,6 +71,7 @@ export default connect(mapStateToProps, {
   addMessageThunk,
   editMessageAction,
   updateMessageAction,
-  addEditMessageThunk,
+  editMessageThunk,
   cancelEditModeAction,
-})(MessageContainer)
+  readMessageThunk,
+})(MessagesContainer)

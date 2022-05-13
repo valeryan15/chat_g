@@ -19,16 +19,14 @@ import preloader from './img/free-animated-icon-cloud-network-6172518.gif'
 const App = (props) => {
   useEffect(() => {
     props.initializeApp()
-
   }, [])
-
   useEffect(() => {
     let timeoutId = null
     if (props.isAuth) {
       props.getChatsThunk()
       timeoutId = setTimeout(function updateTick() {
         props.getChatsThunk()
-        timeoutId = setTimeout(updateTick, 5000)
+        timeoutId = setTimeout(updateTick, 15000)
       }, 5000)
     }
     return () => {
@@ -51,7 +49,7 @@ const App = (props) => {
       />
       {!props.initialized ? (
         <div className="w-24 ml-[48%] mt-[20%]">
-          <div className='ml-2'>загрузка...</div>
+          <div className="ml-2">загрузка...</div>
           <img src={preloader} alt="preloader" />
         </div>
       ) : (
@@ -87,7 +85,7 @@ const App = (props) => {
               />
             </Routes>
           </div>
-          <FooterContainer />
+          {props.isAuth ? <FooterContainer /> : null}
         </BrowserRouter>
       )}
     </div>

@@ -18,20 +18,23 @@ const User = (props) => {
             disabled={props.toggleAddChat}
           >
             <span className="flex justify-between">
-              {props.toggleAddChat && <span>добавление...</span>}
-              {props.toggleAddChat && (
-                <img
-                  src={preloader}
-                  alt={'preloader'}
-                  className="w-6 ml-2"
-                />
+              {props.toggleAddChat ? (
+                <span>
+                  добавление...
+                  <img
+                    src={preloader}
+                    alt={'preloader'}
+                    className="w-6 ml-2 float-right"
+                  />
+                </span>
+              ) : (
+                <span>добавить в чат</span>
               )}
-              {!props.toggleAddChat && <span>добавить в чат</span>}
             </span>
           </button>
         ) : (
           <span className="bg-blue-200 transition duration-1000 dark:bg-blue-800 dark:hover:bg-blue-900 rounded-lg px-4">
-            <Link to={`/main/chatWindow/`}>перейти в чаты</Link>{' '}
+            <Link to={`/main/chatWindow/`}>перейти в чаты</Link>
           </span>
         )}
       </div>

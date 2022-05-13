@@ -1,9 +1,23 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import WroteMessage from './WroteMessage'
+import arrowDown from '../../img/angle-arrow-down_icon-icons.com_73683.svg'
 
-const Message = (props) => {
+const Messages = (props) => {
+  useEffect(() => {
+    scrollToBottom()
+    if (props.loadedMessagePage) {
+      let unreadMessages = props.messages.filter(
+        (m) => m.user.id !== props.userId && !m.read[props.login]
+      )
+      if (unreadMessages.length) {
+        props.readMessage(unreadMessages)
+      }
+    }
+  }, [props.loadedMessagePage])
+
   let newMessage = props.message
   let messId = props.editMessId
+  let messageEnd = props.messageEnd
 
   const sendMessage = () => {
     props.addMessage(newMessage)
@@ -20,9 +34,16 @@ const Message = (props) => {
   const cancelEditMode = () => {
     props.cancelEditMode()
   }
+  const readMessage = (messages) => {
+    props.readMessage(messages)
+  }
+  const scrollToBottom = () => {
+    messageEnd.scrollIntoView({ behavior: 'smooth' })
+  }
 
   let messageElement = props.messages.map((m) => (
     <WroteMessage
+      readMessage={readMessage}
       editMessage={editMessage}
       id={props.userId}
       mess={m.message}
@@ -38,8 +59,24 @@ const Message = (props) => {
         {props.dialogName}
       </div>
       <div className="dark:text-white transition duration-1000 overflow-auto ">
-        <div className="w-full max-h-[700px]">{messageElement}</div>
+        <div className="min-w-[10%] max-h-[700px]">
+          {messageElement}
+        </div>
+        <div
+          style={{ float: 'left', clear: 'both' }}
+          ref={(el) => {
+            messageEnd = el
+          }}
+        />
       </div>
+      {props.messages.length ? (
+        <button
+          onClick={scrollToBottom}
+          className="w-8 p-2 fixed bottom-[10%] right-[17%] rounded-full bg-gray-200 dark:bg-white"
+        >
+          <img src={arrowDown} alt="arrowDown" />
+        </button>
+      ) : null}
       <div className="dark:text-white mb-2 flex transition duration-1000 absolute w-[70%] bottom-0">
         <textarea
           className=" ml-24 mt-4 border-2 border-slate-200 transition duration-100 w-[75%] dark:bg-gray-800 dark:text-white"
@@ -70,4 +107,4 @@ const Message = (props) => {
   )
 }
 
-export default Message
+export default Messages

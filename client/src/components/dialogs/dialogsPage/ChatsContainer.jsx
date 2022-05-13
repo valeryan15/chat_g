@@ -1,12 +1,12 @@
-import Dialog from './Dialog'
 import { connect } from 'react-redux'
 import { useEffect } from 'react'
 import {
   getChatsThunk,
   setDialogNameAction,
 } from '../../../redux/dialogsReducer'
+import Chats from "./Chats";
 
-const DialogContainer = (props) => {
+const ChatsContainer = (props) => {
   useEffect(() => {
     props.getChatsThunk()
   }, [])
@@ -15,7 +15,7 @@ const DialogContainer = (props) => {
     props.setDialogNameAction(dialogName)
   }
 
-  return <Dialog setDialogName={setDialogName} {...props} />
+  return <Chats setDialogName={setDialogName} {...props} />
 }
 
 const mapStateToProps = (state) => ({
@@ -25,4 +25,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
   getChatsThunk,
   setDialogNameAction,
-})(DialogContainer)
+})(ChatsContainer)

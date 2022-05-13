@@ -1,15 +1,15 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import DialogUsers from './DialogUsers'
+import ChatUsers from './ChatUsers'
 
-const Dialog = (props) => {
+const Chats = (props) => {
   const setDialogName = (dialogName) => {
     props.setDialogName(dialogName)
   }
 
   let userElement = props.chats.map((d) => (
     <Link to={`/main/chatWindow/${d.id}`} key={d.id}>
-      <DialogUsers setDialogName={setDialogName} name={d.name} newMessages={d.countNewMessages}/>
+      <ChatUsers setDialogName={setDialogName} name={d.name} newMessages={d.countNewMessages}/>
     </Link>
   ))
   return (
@@ -19,4 +19,4 @@ const Dialog = (props) => {
   )
 }
 
-export default Dialog
+export default Chats

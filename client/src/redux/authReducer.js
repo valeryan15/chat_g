@@ -1,6 +1,7 @@
 import { authAPI } from '../api/api'
 import { removeToken, setToken } from '../components/login/token'
 import { getUserThunk } from './settingsReducer'
+import {toast} from "react-toastify";
 const SET_USER_DATA = 'SET_USER_DATA'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const TOGGLE_IS_AUTH = 'TOGGLE_IS_AUTH'
@@ -75,6 +76,12 @@ export const registrationThunk =
     authAPI
       .registration(login, password, passwordConfirmation)
       .then(() => {
+        toast.success('Вы успешно зарегестрированы, теперь нажмите на Sing in чтобы авторизоваться', {
+          theme: 'light',
+          autoClose: 10000,
+          draggable: true,
+          position: toast.POSITION.BOTTOM_CENTER,
+        })
         dispatch(toggleIsFetching(false))
       })
       .catch(() => dispatch(toggleIsFetching(false)))
