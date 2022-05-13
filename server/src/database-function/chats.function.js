@@ -61,7 +61,9 @@ export async function addMessageToChat(chatId, user, message) {
     chatId,
     countNewMessage
   )
-  return m
+  const snapshotMessage = await newMessageRef.once('value')
+  const newMessage = snapshotMessage.val()
+  return { id: snapshotMessage.key, ...newMessage }
 }
 
 export async function updateMessage(chatId, messageId, message) {
