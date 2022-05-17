@@ -2,6 +2,7 @@ import { authAPI } from '../api/api'
 import { removeToken, setToken } from '../components/login/token'
 import { getUserThunk } from './settingsReducer'
 import {toast} from "react-toastify";
+
 const SET_USER_DATA = 'SET_USER_DATA'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
 const TOGGLE_IS_AUTH = 'TOGGLE_IS_AUTH'

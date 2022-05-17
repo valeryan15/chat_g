@@ -3,8 +3,10 @@ import { connect } from 'react-redux'
 import {
   addMessageThunk,
   cancelEditModeAction,
-  editMessageAction, editMessageThunk,
-  getChatThunk, readMessageThunk,
+  editMessageAction,
+  editMessageThunk,
+  getChatThunk,
+  readMessageThunk,
   updateMessageAction,
 } from '../../redux/messagesReducer'
 import { Navigate, useParams } from 'react-router-dom'
@@ -57,13 +59,14 @@ const mapStateToProps = (state) => ({
   chats: state.dialogs.chats,
   messages: state.message.messages,
   userId: state.auth.userId,
-  login:state.auth.login,
+  login: state.auth.login,
   isEditMessage: state.message.isEditMessage,
   message: state.message.message,
   editMessId: state.message.editMessId,
   dialogName: state.dialogs.dialogName,
   messageEnd: state.message.messageEnd,
   loadedMessagePage: state.message.loadedMessagePage,
+  isFormDisabled: state.message.isFormDisabled
 })
 
 export default connect(mapStateToProps, {

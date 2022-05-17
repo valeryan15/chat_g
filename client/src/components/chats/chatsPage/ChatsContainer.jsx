@@ -20,6 +20,7 @@ const ChatsContainer = (props) => {
 
 const mapStateToProps = (state) => ({
   chats: state.dialogs.chats,
+  dialogName: state.dialogs.dialogName
 })
 
 export default connect(mapStateToProps, {

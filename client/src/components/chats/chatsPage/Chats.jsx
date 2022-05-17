@@ -9,11 +9,11 @@ const Chats = (props) => {
 
   let userElement = props.chats.map((d) => (
     <Link to={`/main/chatWindow/${d.id}`} key={d.id}>
-      <ChatUsers setDialogName={setDialogName} name={d.name} newMessages={d.countNewMessages}/>
+      <ChatUsers setDialogName={setDialogName} name={d.name} chatName={props.dialogName} newMessages={d.countNewMessages}/>
     </Link>
   ))
   return (
-    <div>
+    <div >
       {userElement}
     </div>
   )

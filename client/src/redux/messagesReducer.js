@@ -8,6 +8,7 @@ const CANCEL_EDIT_MODE = 'CANCEL_EDIT_MODE'
 const READ_MESSAGE = 'READ_MESSAGE'
 const LOADED_MESSAGE_PAGE = 'LOADED_MESSAGE_PAGE'
 const ADD_MESSAGE = 'ADD_MESSAGE'
+const DISABLED_FORM = 'DISABLED_FORM'
 
 const initialState = {
   messages: [],
@@ -16,10 +17,7 @@ const initialState = {
   editMessId: null,
   messageEnd: '',
   loadedMessagePage: false,
-}
-
-const sortMessages = (messages) => {
-  messages.sort((a,b) => a - b)
+  isFormDisabled: false,
 }
 
 const messagesReducer = (state = initialState, action) => {
@@ -63,10 +61,24 @@ const messagesReducer = (state = initialState, action) => {
         ...state,
         loadedMessagePage: action.loadedMessagePage,
       }
+      case DISABLED_FORM:
+      return {
+        ...state,
+        isFormDisabled: action.isFormDisabled,
+      }
     case ADD_MESSAGE:
       return {
         ...state,
         message: '',
+        messages: [
+          ...state.messages,
+          {
+            id: action.response.id,
+            message: action.response.message,
+            timestamp: action.response.timestamp,
+            user: action.response.user
+          },
+        ],
       }
     default:
       return state
@@ -77,8 +89,13 @@ export const getMessageAction = (messages) => ({
   type: GET_MESSAGE,
   messages,
 })
-export const addMessageAction = () => ({
+export const addMessageAction = (response) => ({
   type: ADD_MESSAGE,
+  response,
+})
+export const disabledFormAction = (isFormDisabled) => ({
+  type: DISABLED_FORM,
+  isFormDisabled,
 })
 export const updateMessageAction = (message) => ({
   type: UPDATE_MESSAGE,
@@ -108,10 +125,10 @@ export const getChatThunk = (chatId) => (dispatch) => {
   })
 }
 export const addMessageThunk = (chatId, message) => (dispatch) => {
+  dispatch(disabledFormAction(true))
   return messageAPI.addMessage(chatId, message).then((response) => {
-    let {id, message, timesTamp} = response
-    console.log(id)
     dispatch(addMessageAction(response))
+    dispatch(disabledFormAction(false))
   })
 }
 export const editMessageThunk =

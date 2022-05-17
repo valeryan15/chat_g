@@ -1,12 +1,14 @@
 import checked from '../../img/free-icon-checkmark-outline-54346.png'
+import m from '../../css/message.module.css'
+
 
 const WroteMessage = (props) => {
   const time = new Date(props.time)
 
   const isCurrentUser = props.id === props.userId
   const isCurrentUserStyle = isCurrentUser
-    ? ' my-4 max-w-[25%] px-2 break-words rounded-lg bg-blue-200 dark:bg-blue-800 dark:text-white ml-[49%]'
-    : ' bg-gray-200 w-1/4 break-words my-4 px-2 rounded-lg dark:bg-black ml-24'
+    ? ` my-4 px-2 break-words rounded-lg bg-blue-200 dark:bg-blue-800 dark:text-white ${m.rightMessage}`
+    : ` bg-gray-200 break-words my-4 px-2 rounded-lg dark:bg-black ${m.leftMessage}`
 
   const editWroteMessage = () => {
     props.editMessage(props.mess, props.messId)

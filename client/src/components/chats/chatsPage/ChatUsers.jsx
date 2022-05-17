@@ -1,5 +1,8 @@
 import React from 'react'
 
+const changeDialogFriend =
+  'buttonChangeFriendDialog bg-gray-200 dark:bg-gray-800'
+
 const ChatUsers = (props) => {
   const changeDialog = () => {
     props.setDialogName(props.name)
@@ -8,7 +11,11 @@ const ChatUsers = (props) => {
   return (
     <button
       onClick={changeDialog}
-      className="buttonChangeFriendDialog flex justify-between pr-4"
+      className={
+        props.name === props.chatName
+          ? changeDialogFriend
+          : 'buttonChangeFriendDialog'
+      }
     >
       <div className="ml-4">{props.name}</div>
       {props.newMessages ? `новых: ${props.newMessages} ` : null}

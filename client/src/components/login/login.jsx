@@ -8,14 +8,12 @@ import {Navigate} from "react-router-dom";
 
 
 const Login = (props) => {
-
   const onSubmit = (formData) => {
     props.authorizationThunk({...formData})
   }
   if(props.isAuth) {
     return <Navigate to='/main' />
   }
-
   return (
     <LoginForm onSubmit={onSubmit} isFetching={props.isFetching} />
   )

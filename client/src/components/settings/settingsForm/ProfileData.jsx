@@ -45,7 +45,7 @@ const ProfileData = (props) => {
               <div className="my-4">
                 <Field
                   name="phone"
-                  render={({ field }) => (
+                  render={({ field}) => (
                     <MaskedInput
                       className="my-2 rounded-lg h-8 w-full border border-black pl-2 dark:bg-gray-600 dark:text-white"
                       {...field}

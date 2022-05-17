@@ -1,13 +1,13 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import MessageContainer from '../dialogs/MessagesContainer'
+import MessageContainer from '../chats/MessagesContainer'
 import { connect } from 'react-redux'
-import ChatsContainer from "../dialogs/dialogsPage/ChatsContainer";
+import ChatsContainer from "../chats/chatsPage/ChatsContainer";
 
 function MainWindow() {
   return (
     <div className="flex h-full absolute w-full">
-      <div className="min-w-[400px] bg-white border-r-2 border-slate-200 transition duration-1000 dark:bg-gray-600 h-full">
+      <div className="min-w-[400px] bg-white border-r-[1px] border-gray-500 transition duration-1000 dark:bg-gray-600 h-full">
         <ChatsContainer />
       </div>
       <div className="bg-white dark:bg-gray-600 transition duration-1000  w-full h-full">

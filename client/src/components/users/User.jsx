@@ -14,7 +14,7 @@ const User = (props) => {
         {!props.chatExist ? (
           <button
             onClick={addUserIdDialog}
-            className="hover:bg-blue-200 transition duration-1000 dark:hover:bg-blue-900 rounded-lg px-4"
+            className="hover:bg-blue-200 transition duration-1000 dark:hover:bg-blue-900 px-4"
             disabled={props.toggleAddChat}
           >
             <span className="flex justify-between">
@@ -33,7 +33,7 @@ const User = (props) => {
             </span>
           </button>
         ) : (
-          <span className="bg-blue-200 transition duration-1000 dark:bg-blue-800 dark:hover:bg-blue-900 rounded-lg px-4">
+          <span className="bg-blue-200 transition duration-1000 dark:bg-blue-800 dark:hover:bg-blue-900 px-4">
             <Link to={`/main/chatWindow/`}>перейти в чаты</Link>
           </span>
         )}
