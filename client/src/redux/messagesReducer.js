@@ -15,7 +15,7 @@ const initialState = {
   isEditMessage: false,
   message: '',
   editMessId: null,
-  messageEnd: '',
+  messagesEnd: '',
   loadedMessagePage: false,
   isFormDisabled: false,
 }
@@ -86,6 +86,7 @@ const messagesReducer = (state = initialState, action) => {
 }
 
 export const getMessageAction = (messages) => ({
+  //нужно сделать так, чтоб при открытом чате и получении нового сообщения в этом чате сообщение отображалось без перезагрузки страницы
   type: GET_MESSAGE,
   messages,
 })

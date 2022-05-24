@@ -20,3 +20,9 @@
 .messageContent {
     flex: 1 1 auto;
 }
+
+.imgPreloaderMessageSubmit {
+    width: 2rem;
+    display: block;
+    margin: 0 auto;
+}

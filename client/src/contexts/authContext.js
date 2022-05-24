@@ -8,7 +8,8 @@ const RequireAuth = ({ children, ...props }) => {
 }
 
 const mapStateToProps = (state) => ({
-  isAuth: state.auth.isAuth
+  isAuth: state.auth.isAuth,
+  initialized: state.app.initialized,
 })
 
 export default connect(mapStateToProps)(RequireAuth)

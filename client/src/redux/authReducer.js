@@ -46,10 +46,7 @@ export const toggleIsFetching = (isFetching) => ({
   type: TOGGLE_IS_FETCHING,
   isFetching,
 })
-export const toggleIsAuth = (isAuth) => ({
-  type: TOGGLE_IS_AUTH,
-  isAuth,
-})
+
 
 export const authorizationThunk = (login, password) => (dispatch) => {
   dispatch(toggleIsFetching(true))
@@ -67,7 +64,7 @@ export const authorizationThunk = (login, password) => (dispatch) => {
 export const logoutThunk = () => (dispatch) => {
   authAPI.logout().then(() => {
     removeToken()
-    dispatch(setAuthUserData(null, false))
+    dispatch(setAuthUserData(null,null, false))
   })
 }
 

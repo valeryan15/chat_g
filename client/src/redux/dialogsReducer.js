@@ -6,6 +6,7 @@ const TOGGLE_ADD_CHAT = 'TOGGLE_ADD_CHAT'
 const UPDATE_SUM_MESSAGES = 'UPDATE_SUM_MESSAGES'
 const SET_DIALOG_NAME = 'SET_DIALOG_NAME'
 
+
 const initialState = {
   chats: [],
   toggleAddChat: false,
@@ -77,6 +78,7 @@ export const createChatThunk = (userId) => (dispatch) => {
 
 export const getChatsThunk = () => (dispatch) => {
   return chatsAPI.getChats().then((response) => {
+    console.log(response)
     dispatch(updateSumMessagesAction(response))
     dispatch(setUserDialogAction(response))
   })

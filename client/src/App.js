@@ -1,6 +1,6 @@
 import Login from './components/login/login'
 import Auth from './components/authorization/Auth'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
 import SettingsWindow from './components/settings/settingsWindow'
 import { ToastContainer, Zoom } from 'react-toastify'
 import HeaderContainer from './components/header/HeaderContainer'
@@ -39,7 +39,6 @@ const App = (props) => {
 
   const themeStore = useContext(ThemeContext)
   const classes = `min-h-full flex flex-col ${themeStore.theme}`
-
   return (
     <div className={classes}>
       <ToastContainer

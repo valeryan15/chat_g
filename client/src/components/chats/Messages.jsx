@@ -2,12 +2,13 @@ import React, { useEffect } from 'react'
 import WroteMessage from './WroteMessage'
 import arrowDown from '../../img/angle-arrow-down_icon-icons.com_73683.svg'
 import m from '../../css/message.module.css'
+import preloader from '../../img/1488.gif'
 
 const Messages = (props) => {
   let disabled = props.isFormDisabled
   let newMessage = props.message
   let messId = props.editMessId
-  let messageEnd = props.messageEnd
+  let messagesEnd = props.messagesEnd
 
   useEffect(() => {
     if (props.loadedMessagePage) {
@@ -20,6 +21,13 @@ const Messages = (props) => {
       setTimeout(() => scrollToBottom(), 300)
     }
   }, [props.loadedMessagePage])
+
+  useEffect(() => {
+    if(props.messages.length > 0) {
+      scrollToBottom()
+    }
+  }, [props.messages.length])
+
   const sendMessage = () => {
     props.addMessage(newMessage)
   }
@@ -39,7 +47,7 @@ const Messages = (props) => {
     props.readMessage(messages)
   }
   const scrollToBottom = () => {
-    messageEnd.scrollIntoView({ behavior: 'smooth' })
+    messagesEnd.scrollIntoView({ behavior: 'smooth' })
   }
   const onKeyPress = (e) => {
     if (e.keyCode === 13) {
@@ -72,12 +80,14 @@ const Messages = (props) => {
       <div className="dark:text-white transition duration-1000 w-full border-r-[1px] border-b-[1px] border-gray-500 text-center ">
         {props.dialogName}
       </div>
-      <div className= {`dark:text-white transition duration-1000 overflow-auto ${m.messageContent}`}>
+      <div
+        className={`dark:text-white transition duration-1000 overflow-auto ${m.messageContent}`}
+      >
         <div className={m.currentUserMessage}>{messageElement}</div>
         <div
           style={{ float: 'left', clear: 'both' }}
           ref={(el) => {
-            messageEnd = el
+            messagesEnd = el
           }}
         />
       </div>
@@ -104,8 +114,17 @@ const Messages = (props) => {
         <button
           type="Submit"
           className="dark:text-white border-y-[1px] border-gray-500 w-[70px] bg-gray-200 dark:bg-gray-800"
+          disabled={disabled}
         >
-          Submit
+          {disabled ? (
+            <img
+              className={m.imgPreloaderMessageSubmit}
+              src={preloader}
+              alt={'preloader'}
+            />
+          ) : (
+            <span>Submit</span>
+          )}
         </button>
         {props.isEditMessage ? (
           <button

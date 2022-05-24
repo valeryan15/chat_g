@@ -1,9 +1,12 @@
 import React from 'react'
 
 const changeDialogFriend =
-  'buttonChangeFriendDialog bg-gray-200 dark:bg-gray-800'
+  'buttonChangeFriendDialog bg-gray-200 dark:bg-gray-800 pr-8'
+
+
 
 const ChatUsers = (props) => {
+
   const changeDialog = () => {
     props.setDialogName(props.name)
   }
@@ -18,7 +21,7 @@ const ChatUsers = (props) => {
       }
     >
       <div className="ml-4">{props.name}</div>
-      {props.newMessages ? `новых: ${props.newMessages} ` : null}
+      {props.countNewMessages ? `новых: ${props.countNewMessages}` : null}
     </button>
   )
 }

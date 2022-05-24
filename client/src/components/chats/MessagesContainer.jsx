@@ -64,7 +64,7 @@ const mapStateToProps = (state) => ({
   message: state.message.message,
   editMessId: state.message.editMessId,
   dialogName: state.dialogs.dialogName,
-  messageEnd: state.message.messageEnd,
+  messagesEnd: state.message.messagesEnd,
   loadedMessagePage: state.message.loadedMessagePage,
   isFormDisabled: state.message.isFormDisabled
 })
