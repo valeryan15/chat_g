@@ -18,7 +18,7 @@ import preloader from './img/free-animated-icon-cloud-network-6172518.gif'
 
 const App = (props) => {
   useEffect(() => {
-    console.log('adlfgkjahd;g')
+    console.log('lll;g')
     props.initializeApp()
   }, [])
   useEffect(() => {
