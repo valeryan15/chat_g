@@ -4,9 +4,43 @@ import { getToken } from '../components/login/token'
 
 const baseUrl = 'http://localhost:8081/'
 
-const http = async (url, method, body = {}) => {
+type UpdateInfo = {
+  id: string
+  name: string
+  phone: string
+}
+type Messages = {
+  id: string
+}
+type Registration = {
+  login: string
+  password: string
+  passwordConfirmation: string
+}
+type Authorization = {
+  login: string
+  password: string
+}
+type Chats = {
+  id: string
+  name: string
+  countNewMessages: number
+}
+type GetUserResponse = {
+  id: string
+  login: string
+  settings: {
+    id: string
+    name: string
+    phone: string
+    theme: string
+  }
+  chats: Array<Chats>
+}
+
+const http = async (url: string, method: string, body: any = {}) => {
   let headers = getToken()
-  let options = {}
+  let options: any = {}
   if (method === 'GET') {
     options.params = body
   } else {
@@ -35,11 +69,12 @@ const http = async (url, method, body = {}) => {
   }
 }
 
+
 export const authAPI = {
-  registration(options) {
+  registration(options: Registration) {
     return http(`${baseUrl}common/sign-up`, 'POST', options)
   },
-  authorization(options) {
+  authorization(options: Authorization) {
     return http(`${baseUrl}common/sign-in`, 'POST', options)
   },
   logout() {
@@ -52,12 +87,11 @@ export const authAPI = {
     return http(`${baseUrl}users`, 'POST')
   },
 }
-
 export const settingsAPI = {
-  updateInfo(options) {
+  updateInfo(options: UpdateInfo) {
     return http(`${baseUrl}settings/update-info`, 'POST', options)
   },
-  updateTheme(id, theme) {
+  updateTheme(id: string, theme: string) {
     return http(`${baseUrl}settings/update-theme`, 'POST', {
       id,
       theme,
@@ -66,7 +100,7 @@ export const settingsAPI = {
 }
 
 export const chatsAPI = {
-  createChat(id) {
+  createChat(id: string) {
     return http(`${baseUrl}chats/create-chat`, 'POST', { id })
   },
   getChats() {
@@ -75,23 +109,23 @@ export const chatsAPI = {
 }
 
 export const messageAPI = {
-  getChat(id) {
+  getChat(id: string) {
     return http(`${baseUrl}chats/get-chat`, 'POST', { id })
   },
-  addMessage(id, message) {
+  addMessage(id: string, message: string) {
     return http(`${baseUrl}chats/add-message`, 'POST', {
       id,
       message,
     })
   },
-  updateMessage(chatId, messageId, message) {
+  updateMessage(chatId: string, messageId: string, message: string) {
     return http(`${baseUrl}chats/update-message`, 'POST', {
       chatId,
       messageId,
       message,
     })
   },
-  readMessages(chatId, messages) {
+  readMessages(chatId:string, messages: Array<Messages>) {
     return http(`${baseUrl}chats/read-messages`, 'POST', {
       chatId,
       messages,

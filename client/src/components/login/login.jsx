@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import {
   authorizationThunk,
   toggleIsFetching,
-} from '../../redux/authReducer'
+} from '../../redux/authReducer.ts'
 import {Navigate} from "react-router-dom";
 
 
@@ -29,3 +29,38 @@ export default connect(mapStateToProps, {
   authorizationThunk,
   toggleIsFetching,
 })(Login)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

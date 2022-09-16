@@ -1,6 +1,12 @@
 import { Link } from 'react-router-dom'
-
-const Header = (props) => {
+import * as React from "react";
+import { FC } from 'react';
+type Props = {
+  isAuth: boolean
+  login: string
+  logoutThunk: any
+}
+const Header: FC<Props> = (props) => {
   return (
     <div className='w-full bg-white border-b-[1px] border-gray-500 dark:bg-gray-600 transition duration-1000 h-12 flex justify-end pr-4 pt-2 '>
       <div className="text-black dark:text-white transition duration-500">

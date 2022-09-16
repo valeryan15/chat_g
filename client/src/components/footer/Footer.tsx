@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom'
 import { SvgDialogs, SvgSettings, SvgUsers } from '../../img/svg'
+import {FC} from "react";
 
-const Footer = (props) => {
+
+type Props = {
+  sumMessages: number
+}
+const Footer:FC<Props> = (props) => {
   return (
     <div className="absolute bottom-0 min-w-[400px] ">
       <div className="mx-20 flex justify-between pb-2">

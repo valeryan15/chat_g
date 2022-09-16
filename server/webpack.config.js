@@ -19,9 +19,14 @@ module.exports = {
       },
     ]
   },
+  resolve: {
+    extensions: ['.ts', '.tsx', '.js']
+  },
   output: {
     filename: 'server.js',
     path: path.resolve(__dirname, 'dist'),
   },
   mode: 'production',
+
 }
+

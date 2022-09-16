@@ -1,20 +1,28 @@
-import { authAPI } from '../api/api'
+import { authAPI } from '../api/api.ts'
 import { removeToken, setToken } from '../components/login/token'
-import { getUserThunk } from './settingsReducer'
+import { getUserThunk } from './settingsReducer.ts'
 import {toast} from "react-toastify";
+import {ThunkAction} from "redux-thunk";
+import {AppState} from "./redux-store";
 
 const SET_USER_DATA = 'SET_USER_DATA'
 const TOGGLE_IS_FETCHING = 'TOGGLE_IS_FETCHING'
-const TOGGLE_IS_AUTH = 'TOGGLE_IS_AUTH'
 
-const initialState = {
+
+export type InitialState  = {
+  userId: string | null,
+  login: string | null,
+  isAuth: boolean,
+  isFetching: boolean,
+}
+const initialState: InitialState = {
   userId: null,
   login: null,
   isAuth: false,
   isFetching: false,
 }
 
-const authReducer = (state = initialState, action) => {
+const authReducer = (state = initialState, action: Actions): InitialState => {
   switch (action.type) {
     case SET_USER_DATA:
       return {
@@ -26,29 +34,37 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isFetching: action.isFetching,
       }
-    case TOGGLE_IS_AUTH:
-      return {
-        ...state,
-        isAuth: action.isAuth,
-      }
-
     default:
       return state
   }
 }
+type Payload = {
+  userId: string | null
+  login: string| null
+  isAuth: boolean
+}
+type Actions = SetAuthUserData | ToggleIsFetching
+type SetAuthUserData = {
+  type: typeof SET_USER_DATA
+  payload: Payload
+}
+type ToggleIsFetching = {
+  type: typeof TOGGLE_IS_FETCHING
+  isFetching: boolean
+}
+type Thunk = ThunkAction<Promise<void>, AppState, unknown, Actions>
 
-export const setAuthUserData = (userId, login, isAuth) => ({
+export const setAuthUserData = (userId: string, login: string, isAuth: boolean): SetAuthUserData => ({
   type: SET_USER_DATA,
   payload: {userId, login, isAuth },
 })
-
-export const toggleIsFetching = (isFetching) => ({
+export const toggleIsFetching = (isFetching: boolean):ToggleIsFetching => ({
   type: TOGGLE_IS_FETCHING,
   isFetching,
 })
 
 
-export const authorizationThunk = (login, password) => (dispatch) => {
+export const authorizationThunk = (login: string | null, password: string): Thunk => (dispatch) => {
   dispatch(toggleIsFetching(true))
   authAPI
     .authorization(login, password)
@@ -61,7 +77,7 @@ export const authorizationThunk = (login, password) => (dispatch) => {
     .catch(() => dispatch(toggleIsFetching(false)))
 }
 
-export const logoutThunk = () => (dispatch) => {
+export const logoutThunk = (): Thunk => (dispatch) => {
   authAPI.logout().then(() => {
     removeToken()
     dispatch(setAuthUserData(null,null, false))
@@ -69,7 +85,7 @@ export const logoutThunk = () => (dispatch) => {
 }
 
 export const registrationThunk =
-  (login, password, passwordConfirmation) => (dispatch) => {
+  (login, password, passwordConfirmation): Thunk => (dispatch) => {
     dispatch(toggleIsFetching(true))
     authAPI
       .registration(login, password, passwordConfirmation)

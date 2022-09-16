@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import {
   getChatsThunk,
   setDialogNameAction,
-} from '../../../redux/dialogsReducer'
+} from '../../../redux/dialogsReducer.ts'
 import Chats from "./Chats";
 
 const ChatsContainer = (props) => {

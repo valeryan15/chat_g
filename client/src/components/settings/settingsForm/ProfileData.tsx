@@ -1,11 +1,16 @@
-import React from 'react'
+import * as React from 'react'
 import { namePhoneInitialValues } from '../../support/formik'
 import { NamePhoneSchema } from '../../support/validators'
 import { Field, Formik } from 'formik'
 import MaskedInput from 'react-text-mask/dist/reactTextMask'
 import {phoneNumberMask} from "../../support/constants";
+import {FC} from "react";
 
-const ProfileData = (props) => {
+
+type Props = {
+  onSubmit: (values) => void
+}
+const ProfileData: FC<Props> = (props) => {
 
   return (
     <div className="relative w-full h-full mt-4 ">

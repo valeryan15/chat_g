@@ -1,9 +1,10 @@
-import React from 'react'
-import NavSettingsContainer from './NavSettingsContainer'
+import * as React from 'react'
+import NavSettingsContainer from './NavSettingsContainer.tsx'
 import { Route, Routes} from 'react-router-dom'
-import ProfileDataContainer from './settingsForm/ProfileDataContainer'
+import ProfileDataContainer from './settingsForm/ProfileDataContainer.tsx'
 import TypeThemeContainer from "../theme/TypeThemeContainer";
 import {connect} from "react-redux";
+import {AppState} from "../../redux/redux-store.ts";
 
 const SettingsWindow = () => {
   return (
@@ -22,7 +23,7 @@ const SettingsWindow = () => {
     </div>
   )
 }
-const mapStateToProps = (state) => ({
+const mapStateToProps = (state: AppState) => ({
   isAuth: state.auth.isAuth
 })
 export default connect(mapStateToProps) (SettingsWindow)

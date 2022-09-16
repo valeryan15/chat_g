@@ -23,7 +23,7 @@ const Messages = (props) => {
   }, [props.loadedMessagePage])
 
   useEffect(() => {
-    if(props.messages.length > 0) {
+    if (props.messages.length > 0) {
       scrollToBottom()
     }
   }, [props.messages.length])

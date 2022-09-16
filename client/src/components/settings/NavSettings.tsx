@@ -1,8 +1,14 @@
-import React from 'react'
+import * as React from 'react'
 import profileAvatar from '../../img/dOKeEPZehOc.jpeg'
 import { Link } from 'react-router-dom'
+import {FC} from "react";
 
-const NavSettings = (props) => {
+type Props = {
+  name: string
+  phone: string
+  login: string
+}
+const NavSettings: FC<Props> = (props) => {
   return (
     <div className="min-h-full flex flex-col">
       <div className="editButton">

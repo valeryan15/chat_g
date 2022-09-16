@@ -1,19 +1,19 @@
 import Login from './components/login/login'
 import Auth from './components/authorization/Auth'
 import {BrowserRouter, Route, Routes} from 'react-router-dom'
-import SettingsWindow from './components/settings/settingsWindow'
+import SettingsWindow from './components/settings/settingsWindow.tsx'
 import { ToastContainer, Zoom } from 'react-toastify'
-import HeaderContainer from './components/header/HeaderContainer'
+import HeaderContainer from './components/header/HeaderContainer.tsx'
 import 'react-toastify/dist/ReactToastify.css'
 import MainWindow from './components/mainWindow/MainWindow'
 import { useContext, useEffect } from 'react'
 import { connect } from 'react-redux'
-import UsersContainer from './components/users/usersContainer'
-import { initializeApp } from './redux/appReducer'
+import UsersContainer from './components/users/usersContainer.tsx'
+import { initializeApp } from './redux/appReducer.ts'
 import { ThemeContext } from './contexts/themeContext'
 import RequireAuth from './contexts/authContext'
-import { getChatsThunk } from './redux/dialogsReducer'
-import FooterContainer from './components/footer/FooterContainer'
+import { getChatsThunk } from './redux/dialogsReducer.ts'
+import FooterContainer from './components/footer/FooterContainer.tsx'
 import preloader from './img/free-animated-icon-cloud-network-6172518.gif'
 
 const App = (props) => {
@@ -27,10 +27,9 @@ const App = (props) => {
       timeoutId = setTimeout(function updateTick() {
         props.getChatsThunk()
         timeoutId = setTimeout(updateTick, 15000)
-      }, 5000)
+      }, 15000)
     }
     return () => {
-      //это вызывается когда происходит изменение компененты, удаление
       if (timeoutId) {
         clearTimeout(timeoutId)
       }

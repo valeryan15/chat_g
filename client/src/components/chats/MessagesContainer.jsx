@@ -8,7 +8,7 @@ import {
   getChatThunk,
   readMessageThunk,
   updateMessageAction,
-} from '../../redux/messagesReducer'
+} from '../../redux/messagesReducer.ts'
 import { Navigate, useParams } from 'react-router-dom'
 import { useEffect } from 'react'
 
