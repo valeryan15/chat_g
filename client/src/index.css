@@ -6,7 +6,6 @@
   .sideBar-icon {
     @apply relative flex items-center justify-center h-12 mt-2 mb-2 text-blue-800 transition-all duration-300 ease-linear bg-yellow-300 w-28 rounded-3xl hover:text-white;
   }
-
   .nav {
     @apply relative top-0 left-0 flex flex-col h-screen m-0 text-white bg-gray-900 shadow-lg w-28;
   }
@@ -20,9 +19,16 @@
     @apply left-0 w-32 h-12 text-blue-800 transition-all duration-300 ease-linear bg-yellow-300 rounded-3xl hover:text-white;
   }
   .editButton {
-    @apply min-h-0 m-4 bg-white dark:hover:bg-gray-800 hover:bg-gray-200 rounded-lg border-y-2 border-slate-200 pb-2 mb-32 transition duration-1000 dark:bg-gray-600;
+    @apply min-h-0 m-4 bg-white dark:hover:bg-gray-800 hover:bg-gray-200 border-y-[1px] border-gray-500 pb-2 mb-32 transition duration-1000 dark:bg-gray-600;
   }
   .changeButton {
-    @apply h-12 mt-2 rounded-lg  dark:text-white transition duration-1000 border-y-2 mx-4 border-slate-200;
+    @apply h-12 mt-2  dark:text-white transition duration-1000 border-b-[1px] mx-4 border-gray-500;
+  }
+  .buttonChangeFriendDialog {
+    @apply border-b-[1px] w-[100%] hover:bg-gray-200 dark:hover:bg-gray-800 pr-8
+    dark:text-white transition duration-1000 border-gray-500 ml-4 h-16 flex justify-between items-center flex justify-between;
+  }
+  .theme {
+    @apply h-8 text-center dark:hover:bg-gray-800 hover:bg-gray-200 dark:text-white transition duration-1000 border-y-[1px] mx-4 border-gray-500;
   }
 }

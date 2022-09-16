@@ -1,27 +1,43 @@
 import Login from './components/login/login'
-import Auth from './authorization/Auth'
-import { BrowserRouter, Route, Routes } from 'react-router-dom'
-import SettingsWindow from './components/settings/settingsWindow'
+import Auth from './components/authorization/Auth'
+import {BrowserRouter, Route, Routes} from 'react-router-dom'
+import SettingsWindow from './components/settings/settingsWindow.tsx'
 import { ToastContainer, Zoom } from 'react-toastify'
-import HeaderContainer from './components/header/HeaderContainer'
+import HeaderContainer from './components/header/HeaderContainer.tsx'
 import 'react-toastify/dist/ReactToastify.css'
 import MainWindow from './components/mainWindow/MainWindow'
 import { useContext, useEffect } from 'react'
 import { connect } from 'react-redux'
-import UsersContainer from './components/users/usersContainer'
-import { initializeApp } from './redux/appReducer'
+import UsersContainer from './components/users/usersContainer.tsx'
+import { initializeApp } from './redux/appReducer.ts'
 import { ThemeContext } from './contexts/themeContext'
 import RequireAuth from './contexts/authContext'
+import { getChatsThunk } from './redux/dialogsReducer.ts'
+import FooterContainer from './components/footer/FooterContainer.tsx'
+import preloader from './img/free-animated-icon-cloud-network-6172518.gif'
 
 const App = (props) => {
   useEffect(() => {
     props.initializeApp()
   }, [])
+  useEffect(() => {
+    let timeoutId = null
+    if (props.isAuth) {
+      props.getChatsThunk()
+      timeoutId = setTimeout(function updateTick() {
+        props.getChatsThunk()
+        timeoutId = setTimeout(updateTick, 15000)
+      }, 15000)
+    }
+    return () => {
+      if (timeoutId) {
+        clearTimeout(timeoutId)
+      }
+    }
+  })
 
   const themeStore = useContext(ThemeContext)
   const classes = `min-h-full flex flex-col ${themeStore.theme}`
-  console.log(props)
-
   return (
     <div className={classes}>
       <ToastContainer
@@ -30,7 +46,10 @@ const App = (props) => {
         autoClose={8000}
       />
       {!props.initialized ? (
-        <span>loading...</span>
+        <div className="w-24 ml-[48%] mt-[20%]">
+          <div className="ml-2">загрузка...</div>
+          <img src={preloader} alt="preloader" />
+        </div>
       ) : (
         <BrowserRouter>
           <HeaderContainer />
@@ -64,6 +83,7 @@ const App = (props) => {
               />
             </Routes>
           </div>
+          {props.isAuth ? <FooterContainer /> : null}
         </BrowserRouter>
       )}
     </div>
@@ -76,4 +96,7 @@ const mapStateToProps = (state) => ({
   isAuth: state.auth.isAuth,
 })
 
-export default connect(mapStateToProps, { initializeApp })(App)
+export default connect(mapStateToProps, {
+  initializeApp,
+  getChatsThunk,
+})(App)

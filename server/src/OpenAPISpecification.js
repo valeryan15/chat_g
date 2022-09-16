@@ -5,7 +5,7 @@ const options = {
   swaggerDefinition: {
     openapi: '3.0.0',
     info: {
-      title: 'Hello World',
+      title: 'Chat_g',
       version: '1.0.0',
     },
   },

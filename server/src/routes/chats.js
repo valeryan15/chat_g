@@ -58,12 +58,6 @@ router.use(authMiddleware)
  *                      message:
  *                        type: string
  *                        description: тело сообщения
- *                      read:
- *                        type: object
- *                        properties:
- *                          dynamic_key:
- *                            type: boolean
- *                            description: Динамический ключ состоящий из логина пользователя. А значение, boolean говорит о том что прочитано у пользователя сообщение или нет
  *                      user:
  *                        type: object
  *                        properties:
@@ -146,12 +140,6 @@ router.post(
  *                      message:
  *                        type: string
  *                        description: тело сообщения
- *                      read:
- *                        type: object
- *                        properties:
- *                          dynamic_key:
- *                            type: boolean
- *                            description: Динамический ключ состоящий из логина пользователя. А значение, boolean говорит о том что прочитано у пользователя сообщение или нет
  *                      user:
  *                        type: object
  *                        properties:
@@ -215,12 +203,6 @@ router.post(
  *                message:
  *                  type: string
  *                  description: тело сообщения
- *                read:
- *                  type: object
- *                  properties:
- *                    dynamic_key:
- *                      type: boolean
- *                      description: Динамический ключ состоящий из логина пользователя. А значение, boolean говорит о том что прочитано у пользователя сообщение или нет
  *                user:
  *                  type: object
  *                  properties:
@@ -295,12 +277,6 @@ router.post(
  *                message:
  *                  type: string
  *                  description: тело сообщения
- *                read:
- *                  type: object
- *                  properties:
- *                    dynamic_key:
- *                      type: boolean
- *                      description: Динамический ключ состоящий из логина пользователя. А значение, boolean говорит о том что прочитано у пользователя сообщение или нет
  *                user:
  *                  type: object
  *                  properties:
