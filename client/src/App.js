@@ -15,7 +15,7 @@ import RequireAuth from './contexts/authContext'
 
 const App = (props) => {
   useEffect(() => {
-    console.log('adlfgkjahd;g')
+    console.log('kkk;g')
     props.initializeApp()
   }, [])
 
